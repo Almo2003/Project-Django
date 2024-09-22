@@ -21,6 +21,7 @@ def signup(request):
                 user.save()
                 return HttpResponse('User Created successfully')
             except:
+                return HttpResponse('Username already exist')
         return HttpResponse('Password do not match')
         
     
