@@ -6,8 +6,30 @@
     <title>Requeriment Django</title>
 </head>
 <body>
+
+    <nav>
+        <ul>
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            {% if user.is_authenticated %}
+            <li>
+                <a href="/logout">LogOut</a>
+            </li>
+            {% else %} 
+            <li>
+                <a href="/signup">SignUp</a>
+            </li> 
+            <li>
+                <a href="/signin">SignIn</a>
+            </li>  
+            {% endif %} 
+        </ul>
+    </nav>
+
     {% block content %}
-        
+
     {% endblock %}
     
 </body>
