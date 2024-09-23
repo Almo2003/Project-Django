@@ -1,14 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{{error}}
+<main class="container py-5">
+    <section class="card card-body">
+        {{error}}
 
-<h1>SignIn</h1>
-<form method="POST">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button>
-        SignIn
-    </button>
-</form>
+        <h1 class="card-title">SignIn</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button class="btn btn-primary">
+                SignIn
+            </button>
+        </form>
+    </section>
+</main>
 {% endblock %}
