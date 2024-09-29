@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<main class="container py-5" style="background-color: #007bff;">  <!-- Color azul fuera del section -->
-    <section class="card card-body">
+<main class="container py-5" style="background-color: #ff0000; height: 100vh;">  <!-- Fondo rojo -->
+    <section class="card card-body" style="background: transparent; border: none;">
         <h1 class="display-1 text-center">SISTEMAS DE EGRESADOS</h1>
-        <p>Un Sistema de Egresados para el ISER es una plataforma digital diseñada para conectar a exalumnos 
+        <p class="text-white">Un Sistema de Egresados para el ISER es una plataforma digital diseñada para conectar a exalumnos 
              con la institución y entre sí, fomentando una red de apoyo profesional y académico. Este sistema 
              permite a los egresados actualizar sus datos, acceder a oportunidades laborales exclusivas, 
              recibir información sobre eventos y capacitaciones, y mantener un vínculo activo con el instituto.
@@ -12,8 +13,23 @@
              impulsando el crecimiento profesional de sus antiguos estudiantes y promoviendo el prestigio 
              institucional.
         </p>
-        <!-- Agregamos una imagen dentro del section -->
-        <img src="https://www.iser.edu.co/wp-content/uploads/2024/07/cropped-LOGO-NEGRO-HORIZONTAL-01-2-1536x614.png" alt="Descripción de la imagen" class="img-fluid mt-4" style="max-width: 100%; height: auto;">
+        
+        <!-- Agregamos los botones Cargar y Guardar -->
+        <div class="text-center mt-4">
+            <!-- Botón "Cargar" -->
+            <a href="{% url 'cargar_archivo' %}">
+                <button class="btn btn-light my-2" style="width: 150px; height: 50px;">Cargar</button>
+            </a>
+            <br>
+            <!-- Botón "Guardar" (puedes conectarlo a alguna funcionalidad específica más tarde) -->
+            <button class="btn btn-light my-2" style="width: 150px; height: 50px;">Guardar</button>
+        </div>
     </section>
+
+    <!-- Icono flotante con el texto "ABC" -->
+    <div style="position: absolute; bottom: 20px; right: 20px; width: 100px; height: 100px; background-color: rgba(255, 255, 255, 0.2); border-radius: 20px; display: flex; justify-content: center; align-items: center;">
+        <span style="font-size: 30px; color: white;">ABC</span>
+    </div>
 </main>
 {% endblock %}
+
