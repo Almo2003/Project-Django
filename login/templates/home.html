@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<main class="container py-5" style="background-color: #ff0000; height: 100vh;">  <!-- Fondo rojo -->
-    <section class="card card-body" style="background: transparent; border: none;">
+<main class="container py-5">  <!-- Fondo rojo -->
+    <section class="card card-body">
         <h1 class="display-1 text-center">SISTEMAS DE EGRESADOS</h1>
-        <p class="text-white">Un Sistema de Egresados para el ISER es una plataforma digital diseñada para conectar a exalumnos 
+        <p>Un Sistema de Egresados para el ISER es una plataforma digital diseñada para conectar a exalumnos 
              con la institución y entre sí, fomentando una red de apoyo profesional y académico. Este sistema 
              permite a los egresados actualizar sus datos, acceder a oportunidades laborales exclusivas, 
              recibir información sobre eventos y capacitaciones, y mantener un vínculo activo con el instituto.
@@ -18,11 +18,11 @@
         <div class="text-center mt-4">
             <!-- Botón "Cargar" -->
             <a href="{% url 'cargar_archivo' %}">
-                <button class="btn btn-light my-2" style="width: 150px; height: 50px;">Cargar</button>
+                <button class="btn btn-light my-2" style=" background-color: #8B9E88; width: 150px; height: 50px;">Cargar</button>
             </a>
             <br>
             <!-- Botón "Guardar" (puedes conectarlo a alguna funcionalidad específica más tarde) -->
-            <button class="btn btn-light my-2" style="width: 150px; height: 50px;">Guardar</button>
+            <button class="btn btn-light my-2" style=" background-color: #8B9E88; width: 150px; height: 50px;">Guardar</button>
         </div>
     </section>
 

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="container py-5">
+    <section class="card card-body" style="background: transparent; border: none;">
+        <h1 class="display-1 text-center">Contenido del Archivo CSV</h1>
+
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    {% for header in data.0 %}
+                    <th>{{ header }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data.1:data|length %}
+                <tr>
+                    {% for column in row %}
+                    <td>{{ column }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</main>
+{% endblock %}

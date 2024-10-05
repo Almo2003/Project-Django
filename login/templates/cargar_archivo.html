@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="container py-5">
+    <section class="card card-body" style="background: transparent; border: none;">
+        <h1 class="display-1 text-center">Sube tu archivo CSV</h1>
+        
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-light my-2" style="width: 150px; height: 50px;">Cargar</button>
+        </form>
+    </section>
+</main>
+{% endblock %}

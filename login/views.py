@@ -5,6 +5,8 @@ from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponse
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
+import csv
+from .forms import CSVUploadForm
 
 # Create your views here.
 def home(request):
@@ -65,7 +67,25 @@ def signin(request):
         return redirect('private')
             
            
-             
+def cargar_archivo(request):
+    if request.method == 'POST':
+        form = CSVUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            csv_file = request.FILES['csv_file']
+
+            # Leer el archivo CSV y almacenarlo en una lista de listas
+            data = []
+            decoded_file = csv_file.read().decode('utf-8').splitlines()
+            reader = csv.reader(decoded_file)
+            for row in reader:
+                data.append(row)
+
+            # Redirigir a una vista donde se muestra el contenido del archivo
+            return render(request, 'mostrar_csv.html', {'data': data})
+    else:
+        form = CSVUploadForm()
+
+    return render(request, 'cargar_archivo.html', {'form': form})
         
     
     

@@ -25,4 +25,5 @@ urlpatterns = [
     path('private/', views.private, name='private'),
     path('signout/', views.signout, name='logout'),
     path('signin/', views.signin, name='signin'),
+    path('cargar/', views.cargar_archivo, name='cargar_archivo'),
 ]
