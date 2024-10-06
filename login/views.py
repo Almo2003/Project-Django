@@ -9,10 +9,19 @@ import csv
 from .forms import CSVUploadForm
 
 # Create your views here.
-def home(request):
+def home(request, extra=None):
+    # Verificamos si hay un segmento adicional en la URL (parámetro extra)
+    if extra is not None:
+        # Si hay un segmento adicional, redirigimos a la página de inicio de sesión
+        return redirect('home')
     return render(request, 'home.html')
 
-def signup(request):
+def signup(request, extra=None):
+    # Verificamos si hay un segmento adicional en la URL (parámetro extra)
+    if extra is not None:
+        # Si hay un segmento adicional, redirigimos a la página de inicio de sesión
+        return redirect('signup')
+    
     if request.method == 'GET':
         return render(request, 'signup.html', {"form": UserCreationForm})
     else:
@@ -34,11 +43,19 @@ def signup(request):
             "error": "Passwords did not match."})
 
 @login_required
-def private(request):
+def private(request, extra=None):
+    # Verificamos si hay un segmento adicional en la URL (parámetro extra)
+    if extra is not None:
+        # Si hay un segmento adicional, redirigimos a la página de inicio de sesión
+        return redirect('private')
     return render(request, 'private.html')
 
 @login_required
-def signout(request):
+def signout(request, extra=None):
+    # Verificamos si hay un segmento adicional en la URL (parámetro extra)
+    if extra is not None:
+        # Si hay un segmento adicional, redirigimos a la página de inicio de sesión
+        return redirect('signout')
     logout(request)
     return redirect('home')
     
@@ -80,7 +97,12 @@ def signin(request, extra=None):
 
             
            
-def cargar_archivo(request):
+def cargar_archivo(request, extra=None):
+    # Verificamos si hay un segmento adicional en la URL (parámetro extra)
+    if extra is not None:
+        # Si hay un segmento adicional, redirigimos a la página de inicio de sesión
+        return redirect('cargar_archivo')
+    
     if request.method == 'POST':
         form = CSVUploadForm(request.POST, request.FILES)
         if form.is_valid():
