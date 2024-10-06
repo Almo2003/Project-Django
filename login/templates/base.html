@@ -17,18 +17,18 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
               <li class="nav-item">
-                <a class="nav-link" href="/" style="color: white; font: 20px verdana, sans-serif;">Home</a>
+                <a class="nav-link" href="/" style="color: white; font: 20px verdana, sans-serif;">Principal</a>
               </li>
               {% if user.is_authenticated %}
               <li class="nav-item">
-                <a class="nav-link" href="/signout" style="color: white; font: 20px verdana, sans-serif;">LogOut</a>
+                <a class="nav-link" href="/signout" style="color: white; font: 20px verdana, sans-serif;">Cerrar Sesion</a>
               </li>
               {% else %} 
               <li class="nav-item">
-                <a class="nav-link" href="/signup" style="color: white; font: 20px verdana, sans-serif;">Register</a>
+                <a class="nav-link" href="/signup" style="color: white; font: 20px verdana, sans-serif;">Registrarse</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/signin" style="color: white; font: 20px verdana, sans-serif;">SignIn</a>
+                <a class="nav-link" href="/signin" style="color: white; font: 20px verdana, sans-serif;">Iniciar Sesion</a>
               </li>
               {% endif %} 
             </ul>

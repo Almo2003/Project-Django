@@ -1,18 +1,37 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<main class="container py-5">
-    <section class="card card-body">
-        {{error}}
-
-        <h1 class="card-title">SignIn</h1>
+<main class="d-flex justify-content-center align-items-center vh-100 bg-dark">
+    <section class="card card-body shadow-lg rounded-3 login-card d-flex justify-content-center align-items-center ">
+        <div class="text-center">
+            <!-- Imagen de ícono (opcional) -->
+            <img src="https://www.iser.edu.co/wp-content/uploads/2024/07/IMAGOTIPO-NEGRO-01-1447x1536.png" alt="Login Icon" class="img-fluid" width="200px" height="200px">
+        </div>
+        <h1 class="card-title text-center text-black mb-4">Iniciar Sesion</h1>
+        
+        <!-- Mostrar errores si existen -->
+        {% if error %}
+        <div class="alert alert-danger">
+            {{ error }}
+        </div>
+        {% endif %}
+        
         <form method="POST">
             {% csrf_token %}
-            {{form.as_p}}
-            <button class="btn btn-primary">
-                SignIn
+            <div class="form-group mb-3">
+                <label for="id_username" class="form-label text-black" placeholder="username">Usuario</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group mb-3">
+                <label for="id_password" class="form-label text-black">contraseña</label>
+                {{ form.password }}
+            </div>
+            <button class="btn btn-primary justify-content-center align-items-center btn-lg">
+                Acceder
             </button>
         </form>
     </section>
 </main>
 {% endblock %}
+
+

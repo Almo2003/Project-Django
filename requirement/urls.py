@@ -21,9 +21,15 @@ from login import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
+    path('home/<path:extra>/', views.home),
     path('signup/', views.signup, name='signup'),
+    path('signup/<path:extra>/', views.signup),
     path('private/', views.private, name='private'),
+    path('private/<path:extra>/', views.private),
     path('signout/', views.signout, name='logout'),
+    path('signout/<path:extra>/', views.signout),
     path('signin/', views.signin, name='signin'),
+    path('signin/<path:extra>/', views.signin),
     path('cargar/', views.cargar_archivo, name='cargar_archivo'),
+    path('cargar/<path:extra>/', views.cargar_archivo),
 ]
