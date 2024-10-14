@@ -32,4 +32,5 @@ urlpatterns = [
     path('signin/<path:extra>/', views.signin),
     path('cargar/', views.cargar_archivo, name='cargar_archivo'),
     path('cargar/<path:extra>/', views.cargar_archivo),
+    path('guardar_datos/', views.guardar_datos)
 ]

@@ -2,28 +2,32 @@
 
 {% block content %}
 <main class="container py-5">
-    <section class="card card-body" style="background: transparent; border: none;">
-        <h1 class="display-3 text-center">Datos del archivo CSV</h1>
-        
-        <table class="table table-bordered table-striped">
-            <thead>
+    <h1 class="display-3 text-center">Datos del archivo CSV</h1>
+    
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                {% for column in column_names %}
+                    <th>{{ column }}</th>  <!-- Mostrar los nombres de las columnas -->
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
                 <tr>
-                    {% for columna in columnas %}
-                        <th>{{ columna }}</th>
+                    {% for item in row %}
+                        <td>{{ item }}</td>  <!-- Mostrar los valores de las columnas -->
                     {% endfor %}
                 </tr>
-            </thead>
-            <tbody>
-                {% for row in data %}
-                    <tr>
-                        {% for item in row %}
-                            <td>{{ item }}</td>
-                        {% endfor %}
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <a href="{% url 'cargar_archivo' %}" class="btn btn-primary mt-4">Subir otro archivo</a>
-    </section>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'cargar_archivo' %}" class="btn btn-light my-2" style=" background-color: #1B9D87; color: white; padding: 8px 16px; width: 150px; height: 50px;">Volver</a>
+    <form method="POST" action="{% url 'cargar_archivo' %}">
+        {% csrf_token %}
+        <input type="hidden" name="data" value="{{ data|safe }}">
+        
+        <button type="submit" class="btn btn-light my-2" style="background-color: #1B9D87; color: white; padding: 8px 16px; width: 150px; height: 50px;">Guardar</button>
+    </form>
 </main>
 {% endblock %}
