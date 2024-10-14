@@ -3,13 +3,37 @@
 {% block content %}
 <main class="container py-5">
     <section class="card card-body" style="background: transparent; border: none;">
-        <h1 class="display-1 text-center">Sube tu archivo CSV</h1>
+        <h1 class="display-1 text-center">Sube tu archivo CSV y especifica el número de entradas</h1>
         
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
+
+            <!-- Aquí se agregarán dinámicamente las cajas de texto -->
+            <div id="cajasContainer"></div>
+
             <button type="submit" class="btn btn-light my-2" style="width: 150px; height: 50px;">Cargar</button>
         </form>
+        
+        <script>
+            const numCajasInput = document.getElementById('id_num_cajas');
+            numCajasInput.addEventListener('input', function() {
+                const numCajas = numCajasInput.value;
+                const cajasContainer = document.getElementById('cajasContainer');
+                cajasContainer.innerHTML = '';  // Limpiar el contenedor antes de agregar nuevas cajas
+
+                for (let i = 0; i < numCajas; i++) {
+                    const label = document.createElement('label');
+                    label.textContent = `Nombre de la columna ${i + 1}: `;
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.name = `columna_${i + 1}`;
+                    cajasContainer.appendChild(label);
+                    cajasContainer.appendChild(input);
+                    cajasContainer.appendChild(document.createElement('br'));
+                }
+            });
+        </script>
     </section>
 </main>
 {% endblock %}

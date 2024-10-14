@@ -3,26 +3,27 @@
 {% block content %}
 <main class="container py-5">
     <section class="card card-body" style="background: transparent; border: none;">
-        <h1 class="display-1 text-center">Contenido del Archivo CSV</h1>
-
-        <table class="table table-striped table-bordered">
+        <h1 class="display-3 text-center">Datos del archivo CSV</h1>
+        
+        <table class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    {% for header in data.0 %}
-                    <th>{{ header }}</th>
+                    {% for columna in columnas %}
+                        <th>{{ columna }}</th>
                     {% endfor %}
                 </tr>
             </thead>
             <tbody>
-                {% for row in data.1 %}
-                <tr>
-                    {% for column in row %}
-                    <td>{{ row }}</td>
-                    {% endfor %}
-                </tr>
+                {% for row in data %}
+                    <tr>
+                        {% for item in row %}
+                            <td>{{ item }}</td>
+                        {% endfor %}
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
+        <a href="{% url 'cargar_archivo' %}" class="btn btn-primary mt-4">Subir otro archivo</a>
     </section>
 </main>
 {% endblock %}

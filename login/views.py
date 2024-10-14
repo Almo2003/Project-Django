@@ -7,6 +7,7 @@ from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 import csv
 from .forms import CSVUploadForm
+import pandas as pd
 
 # Create your views here.
 def home(request, extra=None):
@@ -98,30 +99,39 @@ def signin(request, extra=None):
             
            
 def cargar_archivo(request, extra=None):
-    # Verificamos si hay un segmento adicional en la URL (parámetro extra)
-    if extra is not None:
-        # Si hay un segmento adicional, redirigimos a la página de inicio de sesión
-        return redirect('cargar_archivo')
-    
     if request.method == 'POST':
         form = CSVUploadForm(request.POST, request.FILES)
         if form.is_valid():
             csv_file = request.FILES['csv_file']
+            num_cajas = form.cleaned_data['num_cajas']
 
-            # Leer el archivo CSV y almacenarlo en una lista de listas
+            # Leer el archivo CSV
             data = []
-            decoded_file = csv_file.read().decode('utf-8').splitlines()
-            reader = csv.reader(decoded_file)
-            for row in reader:
-                data.append(row)
+            try:
+                decoded_file = csv_file.read().decode('utf-8').splitlines()
+            except UnicodeDecodeError:
+                decoded_file = csv_file.read().decode('ISO-8859-1').splitlines()
 
-            # Redirigir a una vista donde se muestra el contenido del archivo
-            return render(request, 'mostrar_csv.html', {'data': data})
+            reader = csv.reader(decoded_file)
+
+            # Leer los datos y asegurarse de que hay al menos dos columnas
+            nombres = []  # Lista para almacenar nombres y apellidos
+            for row in reader:
+                # Verificar que la fila tenga al menos dos columnas
+                if len(row) < 2:
+                    continue  # O salta a la siguiente fila si no hay suficientes datos
+
+                nombre = row[0].strip()  # Columna de nombres
+                apellido = row[1].strip()  # Columna de apellidos
+                nombres.append((nombre, apellido))
+
+            # Redirigir a la vista donde se muestra el contenido del archivo
+            return render(request, 'mostrar_csv.html', {'nombres': nombres})
+
     else:
         form = CSVUploadForm()
 
     return render(request, 'cargar_archivo.html', {'form': form})
-        
     
     
     
