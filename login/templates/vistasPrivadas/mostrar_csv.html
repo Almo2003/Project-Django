@@ -22,12 +22,17 @@
             {% endfor %}
         </tbody>
     </table>
-    <a href="{% url 'cargar_archivo' %}" class="btn btn-light my-2" style=" background-color: #1B9D87; color: white; padding: 8px 16px; width: 150px; height: 50px;">Volver</a>
-    <form method="POST" action="{% url 'cargar_archivo' %}">
+    <a href="{% url 'cargar_archivo' %}" class="btn btn-light my-2" style="background-color: #1B9D87; color: white; padding: 8px 16px; width: 150px; height: 50px;">Volver</a>
+    <form method="POST" action="{% url 'guardar_datos' %}">
         {% csrf_token %}
-        <input type="hidden" name="data" value="{{ data|safe }}">
+        <input type="hidden" name="data" id="data">
         
         <button type="submit" class="btn btn-light my-2" style="background-color: #1B9D87; color: white; padding: 8px 16px; width: 150px; height: 50px;">Guardar</button>
     </form>
+    
+    <script>
+        // Convertir el objeto de datos en una cadena JSON antes de enviar el formulario
+        document.getElementById('data').value = JSON.stringify({{ data|safe }});
+    </script>
 </main>
 {% endblock %}

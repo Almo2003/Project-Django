@@ -14,7 +14,14 @@
 
             <button type="submit" class="btn btn-light my-2" style="width: 150px; height: 50px;">Cargar</button>
         </form>
-        
+
+        <!-- Mostrar errores de validación -->
+        <div id="errorContainer" class="alert alert-danger" style="display: {% if errors %} block {% else %} none {% endif %};">
+            {% for error in errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+
         <div id="alertContainer" style="display: none;" class="alert alert-danger" role="alert">
             Por favor, selecciona un archivo CSV antes de cargar.
         </div>

@@ -16,24 +16,24 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="/" style="color: white; font: 20px verdana, sans-serif;">Principal</a>
-              </li>
-              {% if user.is_authenticated %}
-              <li class="nav-item">
-                <a class="nav-link" href="/signout" style="color: white; font: 20px verdana, sans-serif;">Cerrar Sesion</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/cargar" style="color: white; font: 20px verdana, sans-serif;">Cargar Archivo</a>
-              </li>
-              {% else %} 
-              <li class="nav-item">
-                <a class="nav-link" href="/signup" style="color: white; font: 20px verdana, sans-serif;">Registrarse</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/signin" style="color: white; font: 20px verdana, sans-serif;">Iniciar Sesion</a>
-              </li>
-              {% endif %} 
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}" style="color: white; font: 20px verdana, sans-serif;">Principal</a>
+                  </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'cargar_archivo'  %}" style="color: white; font: 20px verdana, sans-serif;">Cargar Archivo</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'logout' %}" style="color: white; font: 20px verdana, sans-serif;">Cerrar Sesion</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'signup' %}" style="color: white; font: 20px verdana, sans-serif;">Registrarse</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'signin' %}" style="color: white; font: 20px verdana, sans-serif;">Iniciar Sesion</a>
+                    </li>
+                {% endif %} 
             </ul>
           </div>
         </div>

@@ -18,7 +18,7 @@ def home(request, extra=None):
     if extra is not None:
         # Si hay un segmento adicional, redirigimos a la página de inicio de sesión
         return redirect('home')
-    return render(request, 'home.html')
+    return render(request, './vistasPublicas/home.html')
 
 def signup(request, extra=None):
     # Verificamos si hay un segmento adicional en la URL (parámetro extra)
@@ -27,7 +27,7 @@ def signup(request, extra=None):
         return redirect('signup')
     
     if request.method == 'GET':
-        return render(request, 'signup.html', {"form": UserCreationForm})
+        return render(request, './vistasPublicas/signup.html', {"form": UserCreationForm})
     else:
 
         if request.POST["password1"] == request.POST["password2"]:
@@ -42,7 +42,7 @@ def signup(request, extra=None):
                     "form": UserCreationForm, 
                     "error": "Username already exists."})
 
-        return render(request, 'signup.html', {
+        return render(request, './vistasPublicas/signup.html', {
             "form": UserCreationForm, 
             "error": "Passwords did not match."})
 
@@ -52,7 +52,7 @@ def private(request, extra=None):
     if extra is not None:
         # Si hay un segmento adicional, redirigimos a la página de inicio de sesión
         return redirect('private')
-    return render(request, 'private.html')
+    return render(request, './vistasPrivadas/private.html')
 
 @login_required
 def signout(request, extra=None):
@@ -71,7 +71,7 @@ def signin(request, extra=None):
 
     # Si la solicitud es GET, renderizamos el formulario
     if request.method == 'GET':
-        return render(request, 'signin.html', {
+        return render(request, './vistasPublicas/signin.html', {
             'form': AuthenticationForm()
         })
 
@@ -86,7 +86,7 @@ def signin(request, extra=None):
         
         if user is None:
             # Si el usuario no es válido, renderizamos el formulario con un mensaje de error
-            return render(request, 'signin.html', {
+            return render(request, './vistasPublicas/signin.html', {
                 'form': AuthenticationForm(),
                 'error': 'Username o contraseña incorrectos.'
             })
@@ -101,72 +101,78 @@ def signin(request, extra=None):
         
 def cargar_archivo(request, extra=None):
     if extra is not None:
-        # Si hay un segmento adicional, redirigimos a la página de inicio de sesión
         return redirect('cargar_archivo')
     
     if request.method == 'POST':
         form = CSVUploadForm(request.POST, request.FILES)
         if form.is_valid():
-            csv_file = request.FILES['csv_file']  # Archivo CSV cargado
+            csv_file = request.FILES['csv_file']
 
             # Recoger los nombres de las columnas ingresados en las cajas de texto
             column_names = [request.POST.get(f'columna_{i + 1}').strip() for i in range(int(request.POST.get('id_num_cajas', 0)))]
 
-            print("Nombres de columnas recibidos:", column_names)  # Para depurar
-
             # Validar que no haya columnas vacías
-            if any(col == "" for col in column_names):
-                error_message = "Por favor, digite la columna que quiere observar."
-                return render(request, 'cargar_archivo.html', {'form': form, 'error_message': error_message})
+            errors = []  # Lista para almacenar errores
+            for i, col in enumerate(column_names):
+                if col == "":
+                    errors.append(f"Por favor, digite la columna {i + 1} que quiere observar.")
+
+            if errors:
+                # Si hay errores, renderizar la plantilla con los errores
+                return render(request, 'cargar_archivo.html', {'form': form, 'errors': errors})
 
             try:
-                # Lee el archivo CSV con el delimitador correcto
                 decoded_file = csv_file.read().decode('ISO-8859-1').splitlines()
-                # Usar `delimiter=';'` si el CSV está separado por punto y coma
-                reader = csv.DictReader(decoded_file, delimiter=';')  # Cambiado para incluir el delimitador
+                reader = csv.DictReader(decoded_file, delimiter=';')
 
                 # Verificar si las columnas ingresadas existen en el CSV
-                csv_columns = [col.strip() for col in reader.fieldnames]  # Quitar espacios en blanco de las columnas
-                print("Columnas en el CSV:", csv_columns)  # Para depurar
+                csv_columns = [col.strip() for col in reader.fieldnames]
 
                 if all(col in csv_columns for col in column_names):
                     data = []
                     for row in reader:
-                        # Extraer los valores de las columnas especificadas
                         extracted_row = [row[col] for col in column_names if col in row]
                         data.append(extracted_row)
-
                 else:
                     raise ValueError("Una o más columnas ingresadas no existen en el archivo CSV")
 
             except Exception as e:
                 error_message = f"Error al procesar el archivo: {str(e)}"
-                return render(request, 'cargar_archivo.html', {'form': form, 'error_message': error_message})
+                return render(request, './vistasPrivadas/cargar_archivo.html', {'form': form, 'error_message': error_message})
 
-            # Mostrar los datos extraídos en la plantilla
-            return render(request, 'mostrar_csv.html', {
-                'data': data,  # Datos de las columnas extraídas
-                'column_names': column_names  # Columnas que se mostraron
+            return render(request, './vistasPrivadas/mostrar_csv.html', {
+                'data': data,
+                'column_names': column_names
             })
 
     else:
         form = CSVUploadForm()
 
-    return render(request, 'cargar_archivo.html', {'form': form})
+    return render(request, './vistasPrivadas/cargar_archivo.html', {'form': form})
+
+
 
 def guardar_datos(request):
     if request.method == 'POST':
         # Obtener los datos del input hidden
         data = request.POST.get('data')
-        data = json.loads(data)
+        print("Datos recibidos antes de decodificar:", data)
+
+        try:
+            data = json.loads(data)
+            print("Datos decodificados:", data)
+        except json.JSONDecodeError as e:
+            print(f"Error al decodificar JSON: {e}")
+            return redirect('cargar_archivo')
 
         for row in data:
-            # Asumiendo que el primer valor es 'nombre' y el segundo es 'apellido'
-            nombre = row[0]
-            apellido = row[1]
-
-            # Guardar cada fila en la base de datos
-            Persona.objects.create(nombre=nombre, apellido=apellido)
+            # Verificar si los valores existen antes de asignar
+            nombre = row[0] if len(row) > 0 else None
+            apellido = row[1] if len(row) > 1 else None
+            
+            # Guardar solo si 'nombre' y 'apellido' son válidos
+            if nombre and apellido:
+                Persona.objects.create(nombre=nombre, apellido=apellido)
 
         # Mostrar un mensaje de éxito
         return redirect('exito_guardado')
