@@ -152,6 +152,7 @@ def cargar_archivo(request, extra=None):
 
 
 
+
 def guardar_datos(request):
     if request.method == 'POST':
         # Obtener los datos del input hidden
@@ -168,16 +169,32 @@ def guardar_datos(request):
         for row in data:
             # Verificar si los valores existen antes de asignar
             nombre = row[0] if len(row) > 0 else None
-            apellido = row[1] if len(row) > 1 else None
-            
-            # Guardar solo si 'nombre' y 'apellido' son válidos
-            if nombre and apellido:
-                Persona.objects.create(nombre=nombre, apellido=apellido)
+            documento = row[1] if len(row) > 1 else None
+            programa = row[2] if len(row) > 2 else None
+            fechagrado = row[3] if len(row) > 3 else None
+            ubicacion_laboral = row[4] if len(row) > 4 else None
+            correoelectronico = row[5] if len(row) > 5 else None
+            telefono = row[6] if len(row) > 6 else None
+            oferta = row[7] if len(row) > 7 else None
+
+            #Crear y guardar una nueva instancia de Persona
+            persona = Persona(
+                nombre=nombre,
+                documento=documento,
+                programa=programa,
+                fechagrado=fechagrado,
+                ubicacion_laboral=ubicacion_laboral,
+                correoelectronico=correoelectronico,
+                telefono=telefono,
+                oferta=oferta,
+            )
+            persona.save()
 
         # Mostrar un mensaje de éxito
         return redirect('exito_guardado')
 
     return redirect('cargar_archivo')
+
  
 def exito_guardado(request):
     return render(request, 'exito_guardado.html')
