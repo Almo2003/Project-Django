@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
@@ -6,10 +6,10 @@ from django.http import HttpResponse, Http404
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 import csv
-from .forms import CSVUploadForm
+from .forms import CSVUploadForm, TrasabilidadForm
 import pandas as pd
 import io
-from .models import Persona
+from .models import Persona, Trasabilidad
 import json
 
 # Create your views here.
@@ -153,6 +153,8 @@ def cargar_archivo(request, extra=None):
 
 
 
+from django.db import IntegrityError
+
 def guardar_datos(request):
     if request.method == 'POST':
         # Obtener los datos del input hidden
@@ -177,18 +179,25 @@ def guardar_datos(request):
             telefono = row[6] if len(row) > 6 else None
             oferta = row[7] if len(row) > 7 else None
 
-            #Crear y guardar una nueva instancia de Persona
-            persona = Persona(
-                nombre=nombre,
-                documento=documento,
-                programa=programa,
-                fechagrado=fechagrado,
-                ubicacion_laboral=ubicacion_laboral,
-                correoelectronico=correoelectronico,
-                telefono=telefono,
-                oferta=oferta,
-            )
-            persona.save()
+            # Verificar si ya existe un registro con el mismo documento
+            if documento and not Persona.objects.filter(documento=documento).exists():
+                try:
+                    # Crear y guardar una nueva instancia de Persona
+                    persona = Persona(
+                        nombre=nombre,
+                        documento=documento,
+                        programa=programa,
+                        fechagrado=fechagrado,
+                        ubicacion_laboral=ubicacion_laboral,
+                        correoelectronico=correoelectronico,
+                        telefono=telefono,
+                        oferta=oferta,
+                    )
+                    persona.save()
+                except IntegrityError as e:
+                    print(f"Error al guardar datos: {e}")
+            else:
+                print(f"Registro duplicado encontrado para documento: {documento}")
 
         # Mostrar un mensaje de éxito
         return redirect('exito_guardado')
@@ -198,4 +207,24 @@ def guardar_datos(request):
  
 def exito_guardado(request):
     return render(request, 'exito_guardado.html')
+
+def listar_trasabilidad(request, persona_id):
+    persona = get_object_or_404(Persona, id=persona_id)
+    historial = Trasabilidad.objects.filter(persona=persona).order_by('-fecha_modificacion')
+
+    if request.method == 'POST':
+        form = TrasabilidadForm(request.POST)
+        if form.is_valid():
+            nuevo_registro = form.save(commit=False)
+            nuevo_registro.persona = persona
+            nuevo_registro.save()
+            return redirect('listar_trasabilidad', persona_id=persona.id)
+    else:
+        form = TrasabilidadForm()
+
+    return render(request, 'listar_trasabilidad.html', {
+        'persona': persona,
+        'historial': historial,
+        'form': form
+    })
  
