@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="container py-5">
+    <h2>Historial de {{ persona.nombre }}</h2>
+
+    <ul>
+        {% for registro in historial %}
+            <li>
+                <strong>Teléfono:</strong> {{ registro.telefono }} |
+                <strong>Correo:</strong> {{ registro.correo }} |
+                <strong>Ubicación:</strong> {{ registro.ubicacion }} |
+                <strong>Oferta:</strong> {{ registro.oferta }} |
+                <strong>Fecha de modificación:</strong> {{ registro.fecha_modificacion }}
+            </li>
+        {% empty %}
+            <p>No hay registros de trasabilidad para esta persona.</p>
+        {% endfor %}
+    </ul>
+
+    <h3>Agregar nuevo registro</h3>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Agregar</button>
+    </form>
+</main>
+{% endblock %}

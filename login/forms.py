@@ -18,17 +18,17 @@ class CSVUploadForm(forms.Form):
 class TrasabilidadForm(forms.ModelForm):
     class Meta:
         model = Trasabilidad
-        fields = ['telefono', 'correo', 'ubicacion', 'oferta']
+        fields = ['telefono', 'correoelectronico', 'ubicacion_laboral', 'oferta']
         labels = {
             'telefono': 'Teléfono',
-            'correo': 'Correo Electrónico',
-            'ubicacion': 'Ubicación',
+            'correoelectronico': 'Correo Electrónico',
+            'ubicacion_laboral': 'Ubicación Laboral',
             'oferta': 'Oferta Laboral',
         }
         widgets = {
             'telefono': forms.TextInput(attrs={'placeholder': 'Ej. 3001234567'}),
-            'correo': forms.EmailInput(attrs={'placeholder': 'ejemplo@correo.com'}),
-            'ubicacion': forms.TextInput(attrs={'placeholder': 'Ciudad o Dirección'}),
+            'correoelectronico': forms.EmailInput(attrs={'placeholder': 'ejemplo@correo.com'}),
+            'ubicacion_laboral': forms.TextInput(attrs={'placeholder': 'Ciudad o Dirección'}),
             'oferta': forms.Textarea(attrs={'placeholder': 'Detalles de la oferta', 'rows': 3}),
         }
 

@@ -39,4 +39,11 @@ class Trasabilidad(models.Model):
             self.save()
 
     def __str__(self):
-        return f"{self.persona.nombre} - Historial"
+        return ( f"{self.persona}"
+                f"{self.telefono}" 
+                f"{self.correoelectronico}" 
+                f"{self.ubicacion_laboral}" 
+                f"{self.oferta}" 
+                f"{self.fecha_modificacion}"
+        )
+            
