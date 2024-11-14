@@ -6,10 +6,10 @@ from django.http import HttpResponse, Http404
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 import csv
-from .forms import CSVUploadForm, TrasabilidadForm
+from .forms import CSVUploadForm
 import pandas as pd
 import io
-from .models import Persona, Trasabilidad
+from .models import Persona
 import json
 
 # Create your views here.
@@ -184,14 +184,14 @@ def guardar_datos(request):
                 try:
                     # Crear y guardar una nueva instancia de Persona
                     persona = Persona(
-                        nombre=nombre,
-                        documento=documento,
-                        programa=programa,
-                        fechagrado=fechagrado,
-                        ubicacion_laboral=ubicacion_laboral,
-                        correoelectronico=correoelectronico,
-                        telefono=telefono,
-                        oferta=oferta,
+                        nombre = nombre,
+                        documento = documento,
+                        programa = programa,
+                        fechagrado = fechagrado,
+                        telefono = telefono,
+                        correoelectronico = correoelectronico,
+                        ubicacion_laboral = ubicacion_laboral,
+                        oferta = oferta,
                     )
                     persona.save()
                 except IntegrityError as e:
@@ -208,23 +208,4 @@ def guardar_datos(request):
 def exito_guardado(request):
     return render(request, 'exito_guardado.html')
 
-def listar_trasabilidad(request, persona_id):
-    persona = get_object_or_404(Persona, id=persona_id)
-    historial = Trasabilidad.objects.filter(persona=persona).order_by('-fecha_modificacion')
 
-    if request.method == 'POST':
-        form = TrasabilidadForm(request.POST)
-        if form.is_valid():
-            nuevo_registro = form.save(commit=False)
-            nuevo_registro.persona = persona
-            nuevo_registro.save()
-            return redirect('listar_trasabilidad', persona_id=persona.id)
-    else:
-        form = TrasabilidadForm()
-
-    return render(request, 'listar_trasabilidad.html', {
-        'persona': persona,
-        'historial': historial,
-        'form': form
-    })
- 

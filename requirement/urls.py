@@ -34,5 +34,4 @@ urlpatterns = [
     path('cargar/<path:extra>/', views.cargar_archivo),
     path('guardar_datos/', views.guardar_datos, name='guardar_datos'),
     path('exito_guardado/', views.exito_guardado, name='exito_guardado'),
-    path('persona/<int:persona_id>/trasabilidad/', views.listar_trasabilidad, name='listar_trasabilidad'),
 ]

@@ -1,5 +1,4 @@
 from django import forms
-from .models import Trasabilidad
 
 class CSVUploadForm(forms.Form):
     csv_file = forms.FileField(label='Cargar archivo CSV', 
@@ -13,27 +12,3 @@ class CSVUploadForm(forms.Form):
         if file and not file.name.endswith('.csv'):
             raise forms.ValidationError("El archivo debe tener extensión .csv")
         return file
-    
-
-class TrasabilidadForm(forms.ModelForm):
-    class Meta:
-        model = Trasabilidad
-        fields = ['telefono', 'correoelectronico', 'ubicacion_laboral', 'oferta']
-        labels = {
-            'telefono': 'Teléfono',
-            'correoelectronico': 'Correo Electrónico',
-            'ubicacion_laboral': 'Ubicación Laboral',
-            'oferta': 'Oferta Laboral',
-        }
-        widgets = {
-            'telefono': forms.TextInput(attrs={'placeholder': 'Ej. 3001234567'}),
-            'correoelectronico': forms.EmailInput(attrs={'placeholder': 'ejemplo@correo.com'}),
-            'ubicacion_laboral': forms.TextInput(attrs={'placeholder': 'Ciudad o Dirección'}),
-            'oferta': forms.Textarea(attrs={'placeholder': 'Detalles de la oferta', 'rows': 3}),
-        }
-
-    def clean_telefono(self):
-        telefono = self.cleaned_data.get('telefono')
-        if not telefono.isdigit():
-            raise forms.ValidationError("El teléfono debe contener solo números.")
-        return telefono
