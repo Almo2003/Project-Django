@@ -1,38 +1,25 @@
 from django.db import models
 
 class Persona(models.Model):
-    nombre = models.CharField(max_length=200)
-    documento = models.IntegerField(default=0000000000)
-    programa = models.CharField(max_length=100, default='PROGRAMAS')
-    fechagrado = models.DateField(default='16-06-2021')
-    ubicacion_laboral = models.CharField(max_length=200, default='lugar')
-    correoelectronico = models.EmailField(blank=False, null=True)
-    telefono = models.IntegerField(default=0000000000)
-    oferta = models.CharField(max_length=500 , default='oferta academica')
-
-
-    def __str__(self):
-        return (
-            f"{self.nombre} "
-            f"{self.documento} "
-            f"{self.programa} "
-            f"{self.fechagrado} "
-            f"{self.ubicacion_laboral} "
-            f"{self.correoelectronico} "
-            f"{self.telefono} "
-            f"{self.oferta}"
-        )
+    nombre = models.CharField(max_length=100)
+    documento = models.CharField(max_length=20, unique=True)
+    programa = models.CharField(max_length=100)
+    fechagrado = models.DateField()
+    
+    def _str_(self):
+        return self.nombre
 
 
 class Trazabilidad(models.Model):
     persona = models.ForeignKey(Persona, on_delete=models.CASCADE, related_name='trazabilidades')
-    ubicacion_laboral = models.CharField(max_length=100)
-    correoelectronico = models.EmailField()
-    telefono = models.CharField(max_length=20)
-    oferta = models.CharField(max_length=200)
+    ubicacion_laboral = models.CharField(max_length=200, blank=True, null=True)
+    correoelectronico = models.EmailField(blank=True, null=True)
+    telefono = models.CharField(max_length=20, blank=True, null=True)
+    oferta = models.CharField(max_length=200, blank=True, null=True)
     fecha_modificacion = models.DateTimeField(auto_now_add=True)
+    
+    def _str_(self):
+        return f"Trazabilidad de {self.persona.nombre}"
 
-    def __str__(self):
-        return f"Trazabilidad de {self.persona.nombre} - {self.fecha_modificacion}"
 
             

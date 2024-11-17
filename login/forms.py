@@ -12,3 +12,24 @@ class CSVUploadForm(forms.Form):
         if file and not file.name.endswith('.csv'):
             raise forms.ValidationError("El archivo debe tener extensión .csv")
         return file
+    
+class TrazabilidadForm(forms.Form):
+    ubicacion_laboral = forms.CharField(
+        max_length=100, 
+        label="Ubicación Laboral", 
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la ubicación laboral'})
+    )
+    correoelectronico = forms.EmailField(
+        label="Correo Electrónico", 
+        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el correo electrónico'})
+    )
+    telefono = forms.CharField(
+        max_length=15, 
+        label="Teléfono", 
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el teléfono'})
+    )
+    oferta = forms.CharField(
+        max_length=200, 
+        label="Oferta", 
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la oferta'})
+    )

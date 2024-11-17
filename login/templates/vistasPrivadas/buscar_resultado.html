@@ -1,18 +1,85 @@
-{% extends 'base.html' %}
 
-{% block content %}
-<main class="container py-5">
-    <h1 class="display-3 text-center">Resultado de la Búsqueda</h1>
-    <table class="table table-bordered table-striped">
-        <tr><th>Nombre</th><td>{{ persona.nombre }}</td></tr>
-        <tr><th>Documento</th><td>{{ persona.documento }}</td></tr>
-        <tr><th>Programa</th><td>{{ persona.programa }}</td></tr>
-        <tr><th>Fecha de Grado</th><td>{{ persona.fechagrado }}</td></tr>
-        <tr><th>Ubicación Laboral</th><td>{{ persona.ubicacion_laboral }}</td></tr>
-        <tr><th>Correo Electrónico</th><td>{{ persona.correoelectronico }}</td></tr>
-        <tr><th>Teléfono</th><td>{{ persona.telefono }}</td></tr>
-        <tr><th>Oferta</th><td>{{ persona.oferta }}</td></tr>
-    </table>
-    <a href="{% url 'buscar' %}" class="btn btn-light my-2">Volver</a>
-</main>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle Persona</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container my-5">
+        <!-- Título principal -->
+        <h1 class="text-center text-primary mb-4">Detalle de Persona</h1>
+
+        <!-- Datos básicos de la persona -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-primary text-white">
+                <h2 class="h5">Información Personal</h2>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Documento</th>
+                            <th>Programa</th>
+                            <th>Fecha de Grado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ persona.nombre }}</td>
+                            <td>{{ persona.documento }}</td>
+                            <td>{{ persona.programa }}</td>
+                            <td>{{ persona.fechagrado }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Trazabilidad -->
+        {% if trazabilidades %}
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h2 class="h5">Trazabilidad</h2>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead class="table-success">
+                            <tr>
+                                <th>Ubicación Laboral</th>
+                                <th>Correo Electrónico</th>
+                                <th>Teléfono</th>
+                                <th>Oferta</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for trazabilidad in trazabilidades %}
+                                <tr>
+                                    <td>{{ trazabilidad.ubicacion_laboral }}</td>
+                                    <td>{{ trazabilidad.correoelectronico }}</td>
+                                    <td>{{ trazabilidad.telefono }}</td>
+                                    <td>{{ trazabilidad.oferta }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% else %}
+            <div class="alert alert-warning text-center mt-4">
+                <p>La persona no tiene trazabilidad.</p>
+                <button class="btn btn-primary" onclick="window.location.href='{% url 'agregar_trazabilidad' persona.documento %}'">
+                    Agregar Trazabilidad
+                </button>
+            </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+

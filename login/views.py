@@ -6,10 +6,10 @@ from django.http import HttpResponse, Http404
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 import csv
-from .forms import CSVUploadForm
+from .forms import CSVUploadForm, TrazabilidadForm
 import pandas as pd
 import io
-from .models import Persona
+from .models import Persona, Trazabilidad
 import json
 
 # Create your views here.
@@ -232,3 +232,38 @@ def ver_trazabilidad(request, documento):
         'trazabilidades': trazabilidades,
     }
     return render(request, './vistasPrivadas/ver_trazabilidad.html', context)
+
+def detalle_persona(request, documento):
+    # Busca la persona por su documento
+    persona = get_object_or_404(Persona, documento=documento)
+    
+    # Obtén la trazabilidad asociada a la persona
+    trazabilidades = Trazabilidad.objects.filter(persona=persona).order_by('id')
+    
+    contexto = {
+        'persona': persona,
+        'trazabilidades': trazabilidades,
+    }
+    
+    return render(request, './vistasPrivadas/buscar_resultado.html', contexto)
+
+
+def agregar_trazabilidad(request, documento):
+    persona = get_object_or_404(Persona, documento=documento)
+
+    if request.method == 'POST':
+        form = TrazabilidadForm(request.POST)
+        if form.is_valid():
+            # Crear y guardar la nueva trazabilidad
+            Trazabilidad.objects.create(
+                persona=persona,
+                ubicacion_laboral=form.cleaned_data['ubicacion_laboral'],
+                correoelectronico=form.cleaned_data['correoelectronico'],
+                telefono=form.cleaned_data['telefono'],
+                oferta=form.cleaned_data['oferta'],
+            )
+            return redirect('.buscar_resultado', documento=documento)  # Redirige al detalle de la persona
+    else:
+        form = TrazabilidadForm()
+
+    return render(request, './vistasPrivadas/buscar_resultado.html', {'form': form, 'persona': persona})
