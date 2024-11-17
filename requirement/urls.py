@@ -34,4 +34,6 @@ urlpatterns = [
     path('cargar/<path:extra>/', views.cargar_archivo),
     path('guardar_datos/', views.guardar_datos, name='guardar_datos'),
     path('exito_guardado/', views.exito_guardado, name='exito_guardado'),
+    path('buscarpersona/', views.buscar, name='buscar'),
+    path('persona/trazabilidad/<str:documento>/', views.ver_trazabilidad, name='ver_trazabilidad'),
 ]

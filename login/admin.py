@@ -1,9 +1,14 @@
 from django.contrib import admin
-from .models import Persona
+from .models import Persona, Trazabilidad
 
+@admin.register(Persona)
 class PersonaAdmin(admin.ModelAdmin):
-    list_display = ('id' , 'nombre' , 'documento')  # Solo los campos de Persona
+    list_display = ('id', 'nombre', 'documento')
+    search_fields = ('documento',)
 
-admin.site.register(Persona, PersonaAdmin)
+@admin.register(Trazabilidad)
+class TrazabilidadAdmin(admin.ModelAdmin):
+    list_display = ('persona', 'fecha_modificacion', 'ubicacion_laboral', 'correoelectronico', 'telefono', 'oferta')
+    search_fields = ('persona__documento',)
 
     

@@ -21,6 +21,10 @@
                   </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item">
+                      <a class="nav-link" href="{% url 'buscar'  %}" style="color: white; font: 20px verdana, sans-serif;">Buscar</a>
+                    </li>
+
+                    <li class="nav-item">
                       <a class="nav-link" href="{% url 'cargar_archivo'  %}" style="color: white; font: 20px verdana, sans-serif;">Cargar Archivo</a>
                     </li>
                     <li class="nav-item">

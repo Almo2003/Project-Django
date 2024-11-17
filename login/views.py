@@ -209,3 +209,26 @@ def exito_guardado(request):
     return render(request, 'exito_guardado.html')
 
 
+def buscar(request):
+    if request.method == 'POST':
+        documento = request.POST.get('documento')  # Obtenemos el documento del formulario
+
+        try:
+            persona = Persona.objects.get(documento=documento)  # Intentamos obtener la persona
+            return render(request, './vistasPrivadas/buscar_resultado.html', {'persona': persona})
+        except Persona.DoesNotExist:
+            # Si no existe, mostramos un mensaje de error
+            error_message = f"No se encontró ninguna persona con el documento {documento}."
+            return render(request, './vistasPrivadas/buscarpersona.html', {'error_message': error_message})
+
+    return render(request, './vistasPrivadas/buscarpersona.html')
+
+def ver_trazabilidad(request, documento):
+    persona = get_object_or_404(Persona, documento=documento)
+    trazabilidades = persona.trazabilidades.all()  # Obtiene el historial de trazabilidad de la persona
+
+    context = {
+        'persona': persona,
+        'trazabilidades': trazabilidades,
+    }
+    return render(request, './vistasPrivadas/ver_trazabilidad.html', context)

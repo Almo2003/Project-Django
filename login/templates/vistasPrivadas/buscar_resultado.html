@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="container py-5">
+    <h1 class="display-3 text-center">Resultado de la Búsqueda</h1>
+    <table class="table table-bordered table-striped">
+        <tr><th>Nombre</th><td>{{ persona.nombre }}</td></tr>
+        <tr><th>Documento</th><td>{{ persona.documento }}</td></tr>
+        <tr><th>Programa</th><td>{{ persona.programa }}</td></tr>
+        <tr><th>Fecha de Grado</th><td>{{ persona.fechagrado }}</td></tr>
+        <tr><th>Ubicación Laboral</th><td>{{ persona.ubicacion_laboral }}</td></tr>
+        <tr><th>Correo Electrónico</th><td>{{ persona.correoelectronico }}</td></tr>
+        <tr><th>Teléfono</th><td>{{ persona.telefono }}</td></tr>
+        <tr><th>Oferta</th><td>{{ persona.oferta }}</td></tr>
+    </table>
+    <a href="{% url 'buscar' %}" class="btn btn-light my-2">Volver</a>
+</main>
+{% endblock %}

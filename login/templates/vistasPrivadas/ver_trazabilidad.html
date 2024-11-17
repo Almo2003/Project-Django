@@ -1,0 +1,24 @@
+<h2>Historial de Trazabilidad de {{ persona.nombre }} - Documento: {{ persona.documento }}</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Fecha de Modificación</th>
+            <th>Ubicación Laboral</th>
+            <th>Correo Electrónico</th>
+            <th>Teléfono</th>
+            <th>Oferta</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for trazabilidad in trazabilidades %}
+            <tr>
+                <td>{{ trazabilidad.fecha_modificacion }}</td>
+                <td>{{ trazabilidad.ubicacion_laboral }}</td>
+                <td>{{ trazabilidad.correoelectronico }}</td>
+                <td>{{ trazabilidad.telefono }}</td>
+                <td>{{ trazabilidad.oferta }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
