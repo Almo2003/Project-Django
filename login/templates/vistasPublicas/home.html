@@ -1,9 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<main class="container py-5">  <!-- Fondo rojo -->
-    <section class="card card-body">
-        
+<main class="container py-5" style="position: relative; overflow: hidden;">
+    <!-- Fondo con GIF o video -->
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;">
+        <video autoplay muted loop style="width: 100%; height: 100%; object-fit: cover;">
+            <source src="https://www.iser.edu.co/wp-content/uploads/2023/09/resena-final.mp4" type="video/mp4">
+            Tu navegador no soporta la etiqueta de video.
+        </video>
+    </div>
+
+    <section class="card card-body" style="background-color: rgba(255, 255, 255, 0.8);">
         <h1 class="display-1 text-center" style="color: #1B9D87; font: 28px verdana, sans-serif;">SISTEMAS DE EGRESADOS</h1>
         <div class="container-text">
             <p style="color: black; font: 17px verdana, sans-serif">Un Sistema de Egresados para el ISER es una plataforma digital diseñada para conectar a exalumnos 
@@ -15,17 +22,22 @@
                 impulsando el crecimiento profesional de sus antiguos estudiantes y promoviendo el prestigio 
                 institucional.
             </p>
-            <div class="img-lg">
-                <img src="https://www.iser.edu.co/wp-content/uploads/2024/07/cropped-LOGO-NEGRO-HORIZONTAL-01-2-1536x614.png" alt="100px" width="850px">
+            <div class="image-grid">
+                <div class="img-container">
+                    <img  class="img1 " src="https://www.laopinion.co/sites/default/files/2023-02/image%20(5).png" alt="Imagen ISER 1">
+                </div>
+                <div>
+                    <img class="img2" src="https://ww1.iser.edu.co/iser/hermesoft/portalIG/home_1/recursos/imagenes/2021/14022021/rec_fisicos_4.jpg" alt="Imagen ISER 2">
+                </div>
+                <div>
+                    <img class="img3" src="https://www.gacetaregional.com/sitegr/wp-content/uploads/2019/09/iser-de-pamplona.png" alt="Imagen ISER 3">
+                </div>
+                <div>
+                    <img class="img4" src="https://colombiaestudia.com/wp-content/uploads/2022/04/Fachada_ISER.jpg" alt="Imagen ISER 4">
+                </div>
             </div>
         </div>
     </section>
-
-    <!-- Icono flotante con el texto "ABC" -->
-    <div style="position: absolute; bottom: 20px; right: 20px; width: 100px; height: 100px; background-color: rgba(255, 255, 255, 0.2); border-radius: 20px; display: flex; justify-content: center; align-items: center;">
-        <span style="font-size: 30px; color: white;">ABC</span>
-    </div>
-
     <footer class="bg-dark text-white text-center py-4 mt-5">
         <p class="mb-0">© 2024 ISER. Todos los derechos reservados.</p>
         <p>Contacto: iserpam@iser.edu.co | Tel: +57 320 655 6171</p>
@@ -34,5 +46,18 @@
         </div>
     </footer>
 </main>
+
+<style>
+    .image-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+    }
+    .image-grid img {
+        width: 100%;
+        height: auto;
+    }
+    
+</style>
 {% endblock %}
 

@@ -6,7 +6,7 @@ class Persona(models.Model):
     programa = models.CharField(max_length=100)
     fechagrado = models.DateField()
     
-    def _str_(self):
+    def __str__(self):
         return self.nombre
 
 
@@ -18,8 +18,15 @@ class Trazabilidad(models.Model):
     oferta = models.CharField(max_length=200, blank=True, null=True)
     fecha_modificacion = models.DateTimeField(auto_now_add=True)
     
-    def _str_(self):
-        return f"Trazabilidad de {self.persona.nombre}"
+    def __str__(self):
+        return (
+            f"Trazabilidad de {self.persona.nombre} - "
+            f"Ubicación: {self.ubicacion_laboral or 'N/A'}, "
+            f"Correo: {self.correoelectronico or 'N/A'}, "
+            f"Teléfono: {self.telefono or 'N/A'}, "
+            f"Oferta: {self.oferta or 'N/A'}, "
+            f"Fecha: {self.fecha_modificacion.strftime('%Y-%m-%d %H:%M:%S')}"
+        )
 
 
             

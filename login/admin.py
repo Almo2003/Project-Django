@@ -8,7 +8,7 @@ class PersonaAdmin(admin.ModelAdmin):
 
 @admin.register(Trazabilidad)
 class TrazabilidadAdmin(admin.ModelAdmin):
-    list_display = ('persona', 'fecha_modificacion', 'ubicacion_laboral', 'correoelectronico', 'telefono', 'oferta')
+    list_display = ('id', 'fecha_modificacion', 'ubicacion_laboral', 'correoelectronico', 'telefono', 'oferta')
     search_fields = ('persona__documento',)
 
     

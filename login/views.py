@@ -98,7 +98,8 @@ def signin(request, extra=None):
 
     # Si llega un método no esperado, lanzamos un error 404
     raise Http404("Método no válido")
-        
+
+@login_required    
 def cargar_archivo(request, extra=None):
     if extra is not None:
         return redirect('cargar_archivo')
@@ -150,10 +151,7 @@ def cargar_archivo(request, extra=None):
 
     return render(request, './vistasPrivadas/cargar_archivo.html', {'form': form})
 
-
-
-
-from django.db import IntegrityError
+@login_required
 
 def guardar_datos(request):
     if request.method == 'POST':
@@ -184,16 +182,24 @@ def guardar_datos(request):
                 try:
                     # Crear y guardar una nueva instancia de Persona
                     persona = Persona(
-                        nombre = nombre,
-                        documento = documento,
-                        programa = programa,
-                        fechagrado = fechagrado,
-                        telefono = telefono,
-                        correoelectronico = correoelectronico,
-                        ubicacion_laboral = ubicacion_laboral,
-                        oferta = oferta,
+                        nombre=nombre,
+                        documento=documento,
+                        programa=programa,
+                        fechagrado=fechagrado
                     )
                     persona.save()
+
+                    # Crear la instancia de Trazabilidad para los campos dinámicos
+                    if telefono or correoelectronico or ubicacion_laboral or oferta:
+                        trazabilidad = Trazabilidad(
+                            persona=persona,
+                            telefono=telefono,
+                            correoelectronico=correoelectronico,
+                            ubicacion_laboral=ubicacion_laboral,
+                            oferta=oferta
+                        )
+                        trazabilidad.save()
+
                 except IntegrityError as e:
                     print(f"Error al guardar datos: {e}")
             else:
@@ -204,18 +210,25 @@ def guardar_datos(request):
 
     return redirect('cargar_archivo')
 
- 
+
 def exito_guardado(request):
     return render(request, 'exito_guardado.html')
 
-
+@login_required
 def buscar(request):
     if request.method == 'POST':
         documento = request.POST.get('documento')  # Obtenemos el documento del formulario
 
         try:
             persona = Persona.objects.get(documento=documento)  # Intentamos obtener la persona
-            return render(request, './vistasPrivadas/buscar_resultado.html', {'persona': persona})
+
+            # Obtener la trazabilidad asociada a esta persona (si existe)
+            trazabilidades = Trazabilidad.objects.filter(persona=persona)  # Asumiendo que 'Persona' tiene una relación con 'Trazabilidad'
+
+            return render(request, './vistasPrivadas/buscar_resultado.html', {
+                'persona': persona,
+                'trazabilidades': trazabilidades,
+            })
         except Persona.DoesNotExist:
             # Si no existe, mostramos un mensaje de error
             error_message = f"No se encontró ninguna persona con el documento {documento}."
@@ -223,23 +236,24 @@ def buscar(request):
 
     return render(request, './vistasPrivadas/buscarpersona.html')
 
+
+@login_required
 def ver_trazabilidad(request, documento):
     persona = get_object_or_404(Persona, documento=documento)
     trazabilidades = persona.trazabilidades.all()  # Obtiene el historial de trazabilidad de la persona
-
     context = {
         'persona': persona,
         'trazabilidades': trazabilidades,
     }
     return render(request, './vistasPrivadas/ver_trazabilidad.html', context)
 
+@login_required
 def detalle_persona(request, documento):
     # Busca la persona por su documento
     persona = get_object_or_404(Persona, documento=documento)
     
     # Obtén la trazabilidad asociada a la persona
-    trazabilidades = Trazabilidad.objects.filter(persona=persona).order_by('id')
-    
+    trazabilidades = Trazabilidad.objects.filter(persona=persona)
     contexto = {
         'persona': persona,
         'trazabilidades': trazabilidades,
@@ -247,7 +261,7 @@ def detalle_persona(request, documento):
     
     return render(request, './vistasPrivadas/buscar_resultado.html', contexto)
 
-
+@login_required
 def agregar_trazabilidad(request, documento):
     persona = get_object_or_404(Persona, documento=documento)
 
@@ -261,9 +275,141 @@ def agregar_trazabilidad(request, documento):
                 correoelectronico=form.cleaned_data['correoelectronico'],
                 telefono=form.cleaned_data['telefono'],
                 oferta=form.cleaned_data['oferta'],
-            )
-            return redirect('.buscar_resultado', documento=documento)  # Redirige al detalle de la persona
+            )                  # Guarda la trazabilidad
+            return redirect('buscar_resultado', documento=documento)  # Redirige al detalle de la persona
     else:
         form = TrazabilidadForm()
 
-    return render(request, './vistasPrivadas/buscar_resultado.html', {'form': form, 'persona': persona})
+    return render(request, './vistasPrivadas/agregar_trazabilidad.html', {'form': form, 'persona': persona})
+
+@login_required
+def modificar_trazabilidad(request, trazabilidad_id):
+    trazabilidad = get_object_or_404(Trazabilidad, id=trazabilidad_id)
+    
+    if request.method == 'POST':
+        form = TrazabilidadForm(request.POST, instance=trazabilidad)
+        if form.is_valid():
+            form.save()
+            return redirect('ver_trazabilidad', documento=trazabilidad.persona.documento)  # Redirige a la vista de trazabilidad
+    else:
+        form = TrazabilidadForm(instance=trazabilidad)
+    
+    return render(request, './vistasPrivadas/agregar_trazabilidad.html', {'form': form, 'persona': trazabilidad.persona})
+
+
+@login_required
+def eliminar_trazabilidad(request, trazabilidad_id):
+    trazabilidad = get_object_or_404(Trazabilidad, id=trazabilidad_id)
+    documento = trazabilidad.persona.documento  # Para redirigir después
+    trazabilidad.delete()  # Elimina la trazabilidad
+    
+    return redirect('ver_trazabilidad', documento=documento)  # Redirige a la vista de trazabilidad
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"""def imprimir_datos_por_documento(request, documento):
+    # Obtener la persona por documento
+    persona = get_object_or_404(Persona, documento=documento)
+    trazabilidades = Trazabilidad.objects.filter(persona=persona)
+
+    # Imprimir en la consola los datos
+    print(f"Nombre: {persona.nombre}")
+    print(f"Documento: {persona.documento}")
+    print(f"Programa: {persona.programa}")
+    print(f"Fecha de Grado: {persona.fechagrado}")
+
+    print("\nTrazabilidades:")
+    for trazabilidad in trazabilidades:
+        print(f"Ubicación Laboral: {trazabilidad.ubicacion_laboral}")
+        print(f"Correo Electrónico: {trazabilidad.correoelectronico}")
+        print(f"Teléfono: {trazabilidad.telefono}")
+        print(f"Oferta: {trazabilidad.oferta}")
+        print(f"Fecha de Modificación: {trazabilidad.fecha_modificacion}")
+        print("-" * 50)
+
+    # Retornar una respuesta HTTP sencilla
+    return HttpResponse("Datos impresos en la consola correctamente.")"""
+    

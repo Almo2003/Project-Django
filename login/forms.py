@@ -1,4 +1,5 @@
 from django import forms
+from .models import Trazabilidad
 
 class CSVUploadForm(forms.Form):
     csv_file = forms.FileField(label='Cargar archivo CSV', 
@@ -13,7 +14,11 @@ class CSVUploadForm(forms.Form):
             raise forms.ValidationError("El archivo debe tener extensión .csv")
         return file
     
-class TrazabilidadForm(forms.Form):
+class TrazabilidadForm(forms.ModelForm):
+    class Meta:
+        model = Trazabilidad
+        fields = ['ubicacion_laboral', 'correoelectronico', 'telefono', 'oferta']
+
     ubicacion_laboral = forms.CharField(
         max_length=100, 
         label="Ubicación Laboral", 
