@@ -2,7 +2,6 @@
 
 {% block content %}
 <main class="container py-5" style="position: relative; overflow: hidden;">
-    <!-- Fondo con GIF o video -->
     <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;">
         <video autoplay muted loop style="width: 100%; height: 100%; object-fit: cover;">
             <source src="https://www.iser.edu.co/wp-content/uploads/2023/09/resena-final.mp4" type="video/mp4">
@@ -10,54 +9,110 @@
         </video>
     </div>
 
-    <section class="card card-body" style="background-color: rgba(255, 255, 255, 0.8);">
-        <h1 class="display-1 text-center" style="color: #1B9D87; font: 28px verdana, sans-serif;">SISTEMAS DE EGRESADOS</h1>
-        <div class="container-text">
-            <p style="color: black; font: 17px verdana, sans-serif">Un Sistema de Egresados para el ISER es una plataforma digital diseñada para conectar a exalumnos 
-                con la institución y entre sí, fomentando una red de apoyo profesional y académico. Este sistema 
-                permite a los egresados actualizar sus datos, acceder a oportunidades laborales exclusivas, 
-                recibir información sobre eventos y capacitaciones, y mantener un vínculo activo con el instituto.
-                Además, facilita la retroalimentación continua para mejorar los programas académicos y aumentar 
-                la empleabilidad de sus egresados. Es una herramienta clave para fortalecer la comunidad ISER,
-                impulsando el crecimiento profesional de sus antiguos estudiantes y promoviendo el prestigio 
-                institucional.
-            </p>
-            <div class="image-grid">
-                <div class="img-container">
-                    <img  class="img1 " src="https://www.laopinion.co/sites/default/files/2023-02/image%20(5).png" alt="Imagen ISER 1">
-                </div>
-                <div>
-                    <img class="img2" src="https://ww1.iser.edu.co/iser/hermesoft/portalIG/home_1/recursos/imagenes/2021/14022021/rec_fisicos_4.jpg" alt="Imagen ISER 2">
-                </div>
-                <div>
-                    <img class="img3" src="https://www.gacetaregional.com/sitegr/wp-content/uploads/2019/09/iser-de-pamplona.png" alt="Imagen ISER 3">
-                </div>
-                <div>
-                    <img class="img4" src="https://colombiaestudia.com/wp-content/uploads/2022/04/Fachada_ISER.jpg" alt="Imagen ISER 4">
+    <!-- Primera Vista -->
+    <section class="card card-body text-left" style="background-color: rgba(255, 255, 255, 0.9); padding: 2rem; margin-bottom: 3rem;">
+        <div class="row align-items-center">
+            <!-- Título y descripción -->
+            <div class="col-md-6">
+                <h1 class="display-4" style="color: #1B9D87; font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold;">Gestion de Egresados</h1>
+                <p style="color: #333; font-family: Verdana, sans-serif; font-size: 0.9rem; line-height: 1.6; text-align: justify;">
+                    Un Sistema de Egresados para el ISER es una plataforma digital diseñada para conectar a exalumnos 
+                    con la institución y entre sí, fomentando una red de apoyo profesional y académico. Este sistema 
+                    permite a los egresados actualizar sus datos, acceder a oportunidades laborales exclusivas, y 
+                    mantener un vínculo activo con el instituto.
+                </p>
+            </div>
+
+            <!-- Imágenes -->
+            <div class="col-md-6">
+                <div class="image-grid">
+                    <img style="height: 98%; width: 115%;" src="https://www.laopinion.co/sites/default/files/2023-02/image%20(5).png" alt="Imagen ISER 1">
+                    <div class="images">
+                        <img src="https://ww1.iser.edu.co/iser/hermesoft/portalIG/home_1/recursos/imagenes/2021/14022021/rec_fisicos_4.jpg" alt="Imagen ISER 2">
+                        <img src="https://colombiaestudia.com/wp-content/uploads/2022/04/Fachada_ISER.jpg" alt="Imagen ISER 3">
+                    </div>
+                    <img style="width: 194%;" src="https://www.gacetaregional.com/sitegr/wp-content/uploads/2019/09/iser-de-pamplona.png" alt="Imagen ISER 4">
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Segunda Vista -->
+    <section class="section2" style="background-color: rgba(255, 255, 255, 0.9); padding: 2rem; margin-top: 3rem;">
+        <div class="container text-center">
+            <h2 class="mb-4" style="color: #1B9D87; font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold;">Funcionalidades</h2>
+            <div class="row justify-content-center">
+                <!-- Cada funcionalidad en columnas separadas -->
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="card shadow-sm p-3" style="background-color: #f9f9f9; border-radius: 10px;">
+                        <h4 style="color: #1B9D87; font-weight: bold;">Manejo de Datos</h4>
+                        <p>Facilidad para acceder a tus datos</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="card shadow-sm p-3" style="background-color: #f9f9f9; border-radius: 10px;">
+                        <h4 style="color: #1B9D87; font-weight: bold;">Registro de Cambios</h4>
+                        <p>Seguimiento a los cambios surgidos</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="card shadow-sm p-3" style="background-color: #f9f9f9; border-radius: 10px;">
+                        <h4 style="color: #1B9D87; font-weight: bold;">Validacion de Registro</h4>
+                        <p>Validar la duplicacion de datos</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="card shadow-sm p-3" style="background-color: #f9f9f9; border-radius: 10px;">
+                        <h4 style="color: #1B9D87; font-weight: bold;">Historial de Trazabilidad</h4>
+                        <p>Visualizar trazabilidad del egresado</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer class="bg-dark text-white text-center py-4 mt-5">
         <p class="mb-0">© 2024 ISER. Todos los derechos reservados.</p>
         <p>Contacto: iserpam@iser.edu.co | Tel: +57 320 655 6171</p>
-        <div class="social-icons">
-            <!-- Aquí puedes agregar iconos de redes sociales si lo deseas -->
-        </div>
     </footer>
 </main>
 
 <style>
+    main {
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Estilos para las tarjetas */
+    .section2 .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .section2 .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
     .image-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 10px;
     }
+
     .image-grid img {
         width: 100%;
         height: auto;
+        border-radius: 8px;
     }
-    
+
+    .images {
+        margin-left: 11%;
+    }
+
+    .images img {
+        width: 85%;
+        margin-bottom: 3%;
+    }
 </style>
 {% endblock %}
-
