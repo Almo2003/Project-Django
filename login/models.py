@@ -27,6 +27,20 @@ class Trazabilidad(models.Model):
             f"Oferta: {self.oferta or 'N/A'}, "
             f"Fecha: {self.fecha_modificacion.strftime('%Y-%m-%d %H:%M:%S')}"
         )
+        
+class Egresado(models.Model):
+    nombre = models.CharField(max_length=100)
+    profesion = models.CharField(max_length=100)
+    ano_grado = models.IntegerField()
+    cargo_actual = models.CharField(max_length=100)
+    correo = models.EmailField()
+    descripcion = models.TextField()
+    trayectoria = models.TextField()
+    datos_adicionales = models.TextField()
+    imagen_url = models.URLField()
+
+    def __str__(self):
+        return self.nombre
 
 
             

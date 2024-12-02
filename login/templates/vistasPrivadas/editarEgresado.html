@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg rounded-lg border-light p-4">
+        <h1 class="card-title text-center mb-4 text-primary">Editar Egresado: {{ egresado.nombre }}</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card-body">
+                <!-- Imagen -->
+                <div class="form-group mb-4">
+                    <label for="imagen" class="form-label font-weight-bold">Imagen</label>
+                    <input type="file" class="form-control-file" id="imagen" name="imagen">
+                    {% if egresado.imagen_url %}
+                        <div class="mt-2">
+                            <p>Imagen Actual:</p>
+                            <img src="{{ egresado.imagen_url }}" alt="Imagen del egresado" class="img-fluid rounded-circle" width="100">
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Nombre -->
+                <div class="form-group mb-3">
+                    <label for="nombre" class="form-label font-weight-bold">Nombre Completo</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" value="{{ egresado.nombre }}">
+                </div>
+
+                <!-- Profesión -->
+                <div class="form-group mb-3">
+                    <label for="profesion" class="form-label font-weight-bold">Profesión</label>
+                    <input type="text" class="form-control" id="profesion" name="profesion" value="{{ egresado.profesion }}">
+                </div>
+
+                <!-- Año de Grado -->
+                <div class="form-group mb-3">
+                    <label for="anio_grado" class="form-label font-weight-bold">Año de Grado</label>
+                    <input type="text" class="form-control" id="anio_grado" name="anio_grado" value="{{ egresado.anio_grado }}">
+                </div>
+
+                <!-- Cargo Actual -->
+                <div class="form-group mb-3">
+                    <label for="cargo_actual" class="form-label font-weight-bold">Cargo Actual</label>
+                    <input type="text" class="form-control" id="cargo_actual" name="cargo_actual" value="{{ egresado.cargo_actual }}">
+                </div>
+
+                <!-- Correo -->
+                <div class="form-group mb-3">
+                    <label for="correo" class="form-label font-weight-bold">Correo</label>
+                    <input type="email" class="form-control" id="correo" name="correo" value="{{ egresado.correo }}">
+                </div>
+
+                <!-- Descripción -->
+                <div class="form-group mb-3">
+                    <label for="descripcion" class="form-label font-weight-bold">Descripción</label>
+                    <textarea class="form-control" id="descripcion" name="descripcion" rows="4">{{ egresado.descripcion }}</textarea>
+                </div>
+
+                <!-- Trayectoria -->
+                <div class="form-group mb-3">
+                    <label for="trayectoria" class="form-label font-weight-bold">Trayectoria</label>
+                    <textarea class="form-control" id="trayectoria" name="trayectoria" rows="4">{{ egresado.trayectoria|join:', ' }}</textarea>
+                </div>
+
+                <!-- Datos Adicionales -->
+                <div class="form-group mb-4">
+                    <label for="datos_adicionales" class="form-label font-weight-bold">Datos Adicionales</label>
+                    <textarea class="form-control" id="datos_adicionales" name="datos_adicionales" rows="4">{{ egresado.datos_adicionales }}</textarea>
+                </div>
+
+                <!-- Botones -->
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success px-4 py-2">Guardar Cambios</button>
+                    <a href="{% url 'egresadosDestacados' %}" class="btn btn-outline-secondary px-4 py-2">Cancelar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

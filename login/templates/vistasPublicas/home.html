@@ -1,48 +1,49 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<main class="container py-5" style="position: relative; overflow: hidden;">
-    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;">
-        <video autoplay muted loop style="width: 100%; height: 100%; object-fit: cover;">
-            <source src="https://www.iser.edu.co/wp-content/uploads/2023/09/resena-final.mp4" type="video/mp4">
-            Tu navegador no soporta la etiqueta de video.
-        </video>
-    </div>
-
+<main class="container-fluid p-0">
     <!-- Primera Vista -->
-    <section class="card card-body text-left" style="background-color: rgba(255, 255, 255, 0.9); padding: 2rem; margin-bottom: 3rem;">
-        <div class="row align-items-center">
-            <!-- Título y descripción -->
-            <div class="col-md-6">
-                <h1 class="display-4" style="color: #1B9D87; font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold;">Gestion de Egresados</h1>
-                <p style="color: #333; font-family: Verdana, sans-serif; font-size: 0.9rem; line-height: 1.6; text-align: justify;">
-                    Un Sistema de Egresados para el ISER es una plataforma digital diseñada para conectar a exalumnos 
-                    con la institución y entre sí, fomentando una red de apoyo profesional y académico. Este sistema 
-                    permite a los egresados actualizar sus datos, acceder a oportunidades laborales exclusivas, y 
-                    mantener un vínculo activo con el instituto.
-                </p>
-            </div>
-
-            <!-- Imágenes -->
-            <div class="col-md-6">
-                <div class="image-grid">
-                    <img style="height: 98%; width: 115%;" src="https://www.laopinion.co/sites/default/files/2023-02/image%20(5).png" alt="Imagen ISER 1">
-                    <div class="images">
-                        <img src="https://ww1.iser.edu.co/iser/hermesoft/portalIG/home_1/recursos/imagenes/2021/14022021/rec_fisicos_4.jpg" alt="Imagen ISER 2">
-                        <img src="https://colombiaestudia.com/wp-content/uploads/2022/04/Fachada_ISER.jpg" alt="Imagen ISER 3">
+    <section class="card card-body text-left" style="background-color: rgba(255, 255, 255, 0.5); height: 100vh; display: flex; align-items: center;">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Video de fondo y texto -->
+                <div class="col-md-6" style="position: relative; overflow: hidden;">
+                    <!-- Video de fondo -->
+                    <video autoplay loop muted playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+                        <source src="" type="video/mp4">
+                        Tu navegador no soporta la reproducción de videos.
+                    </video>
+                    <!-- Contenido del texto -->
+                    <div style="position: relative; z-index: 1; color: white; padding: 2rem; background-color: rgba(0, 0, 0, 0.5); border-radius: 8px;">
+                        <h1 class="display-4" style="font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold;">Gestión de Egresados</h1>
+                        <p style="font-family: Verdana, sans-serif; font-size: 0.9rem; line-height: 1.6; text-align: justify;">
+                            Un Sistema de Egresados para el ISER es una plataforma digital diseñada para conectar a exalumnos 
+                            con la institución y entre sí, fomentando una red de apoyo profesional y académico. Este sistema 
+                            permite a los egresados actualizar sus datos, acceder a oportunidades laborales exclusivas, y 
+                            mantener un vínculo activo con el instituto.
+                        </p>
                     </div>
-                    <img style="width: 194%;" src="https://www.gacetaregional.com/sitegr/wp-content/uploads/2019/09/iser-de-pamplona.png" alt="Imagen ISER 4">
+                </div>
+                <!-- Imágenes -->
+                <div class="col-md-6">
+                    <div class="image-grid">
+                        <img style="height: 98%; width: 115%; padding: 0.2rem" src="https://www.laopinion.co/sites/default/files/2023-02/image%20(5).png" alt="Imagen ISER 1">
+                        <div class="images">
+                            <img src="https://ww1.iser.edu.co/iser/hermesoft/portalIG/home_1/recursos/imagenes/2021/14022021/rec_fisicos_4.jpg" alt="Imagen ISER 2" style="padding: 0.2rem">
+                            <img src="https://colombiaestudia.com/wp-content/uploads/2022/04/Fachada_ISER.jpg" alt="Imagen ISER 3">
+                        </div>
+                        <img style="width: 194%; " src="https://www.gacetaregional.com/sitegr/wp-content/uploads/2019/09/iser-de-pamplona.png" alt="Imagen ISER 4">
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-
+    
     <!-- Segunda Vista -->
-    <section class="section2" style="background-color: rgba(255, 255, 255, 0.9); padding: 2rem; margin-top: 3rem;">
+    <section class="section2" style="background-color: rgba(255, 255, 255, 0.5); height: 100vh; display: flex; align-items: center;">
         <div class="container text-center">
             <h2 class="mb-4" style="color: #1B9D87; font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold;">Funcionalidades</h2>
             <div class="row justify-content-center">
-                <!-- Cada funcionalidad en columnas separadas -->
                 <div class="col-md-3 col-sm-6 mb-4">
                     <div class="card shadow-sm p-3" style="background-color: #f9f9f9; border-radius: 10px;">
                         <h4 style="color: #1B9D87; font-weight: bold;">Manejo de Datos</h4>
@@ -70,6 +71,45 @@
             </div>
         </div>
     </section>
+     <!-- Tercera Vista -->
+     <section class="section3 mt-5" style="background-color: rgba(255, 255, 255, 0.5); padding: 2rem; min-height: 100vh;">
+        <div class="container">
+            <h2 class="text-center mb-4" style="color: #1B9D87; font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold;">Noticias de Egresados</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <img src="https://www.iser.edu.co/wp-content/uploads/2023/08/WhatsApp-Image-2019-05-02-at-4.44.54-PM-1024x682.jpeg" class="card-img-top" alt="Noticia 1">
+                        <div class="card-body text-center">
+                            <h5 class="card-title" style="color: #1B9E88; font-weight: bold;">Juan Camilo Ortiz Ortega</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <img src="https://yourteenmag.com/wp-content/uploads/2013/06/Depositphotos_24196475_l-2015.jpg" class="card-img-top" alt="Noticia 2">
+                        <div class="card-body text-center">
+                            <h5 class="card-title" style="color: #1B9E88; font-weight: bold;">Karol Juliana Peña Vera</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <img src="https://d2jyir0m79gs60.cloudfront.net/news/images/successful-college-student-lg.png" class="card-img-top" alt="Noticia 3">
+                        <div class="card-body text-center">
+                            <h5 class="card-title" style="color: #1B9E88; font-weight: bold;">Jesus David Moreno Angarita</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Datos Estadisticos -->
+    <section class="section4 mt-5" style="background-color: rgba(255, 255, 255, 0.5); padding: 2rem; min-height: 100vh;">
+        <div class="container">
+            <h2 class="text-center mb-4" style="color: #1B9D87; font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold;">Datos Estadisticos</h2>    
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="bg-dark text-white text-center py-4 mt-5">
@@ -80,16 +120,22 @@
 
 <style>
     main {
-        position: relative;
+        margin: 0;
+        padding: 0;
         overflow: hidden;
     }
 
-    /* Estilos para las tarjetas */
-    .section2 .card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    section {
+        padding: 0;
     }
 
+    /* Efectos para funcionalidad */
     .section2 .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .section3 .card:hover {
         transform: scale(1.05);
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
@@ -104,15 +150,6 @@
         width: 100%;
         height: auto;
         border-radius: 8px;
-    }
-
-    .images {
-        margin-left: 11%;
-    }
-
-    .images img {
-        width: 85%;
-        margin-bottom: 3%;
     }
 </style>
 {% endblock %}

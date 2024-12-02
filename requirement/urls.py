@@ -38,6 +38,8 @@ urlpatterns = [
     path('persona/<str:documento>/', views.detalle_persona, name='buscar_resultado'),
     path('persona/trazabilidad/<str:documento>/', views.ver_trazabilidad, name='ver_trazabilidad'),
     path('persona/<str:documento>/agregar_trazabilidad/', views.agregar_trazabilidad, name='agregar_trazabilidad'),
-     path('trazabilidad/modificar/<int:trazabilidad_id>/', views.modificar_trazabilidad, name='modificar_trazabilidad'),
+    path('trazabilidad/modificar/<int:trazabilidad_id>/', views.modificar_trazabilidad, name='modificar_trazabilidad'),
     path('trazabilidad/eliminar/<int:trazabilidad_id>/', views.eliminar_trazabilidad, name='eliminar_trazabilidad'),
+    path('egresadosDestacados/', views.egresadosDestacados, name="egresadosDestacados" ),
+    path('editar/<int:id>/', views.editar_egresado, name='editar_egresado'),
 ]

@@ -6,11 +6,12 @@ from django.http import HttpResponse, Http404
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 import csv
-from .forms import CSVUploadForm, TrazabilidadForm
+from .forms import CSVUploadForm, TrazabilidadForm, EgresadoForm
 import pandas as pd
 import io
-from .models import Persona, Trazabilidad
+from .models import Persona, Trazabilidad, Egresado
 import json
+from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
 def home(request, extra=None):
@@ -304,6 +305,103 @@ def eliminar_trazabilidad(request, trazabilidad_id):
     trazabilidad.delete()  # Elimina la trazabilidad
     
     return redirect('ver_trazabilidad', documento=documento)  # Redirige a la vista de trazabilidad
+
+def egresadosDestacados(request):
+    # Lista de egresados destacados con datos estáticos
+    egresados = [
+        {
+            'id': 1,
+            'nombre': 'Juan Pérez',
+            'profesion': 'Ingeniero de Sistemas',
+            'anio_grado': 2015,
+            'cargo_actual': 'Desarrollador Senior',
+            'correo': 'juan.perez@example.com',
+            'descripcion': 'Juan ha trabajado en grandes empresas de tecnología.',
+            'trayectoria': ['Desarrollador Junior en TechCorp (2015-2017)', 'Líder Técnico en Innovatech (2017-2019)', 'Gerente de Proyectos en NextGen Solutions (2019-presente)'],
+            'datos_adicionales': 'Certificaciones en Scrum Master y PMP. Participa en conferencias internacionales.',
+            'imagen_url': 'https://www.iser.edu.co/wp-content/uploads/2023/08/WhatsApp-Image-2019-05-02-at-4.44.54-PM-1024x682.jpeg'
+        },
+        {
+            'id': 2,
+            'nombre': 'Karol Juliana Peña Vera',
+            'profesion': 'Contadora Pública',
+            'anio_grado': 2018,
+            'cargo_actual': 'Analista Financiero',
+            'correo': 'karol.peñavera@example.com',
+            'descripcion': 'Karol tiene una gran experiencia en el sector financiero.',
+            'trayectoria': ['Analista en FinCorp (2018-2020)', 'Gerente de Finanzas en MoneyTech (2020-presente)'],
+            'datos_adicionales': 'Especialista en Finanzas Corporativas.',
+            'imagen_url': 'https://yourteenmag.com/wp-content/uploads/2013/06/Depositphotos_24196475_l-2015.jpg'
+        }
+    ]
+    
+    return render(request, './vistasPrivadas/egresadosDestacados.html', {'egresados': egresados})
+
+def editar_egresado(request, id):
+    # Lista estática de egresados
+    egresados = [
+        {
+            'id': 1,
+            'nombre': 'Juan Pérez',
+            'profesion': 'Ingeniero de Sistemas',
+            'anio_grado': 2015,
+            'cargo_actual': 'Desarrollador Senior',
+            'correo': 'juan.perez@example.com',
+            'descripcion': 'Juan ha trabajado en grandes empresas de tecnología.',
+            'trayectoria': ['Desarrollador Junior en TechCorp (2015-2017)', 'Líder Técnico en Innovatech (2017-2019)', 'Gerente de Proyectos en NextGen Solutions (2019-presente)'],
+            'datos_adicionales': 'Certificaciones en Scrum Master y PMP. Participa en conferencias internacionales.',
+            'imagen_url': 'https://www.iser.edu.co/wp-content/uploads/2023/08/WhatsApp-Image-2019-05-02-at-4.44.54-PM-1024x682.jpeg'
+        },
+        {
+            'id': 2,
+            'nombre': 'Karol Juliana Peña Vera',
+            'profesion': 'Contadora Pública',
+            'anio_grado': 2018,
+            'cargo_actual': 'Analista Financiero',
+            'correo': 'karol.peñavera@example.com',
+            'descripcion': 'Karol tiene una gran experiencia en el sector financiero.',
+            'trayectoria': ['Analista en FinCorp (2018-2020)', 'Gerente de Finanzas en MoneyTech (2020-presente)'],
+            'datos_adicionales': 'Especialista en Finanzas Corporativas.',
+            'imagen_url': 'https://yourteenmag.com/wp-content/uploads/2013/06/Depositphotos_24196475_l-2015.jpg'
+        }
+    ]
+    
+    # Buscar el egresado por su ID
+    egresado = next((item for item in egresados if item['id'] == id), None)
+    
+    if egresado is None:
+        # Si no se encuentra el egresado, redirigir o mostrar un error
+        return redirect('egresadosDestacados')
+    
+    if request.method == 'POST':
+        # Si es una solicitud POST, se debe actualizar el egresado
+        egresado['nombre'] = request.POST.get('nombre', egresado['nombre'])
+        egresado['profesion'] = request.POST.get('profesion', egresado['profesion'])
+        egresado['anio_grado'] = request.POST.get('anio_grado', egresado['anio_grado'])
+        egresado['cargo_actual'] = request.POST.get('cargo_actual', egresado['cargo_actual'])
+        egresado['correo'] = request.POST.get('correo', egresado['correo'])
+        egresado['descripcion'] = request.POST.get('descripcion', egresado['descripcion'])
+        egresado['trayectoria'] = request.POST.get('trayectoria', egresado['trayectoria']).split(', ')
+        egresado['datos_adicionales'] = request.POST.get('datos_adicionales', egresado['datos_adicionales'])
+        
+        # Manejar la carga de la imagen
+        if 'imagen' in request.FILES:
+            imagen = request.FILES['imagen']
+            fs = FileSystemStorage()
+            filename = fs.save(imagen.name, imagen)
+            egresado['imagen_url'] = fs.url(filename)
+            
+        # No se usa `.save()` porque no estamos trabajando con una base de datos
+        # Redirigir después de guardar los cambios
+        return redirect('egresadosDestacados')
+    
+    return render(request, './vistasPrivadas/editarEgresado.html', {'egresado': egresado})
+
+
+
+
+
+
 
 
 
