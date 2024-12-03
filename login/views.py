@@ -8,10 +8,11 @@ from django.contrib.auth.decorators import login_required
 import csv
 from .forms import CSVUploadForm, TrazabilidadForm, EgresadoForm
 import pandas as pd
-import io
+import io, os
 from .models import Persona, Trazabilidad, Egresado
 import json
 from django.core.files.storage import FileSystemStorage
+from django.conf import settings
 
 # Create your views here.
 def home(request, extra=None):
@@ -306,6 +307,7 @@ def eliminar_trazabilidad(request, trazabilidad_id):
     
     return redirect('ver_trazabilidad', documento=documento)  # Redirige a la vista de trazabilidad
 
+@login_required
 def egresadosDestacados(request):
     # Lista de egresados destacados con datos estáticos
     egresados = [
@@ -332,11 +334,24 @@ def egresadosDestacados(request):
             'trayectoria': ['Analista en FinCorp (2018-2020)', 'Gerente de Finanzas en MoneyTech (2020-presente)'],
             'datos_adicionales': 'Especialista en Finanzas Corporativas.',
             'imagen_url': 'https://yourteenmag.com/wp-content/uploads/2013/06/Depositphotos_24196475_l-2015.jpg'
+        },
+        {
+            'id': 3,
+            'nombre': 'Jesus David Moreno Angarita',
+            'profesion': 'Administración de Empresas',
+            'anio_grado': 2020,
+            'cargo_actual': 'Director de Operaciones',
+            'correo': 'jesusmoreno@iser.edu.co',
+            'descripcion': 'Con enfoque en la gestión de operaciones y recursos humanos, ha implementado estrategias organizacionales.',
+            'trayectoria': ['Asistente de Recursos Humanos en People Solutions (2020-2021)','Coordinador de Operaciones en LogisTech (2021-2022)'],
+            'datos_adicionales': 'Reconocido por su liderazgo y habilidades de comunicación.',
+            'imagen_url': 'https://d2jyir0m79gs60.cloudfront.net/news/images/successful-college-student-lg.png'
         }
     ]
     
     return render(request, './vistasPrivadas/egresadosDestacados.html', {'egresados': egresados})
 
+@login_required
 def editar_egresado(request, id):
     # Lista estática de egresados
     egresados = [
@@ -363,6 +378,18 @@ def editar_egresado(request, id):
             'trayectoria': ['Analista en FinCorp (2018-2020)', 'Gerente de Finanzas en MoneyTech (2020-presente)'],
             'datos_adicionales': 'Especialista en Finanzas Corporativas.',
             'imagen_url': 'https://yourteenmag.com/wp-content/uploads/2013/06/Depositphotos_24196475_l-2015.jpg'
+        },
+        {
+            'id': 3,
+            'nombre': 'Jesus David Moreno Angarita',
+            'profesion': 'Administración de Empresas',
+            'anio_grado': 2020,
+            'cargo_actual': 'Director de Operaciones',
+            'correo': 'jesusmoreno@iser.edu.co',
+            'descripcion': 'Con enfoque en la gestión de operaciones y recursos humanos, ha implementado estrategias organizacionales.',
+            'trayectoria': ['Asistente de Recursos Humanos en People Solutions (2020-2021)','Coordinador de Operaciones en LogisTech (2021-2022)'],
+            'datos_adicionales': 'Reconocido por su liderazgo y habilidades de comunicación.',
+            'imagen_url': 'https://d2jyir0m79gs60.cloudfront.net/news/images/successful-college-student-lg.png'
         }
     ]
     
@@ -384,18 +411,18 @@ def editar_egresado(request, id):
         egresado['trayectoria'] = request.POST.get('trayectoria', egresado['trayectoria']).split(', ')
         egresado['datos_adicionales'] = request.POST.get('datos_adicionales', egresado['datos_adicionales'])
         
-        # Manejar la carga de la imagen
         if 'imagen' in request.FILES:
             imagen = request.FILES['imagen']
             fs = FileSystemStorage()
             filename = fs.save(imagen.name, imagen)
             egresado['imagen_url'] = fs.url(filename)
             
-        # No se usa `.save()` porque no estamos trabajando con una base de datos
         # Redirigir después de guardar los cambios
         return redirect('egresadosDestacados')
     
     return render(request, './vistasPrivadas/editarEgresado.html', {'egresado': egresado})
+
+
 
 
 
