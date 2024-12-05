@@ -353,7 +353,13 @@ def egresadosDestacados(request):
 
 @login_required
 def editar_egresado(request, id):
+
+    print(id)
     # Lista estática de egresados
+   # if id == 1:
+
+
+
     egresados = [
         {
             'id': 1,
