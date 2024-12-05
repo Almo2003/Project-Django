@@ -8,6 +8,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
     </head>
     <body>
         <main class="container-fluid p-0">
@@ -23,7 +26,7 @@
                                 Tu navegador no soporta la reproducción de videos.
                             </video>
                             <!-- Contenido del texto -->
-                            <div style="position: relative; z-index: 1; color: white; padding: 2rem; background-color: rgba(0, 0, 0, 0.5); border-radius: 8px;">
+                            <div style="position: relative; z-index: 1; color: white; padding: 2rem; background-color: rgba(0, 0, 0, 0.5); border-radius: 8px; position:relative;">
                                 <h1 class="display-4" style="font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold;">Gestión de Egresados</h1>
                                 <p style="font-family: Verdana, sans-serif; font-size: 0.9rem; line-height: 1.6; text-align: justify;">
                                     Un Sistema de Egresados para el ISER es una plataforma digital diseñada para conectar a exalumnos 
@@ -50,36 +53,42 @@
             
             <!-- Segunda Vista -->
             <section class="section2" style="background: rgba(13, 64, 16, 0.73); height: 100vh; display: flex; align-items: center;">
+                <div style="">
+                    
+                    <img src="../../static/multimedia/logo original.png" alt="logo iser">
+                </div>
                 <div class="container text-center">
-                    <h2 class="mb-4" style="color: rgba(229, 241, 229, 0.73); font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold;">Funcionalidades</h2>
+                    <h2 class="mb-4" style="color: rgba(255, 255, 255); font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold;">Funcionalidades</h2>
                     <div class="row justify-content-center">
                         <div class="col-md-3 col-sm-6 mb-4">
-                            <div class="card shadow-sm p-3" style="background-color: rgba(13, 64, 16, 0.73); border-radius: 10px;">
-                                <h4 style="color: rgba(229, 241, 229, 0.73); font-weight: bold;">Manejo de Datos</h4>
-                                <p style="color: rgba(229, 241, 229, 0.73);">Facilidad para acceder a tus datos</p>
+                            <div class="card shadow-sm" style="background-color: rgba(13, 64, 16, 0.73); border-radius: 10px; height: 200px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem;">
+                                <h4 style="color: rgba(255, 255, 255); font-weight: bold;">Manejo de Datos</h4>
+                                <p style="color: rgba(255, 255, 255); font-size: 0.9rem;">Facilidad para acceder a tus datos</p>
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6 mb-4">
-                            <div class="card shadow-sm p-3" style="background-color: rgba(13, 64, 16, 0.73); border-radius: 10px;">
-                                <h4 style="color: rgba(229, 241, 229, 0.73); font-weight: bold;">Registro de Cambios</h4>
-                                <p style="color: rgba(229, 241, 229, 0.73);">Seguimiento a los cambios surgidos</p>
+                            <div class="card shadow-sm" style="background-color: rgba(13, 64, 16, 0.73); border-radius: 10px; height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem;">
+                                <h4 style="color: rgba(255, 255, 255); font-weight: bold;">Registro de Cambios</h4>
+                                <p style="color: rgba(255, 255, 255); font-size: 0.9rem;">Seguimiento a los cambios surgidos</p>
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6 mb-4">
-                            <div class="card shadow-sm p-3" style="background-color: rgba(13, 64, 16, 0.73); border-radius: 10px;">
-                                <h4 style="color: rgba(229, 241, 229, 0.73); font-weight: bold;">Validacion de Registro</h4>
-                                <p style="color: rgba(229, 241, 229, 0.73);"> Validar la duplicacion de datos </p>
+                            <div class="card shadow-sm" style="background-color: rgba(13, 64, 16, 0.73); border-radius: 10px; height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem;">
+                                <h4 style="color: rgba(255, 255, 255); font-weight: bold;">Validacion de Registro</h4>
+                                <p style="color: rgba(255, 255, 255); font-size: 0.9rem;">Validar la duplicacion de datos</p>
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6 mb-4">
-                            <div class="card shadow-sm p-3" style="background-color: rgba(13, 64, 16, 0.73); border-radius: 10px;">
-                                <h4 style="color: rgba(229, 241, 229, 0.73); font-weight: bold;">Historial de Trazabilidad</h4>
-                                <p style="color: rgba(229, 241, 229, 0.73);"> Visualizar trazabilidad del egresado </p>
+                            <div class="card shadow-sm" style="background-color: rgba(13, 64, 16, 0.73); border-radius: 10px; height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem;">
+                                <h4 style="color: rgb(255, 255, 255); font-weight: bold;">Historial de Trazabilidad</h4>
+                                <p style="color: rgba(255, 255, 255); font-size: 0.9rem;">Visualizar trazabilidad del egresado</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
+            
+            
             <!-- Tercera Vista -->
             <section class="section3 mt-5" style="background-color: rgba(255, 255, 255, 0.5); padding: 2rem; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
                 <div class="container">
@@ -172,13 +181,10 @@
             section {
                 padding: 0;
             }
-    
-            /* Efectos para funcionalidad */
             .section2 .card:hover {
                 transform: scale(1.05);
                 box-shadow: 0 4px 15px rgba(13, 64, 16, 0.73);
             }
-    
             .section3 .card:hover {
                 transform: scale(1.05);
                 box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);

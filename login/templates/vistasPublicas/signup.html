@@ -1,17 +1,45 @@
 {% extends 'base.html' %}
 {% block content %}
-<main class="container py-5">
-    <section class="card card-body">
+<main class="d-flex justify-content-center align-items-center vh-100 bg-aquamarine">
+    <style>
+        #id_username_helptext,
+        li,
+        #id_password2_helptext {
+            display: none; /* Oculta completamente los elementos */
+        }
+
+        .nav-item {
+            display: block; /* Asegura que sean visibles */
+            visibility: visible; /* Garantiza que no estén ocultas */
+            opacity: 1; /* Asegura que no sean transparentes */
+        }
+
+        label[for="id_username"]{
+            margin-right: 89px;
+        }
+         label[for="id_password1"]{
+            margin-right: 93px;
+        }
+    </style>
+
+    <section style="margin: 0 35%; height: 580px; width: 39%;" class="card card-body shadow-lg rounded-3 login-card d-flex justify-content-center align-items-center ">
+        
+        <div class="text-center">
+            <!-- Imagen de ícono (opcional) -->
+            <img src="https://www.iser.edu.co/wp-content/uploads/2024/07/IMAGOTIPO-NEGRO-01-1447x1536.png" alt="Login Icon" class="img-fluid" width="200px" height="200px">
+        </div>
+        <h1 class="card-title text-center text-black mb-4">Registrase</h1>
+
         {{error}}
  
         <form method="POST">
             {% csrf_token %} 
             {{form.as_p}}
-            <button class="btn btn-primary">
+            <button class="btn btn-primary justify-content-center align-items-center align-text-center btn-lg">
                 Registrarse
             </button>
         </form>
-            {% endblock %}
-
+        
     </section>
 </main>
+{% endblock %}

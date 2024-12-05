@@ -2,7 +2,7 @@
 
 {% block content %}
 <main class="d-flex justify-content-center align-items-center vh-100 bg-aquamarine">
-    <section class="card card-body shadow-lg rounded-3 login-card d-flex justify-content-center align-items-center ">
+    <section style="margin: 0 35%; height: 580px; width: 39%;" class="card card-body shadow-lg rounded-3 login-card d-flex justify-content-center align-items-center ">
         <div class="text-center">
             <!-- Imagen de ícono (opcional) -->
             <img src="https://www.iser.edu.co/wp-content/uploads/2024/07/IMAGOTIPO-NEGRO-01-1447x1536.png" alt="Login Icon" class="img-fluid" width="200px" height="200px">
@@ -19,7 +19,7 @@
         <form method="POST">
             {% csrf_token %}
             <div class="form-group mb-3">
-                <label for="id_username" class="form-label text-black" placeholder="Ingresa su usuario">Usuario:</label>
+                <label style="margin-right: 25px;" for="id_username" class="form-label text-black" placeholder="Ingresa su usuario">Usuario:</label>
                 {{ form.username }}
             </div>
             <div class="form-group mb-3">
@@ -32,6 +32,4 @@
         </form>
     </section>
 </main>
-{% endblock %}
-
-
+{% endblock %}
