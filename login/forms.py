@@ -43,3 +43,9 @@ class EgresadoForm(forms.ModelForm):
     class Meta:
         model = Egresado
         fields = ['nombre', 'profesion', 'ano_grado', 'cargo_actual', 'correo', 'descripcion', 'trayectoria', 'datos_adicionales', 'imagen_url']
+
+
+class EgresadoDestacadoForm(forms.ModelForm):
+    class Meta:
+        model = Egresado
+        fields = ['nombre', 'profesion', 'anio_grado', 'cargo_actual', 'correo', 'descripcion', 'trayectoria', 'datos_adicionales', 'imagen_url']
