@@ -37,7 +37,7 @@ class Egresado(models.Model):
     descripcion = models.TextField()
     trayectoria = models.TextField()
     datos_adicionales = models.TextField()
-    imagen_url = models.URLField()
+    imagen = models.ImageField(upload_to='egresados/', blank=True, null=True)
 
     def __str__(self):
         return self.nombre

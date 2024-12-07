@@ -42,10 +42,10 @@ class TrazabilidadForm(forms.ModelForm):
 class EgresadoForm(forms.ModelForm):
     class Meta:
         model = Egresado
-        fields = ['nombre', 'profesion', 'ano_grado', 'cargo_actual', 'correo', 'descripcion', 'trayectoria', 'datos_adicionales', 'imagen_url']
+        fields = ['nombre', 'profesion', 'ano_grado', 'cargo_actual', 'correo', 'descripcion', 'trayectoria', 'datos_adicionales', 'imagen']
 
 
 class EgresadoDestacadoForm(forms.ModelForm):
     class Meta:
         model = Egresado
-        fields = ['nombre', 'profesion', 'anio_grado', 'cargo_actual', 'correo', 'descripcion', 'trayectoria', 'datos_adicionales', 'imagen_url']
+        fields = ['nombre', 'profesion', 'ano_grado', 'cargo_actual', 'correo', 'descripcion', 'trayectoria', 'datos_adicionales', 'imagen']

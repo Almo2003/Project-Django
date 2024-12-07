@@ -13,4 +13,4 @@ class TrazabilidadAdmin(admin.ModelAdmin):
 
 @admin.register(Egresado) 
 class EgresadoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'nombre' , 'profesion' , 'ano_grado' , 'cargo_actual' , 'correo' , 'descripcion' , 'trayectoria' , 'datos_adicionales' , 'imagen_url')
+    list_display = ('id', 'nombre' , 'profesion' , 'ano_grado' , 'cargo_actual' , 'correo' , 'descripcion' , 'trayectoria' , 'datos_adicionales' , 'imagen')

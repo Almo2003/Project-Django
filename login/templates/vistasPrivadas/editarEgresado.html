@@ -1,79 +1,86 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="card shadow-lg rounded-lg border-light p-4">
-        <h1 class="card-title text-center mb-4 text-primary">Editar Egresado: {{ egresado.nombre }}</h1>
+<div class="container mt-5 d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-lg rounded-lg border-light p-4" style="max-width: 600px; width: 100%;">
+        <h1 class="card-title text-center mb-4">Editar Egresado: {{ egresado.nombre }}</h1>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="card-body">
-                <!-- Imagen -->
-                <div class="form-group mb-4">
-                    <label for="imagen" class="form-label font-weight-bold">Imagen</label>
-                    <input type="file" class="form-control-file" id="imagen" name="imagen">
-                    {% if egresado.imagen_url %}
-                        <div class="mt-2">
-                            <p>Imagen Actual:</p>
-                            <img src="{{ egresado.imagen_url }}" alt="Imagen del egresado" class="img-fluid rounded-circle" width="100">
-                        </div>
-                    {% endif %}
-                </div>
-
-                <!-- Nombre -->
-                <div class="form-group mb-3">
-                    <label for="nombre" class="form-label font-weight-bold">Nombre Completo</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" value="{{ egresado.nombre }}">
-                </div>
-
-                <!-- Profesión -->
-                <div class="form-group mb-3">
-                    <label for="profesion" class="form-label font-weight-bold">Profesión</label>
-                    <input type="text" class="form-control" id="profesion" name="profesion" value="{{ egresado.profesion }}">
-                </div>
-
-                <!-- Año de Grado -->
-                <div class="form-group mb-3">
-                    <label for="anio_grado" class="form-label font-weight-bold">Año de Grado</label>
-                    <input type="text" class="form-control" id="anio_grado" name="anio_grado" value="{{ egresado.anio_grado }}">
-                </div>
-
-                <!-- Cargo Actual -->
-                <div class="form-group mb-3">
-                    <label for="cargo_actual" class="form-label font-weight-bold">Cargo Actual</label>
-                    <input type="text" class="form-control" id="cargo_actual" name="cargo_actual" value="{{ egresado.cargo_actual }}">
-                </div>
-
-                <!-- Correo -->
-                <div class="form-group mb-3">
-                    <label for="correo" class="form-label font-weight-bold">Correo</label>
-                    <input type="email" class="form-control" id="correo" name="correo" value="{{ egresado.correo }}">
-                </div>
-
-                <!-- Descripción -->
-                <div class="form-group mb-3">
-                    <label for="descripcion" class="form-label font-weight-bold">Descripción</label>
-                    <textarea class="form-control" id="descripcion" name="descripcion" rows="4">{{ egresado.descripcion }}</textarea>
-                </div>
-
-                <!-- Trayectoria -->
-                <div class="form-group mb-3">
-                    <label for="trayectoria" class="form-label font-weight-bold">Trayectoria</label>
-                    <textarea class="form-control" id="trayectoria" name="trayectoria" rows="4">{{ egresado.trayectoria|join:', ' }}</textarea>
-                </div>
-
-                <!-- Datos Adicionales -->
-                <div class="form-group mb-4">
-                    <label for="datos_adicionales" class="form-label font-weight-bold">Datos Adicionales</label>
-                    <textarea class="form-control" id="datos_adicionales" name="datos_adicionales" rows="4">{{ egresado.datos_adicionales }}</textarea>
-                </div>
-
-                <!-- Botones -->
-                <div class="d-flex justify-content-between">
-                    <button type="submit" class="btn btn-success px-4 py-2">Guardar Cambios</button>
-                    <a href="{% url 'egresadosDestacados' %}" class="btn btn-outline-secondary px-4 py-2">Cancelar</a>
-                </div>
+            {{ form.as_p }}
+            <div class="d-flex justify-content-between mt-4">
+                <button type="submit" class="btn btn-success w-45">Guardar Cambios</button>
+                <a href="{% url 'egresadosDestacados' %}" class="btn btn-secondary w-45">Cancelar</a>
             </div>
         </form>
     </div>
 </div>
+
+<style>
+    /* Fondo general */
+    body {
+        background-color: #f4f6f8;
+        font-family: 'Roboto', sans-serif;
+        color: #333;
+    }
+
+    /* Card */
+    .card {
+        border: 1px solid #e3e6ea;
+        background: white;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Título de la tarjeta */
+    .card-title {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #1B9E88;
+    }
+
+    /* Botones */
+    .btn {
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 10px 15px;
+        border-radius: 6px;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+    /* Ajustes de ancho de botones */
+    .w-45 {
+        width: 45%;
+    }
+
+    /* Formulario */
+    form input, form select, form textarea {
+        border-radius: 5px;
+        border: 1px solid #ced4da;
+        padding: 10px;
+    }
+
+    form input:focus, form select:focus, form textarea:focus {
+        border-color: #80bdff;
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+</style>
 {% endblock %}
