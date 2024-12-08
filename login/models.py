@@ -41,6 +41,13 @@ class Egresado(models.Model):
 
     def __str__(self):
         return self.nombre
+    
+class ImagenPrincipal(models.Model):
+    nombre = models.CharField(max_length=100, unique=True)  # Identificador de la imagen, ejemplo: 'imagen1'
+    imagen = models.ImageField(upload_to='imagenes_principales/')  # Carpeta donde se almacenan las imágenes
+
+    def __str__(self):
+        return self.nombre
 
 
             

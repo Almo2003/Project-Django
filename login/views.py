@@ -6,21 +6,22 @@ from django.http import HttpResponse, Http404
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 import csv
-from .forms import CSVUploadForm, TrazabilidadForm, EgresadoForm, EgresadoDestacadoForm
+from .forms import CSVUploadForm, TrazabilidadForm, EgresadoForm, EgresadoDestacadoForm, ImagenPrincipalForm
 import pandas as pd
 import io, os
-from .models import Persona, Trazabilidad, Egresado
+from .models import Persona, Trazabilidad, Egresado, ImagenPrincipal
 import json
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 
 # Create your views here.
 def home(request, extra=None):
+    imagenes = ImagenPrincipal.objects.all()
     # Verificamos si hay un segmento adicional en la URL (parámetro extra)
     if extra is not None:
         # Si hay un segmento adicional, redirigimos a la página de inicio de sesión
         return redirect('home')
-    return render(request, './vistasPublicas/home.html')
+    return render(request, './vistasPublicas/home.html', {'imagenes': imagenes})
 
 def signup(request, extra=None):
     # Verificamos si hay un segmento adicional en la URL (parámetro extra)
@@ -340,7 +341,20 @@ def editar_egresado(request, id):
     return render(request, './vistasPrivadas/editarEgresado.html', {'form': form, 'egresado': egresado})
 
 
+def editar_principal(request):
+    imagenes = ImagenPrincipal.objects.all()  # Obtén todas las imágenes
+    
+    if request.method == 'POST':
+        for imagen in imagenes:
+            form = ImagenPrincipalForm(request.POST, request.FILES, instance=imagen)
+            if form.is_valid():
+                form.save()  # Guarda las nuevas imágenes en la base de datos
+        return redirect('home')  # Redirige al home después de guardar
 
+    # Combina imágenes con sus formularios en una lista de pares
+    data = [{'imagen': imagen, 'form': ImagenPrincipalForm(instance=imagen)} for imagen in imagenes]
+
+    return render(request, './vistasPrivadas/editar_principal.html', {'data': data})
 
 
 

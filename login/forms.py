@@ -1,5 +1,5 @@
 from django import forms
-from .models import Trazabilidad, Egresado
+from .models import Trazabilidad, Egresado, ImagenPrincipal
 
 class CSVUploadForm(forms.Form):
     csv_file = forms.FileField(label='Cargar archivo CSV', 
@@ -49,3 +49,8 @@ class EgresadoDestacadoForm(forms.ModelForm):
     class Meta:
         model = Egresado
         fields = ['nombre', 'profesion', 'ano_grado', 'cargo_actual', 'correo', 'descripcion', 'trayectoria', 'datos_adicionales', 'imagen']
+
+class ImagenPrincipalForm(forms.ModelForm):
+    class Meta:
+        model = ImagenPrincipal
+        fields = ['imagen']

@@ -45,7 +45,10 @@ urlpatterns = [
     path('egresadosDestacados/', views.egresadosDestacados, name="egresadosDestacados" ),
     path('editar/<int:id>/', views.editar_egresado, name='editar_egresado'),
     path('egresados-destacados/', views.listar_egresados_destacados, name='listar_egresados_destacados'),
+    path('editar-principal/', views.editar_principal, name='editar_principal'),
+
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
