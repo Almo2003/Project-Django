@@ -13,11 +13,11 @@
             {% for egresado in egresados %}
                 <div class="col-md-4 mb-4">
                     <div class="card">
-                        <img src="{{ egresado.imagen_url }}" class="card-img-top" alt="Imagen de {{ egresado.nombre }}">
+                        <img src="{{ egresado.imagen }}" class="card-img-top" alt="Imagen de {{ egresado.nombre }}">
                         <div class="card-body">
                             <h5 class="card-title">{{ egresado.nombre }}</h5>
                             <p class="card-text"><strong>Profesión:</strong> {{ egresado.profesion }}</p>
-                            <p class="card-text"><strong>Año de Grado:</strong> {{ egresado.anio_grado }}</p>
+                            <p class="card-text"><strong>Año de Grado:</strong> {{ egresado.ano_grado }}</p>
                             <p class="card-text"><strong>Cargo Actual:</strong> {{ egresado.cargo_actual }}</p>
                             <p class="card-text">{{ egresado.descripcion|truncatewords:20 }}</p>
                             <a href="mailto:{{ egresado.correo }}" class="btn btn-primary">Contactar</a>

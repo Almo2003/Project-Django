@@ -15,20 +15,20 @@
     <body>
         <main class="container-fluid p-0">
             <!-- Primera Vista -->
-            <section class="card card-body text-left" style="background-color: rgba(255, 255, 255, 0.1); height: 100vh; display: flex; align-items: center;">
-                <div class="container">
-                    <div class="row align-items-center">
+            <section class="card card-body text-left" style="background-color: rgba(255, 255, 255, 0.1); height: 100vh; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+                <div class="container" style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                    <div class="row align-items-center justify-content-center" style="width: 100%; height: 100%;">
                         <!-- Video de fondo y texto -->
-                        <div class="col-md-6" style="position: relative; overflow: hidden;">
+                        <div class="col-md-6" style="position: relative; overflow: hidden; height: 70vh;">
                             <!-- Video de fondo -->
                             <video autoplay loop muted playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
                                 <source src="{% static 'multimedia/iservideo.mp4' %}" type="video/mp4">
                                 Tu navegador no soporta la reproducción de videos.
                             </video>
-                            <!-- Contenido del texto -->
-                            <div style="position: relative; z-index: 1; color: white; padding: 2rem; background-color: rgba(0, 0, 0, 0.5); border-radius: 8px; position:relative;">
-                                <h1 class="display-4" style="font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold;">Gestión de Egresados</h1>
-                                <p style="font-family: Verdana, sans-serif; font-size: 0.9rem; line-height: 1.6; text-align: justify;">
+                            <!-- Contenido del texto con fondo negro que ocupa todo el espacio del video -->
+                            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1; padding: 2rem; border-radius: 8px;">
+                                <h1 class="display-4" style="font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold; color: white; margin-bottom: 1rem; text-align: center;">Gestión de Egresados</h1>
+                                <p style="font-family: Verdana, sans-serif; font-size: 1rem; line-height: 1.6; text-align: justify; color: white;">
                                     Un Sistema de Egresados para el ISER es una plataforma digital diseñada para conectar a exalumnos 
                                     con la institución y entre sí, fomentando una red de apoyo profesional y académico. Este sistema 
                                     permite a los egresados actualizar sus datos, acceder a oportunidades laborales exclusivas, y 
@@ -39,55 +39,61 @@
                         <!-- Imágenes -->
                         <div class="col-md-6">
                             <div class="image-grid">
-                                <img style="height: 98%; width: 115%; padding: 0.2rem" src="https://www.laopinion.co/sites/default/files/2023-02/image%20(5).png" alt="Imagen ISER 1">
+                                <img style="height: 100%; width: 100%; padding: 0.2rem" src="https://www.laopinion.co/sites/default/files/2023-02/image%20(5).png" alt="Imagen ISER 1">
                                 <div class="images">
-                                    <img src="https://ww1.iser.edu.co/iser/hermesoft/portalIG/home_1/recursos/imagenes/2021/14022021/rec_fisicos_4.jpg" alt="Imagen ISER 2" style="padding: 0.2rem">
+                                    <img src="https://ww1.iser.edu.co/iser/hermesoft/portalIG/home_1/recursos/imagenes/2021/14022021/rec_fisicos_4.jpg" alt="Imagen ISER 2" style="padding: 0.3rem;">
                                     <img src="https://colombiaestudia.com/wp-content/uploads/2022/04/Fachada_ISER.jpg" alt="Imagen ISER 3">
                                 </div>
-                                <img style="width: 194%; height: 90%; " src="https://www.gacetaregional.com/sitegr/wp-content/uploads/2019/09/iser-de-pamplona.png" alt="Imagen ISER 4">
+                                <img style="width: 203%; height: 90%; " src="https://www.gacetaregional.com/sitegr/wp-content/uploads/2019/09/iser-de-pamplona.png" alt="Imagen ISER 4">
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-            
-            <!-- Segunda Vista -->
-            <section class="section2" style="background: rgba(13, 64, 16, 0.73); height: 100vh; display: flex; align-items: center;">
-                <div style="">
-                    
-                    <img src="../../static/multimedia/logo original.png" alt="logo iser">
-                </div>
+
+            <!--Segunda Vista-->
+            <section class="section2" style="background: rgba(13, 64, 16, 0.73); height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column;">
                 <div class="container text-center">
-                    <h2 class="mb-4" style="color: rgba(255, 255, 255); font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold;">Funcionalidades</h2>
                     <div class="row justify-content-center">
-                        <div class="col-md-3 col-sm-6 mb-4">
-                            <div class="card shadow-sm" style="background-color: rgba(13, 64, 16, 0.73); border-radius: 10px; height: 200px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem;">
-                                <h4 style="color: rgba(255, 255, 255); font-weight: bold;">Manejo de Datos</h4>
-                                <p style="color: rgba(255, 255, 255); font-size: 0.9rem;">Facilidad para acceder a tus datos</p>
-                            </div>
+                        <!-- Columna de imagen -->
+                        <div class="col-md-6 d-flex justify-content-center align-items-center">
+                            <img src="../../static/multimedia/logo original.png" alt="logo iser" style="max-width: 100%; height: auto;">
                         </div>
-                        <div class="col-md-3 col-sm-6 mb-4">
-                            <div class="card shadow-sm" style="background-color: rgba(13, 64, 16, 0.73); border-radius: 10px; height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem;">
-                                <h4 style="color: rgba(255, 255, 255); font-weight: bold;">Registro de Cambios</h4>
-                                <p style="color: rgba(255, 255, 255); font-size: 0.9rem;">Seguimiento a los cambios surgidos</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 mb-4">
-                            <div class="card shadow-sm" style="background-color: rgba(13, 64, 16, 0.73); border-radius: 10px; height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem;">
-                                <h4 style="color: rgba(255, 255, 255); font-weight: bold;">Validacion de Registro</h4>
-                                <p style="color: rgba(255, 255, 255); font-size: 0.9rem;">Validar la duplicacion de datos</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 mb-4">
-                            <div class="card shadow-sm" style="background-color: rgba(13, 64, 16, 0.73); border-radius: 10px; height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem;">
-                                <h4 style="color: rgb(255, 255, 255); font-weight: bold;">Historial de Trazabilidad</h4>
-                                <p style="color: rgba(255, 255, 255); font-size: 0.9rem;">Visualizar trazabilidad del egresado</p>
+                        <!-- Columna de contenido -->
+                        <div class="col-md-6 d-flex justify-content-center align-items-center">
+                            <div>
+                                <h2 class="mb-4" style="color: rgba(255, 255, 255); font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold;">Funcionalidades</h2>
+                                <div class="row justify-content-center">
+                                    <div class="col-md-3 col-sm-6 mb-4">
+                                        <div class="card shadow-sm" style="background-color: rgba(13, 64, 16, 0.73); border-radius: 10px; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem;">
+                                            <h4 style="color: rgba(255, 255, 255); font-weight: bold;">Manejo de Datos</h4>
+                                            <p style="color: rgba(255, 255, 255); font-size: 0.9rem;">Facilidad para acceder a tus datos</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 mb-4">
+                                        <div class="card shadow-sm" style="background-color: rgba(13, 64, 16, 0.73); border-radius: 10px; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem;">
+                                            <h4 style="color: rgba(255, 255, 255); font-weight: bold;">Registro de Cambios</h4>
+                                            <p style="color: rgba(255, 255, 255); font-size: 0.9rem;">Seguimiento a los cambios surgidos</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 mb-4">
+                                        <div class="card shadow-sm" style="background-color: rgba(13, 64, 16, 0.73); border-radius: 10px; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem;">
+                                            <h4 style="color: rgba(255, 255, 255); font-weight: bold;">Validacion de Registro</h4>
+                                            <p style="color: rgba(255, 255, 255); font-size: 0.9rem;">Validar la duplicacion de datos</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 mb-4">
+                                        <div class="card shadow-sm" style="background-color: rgba(13, 64, 16, 0.73); border-radius: 10px; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem;">
+                                            <h4 style="color: rgb(255, 255, 255); font-weight: bold;">Historial de Trazabilidad</h4>
+                                            <p style="color: rgba(255, 255, 255); font-size: 0.9rem;">Visualizar trazabilidad del egresado</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-            
             
             <!-- Tercera Vista -->
             <section class="section3 mt-5" style="background-color: rgba(255, 255, 255, 0.5); padding: 2rem; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
@@ -148,11 +154,6 @@
                         <div class="col-md-2 col-sm-4 mb-4">
                             <a href="https://www.tiktok.com/@isercol?_t=8rtHJmMnokp&_r=1" target="_blank">
                                 <i class="fab fa-tiktok fa-3x" style="color: black;"></i>
-                            </a>
-                        </div>
-                        <div class="col-md-2 col-sm-4 mb-4">
-                            <a href="https://www.linkedin.com/company/tu-pagina" target="_blank">
-                                <i class="fab fa-linkedin fa-3x" style="color: #0e76a8;"></i>
                             </a>
                         </div>
                         <div class="col-md-2 col-sm-4 mb-4">

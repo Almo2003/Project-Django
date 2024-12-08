@@ -27,7 +27,7 @@
                         <a href="mailto:{{ egresado.correo }}">{{ egresado.correo }}</a>
                     </p>
                     <p class="profile-description"><strong>Descripción:</strong> {{ egresado.descripcion }}</p>
-                    <p class="profile-dateadition"><strong>Datos Adicionales:</strong> {{ egresado.datos_adicionales }}</p>
+                    <p class="profile-date"><strong>Datos Adicionales:</strong> {{ egresado.datos_adicionales }}</p>
                 </div>
 
                 <!-- Botón -->
@@ -104,7 +104,8 @@
     .profile-year,
     .profile-position,
     .profile-email,
-    .profile-description {
+    .profile-description,
+    .profile-date {
         font-size: 0.95rem;
         margin-bottom: 8px;
         color: #555;
