@@ -48,7 +48,7 @@ class EgresadoForm(forms.ModelForm):
 class EgresadoDestacadoForm(forms.ModelForm):
     class Meta:
         model = Egresado
-        fields = ['nombre', 'profesion', 'ano_grado', 'cargo_actual', 'correo', 'descripcion', 'trayectoria', 'datos_adicionales', 'imagen']
+        fields = ['nombre', 'imagen' , 'profesion', 'ano_grado', 'cargo_actual', 'correo', 'descripcion', 'trayectoria', 'datos_adicionales']
 
 class ImagenPrincipalForm(forms.ModelForm):
     class Meta:
