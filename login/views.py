@@ -226,7 +226,7 @@ def buscar(request):
             persona = Persona.objects.get(documento=documento)  # Intentamos obtener la persona
 
             # Obtener la trazabilidad asociada a esta persona (si existe)
-            trazabilidades = Trazabilidad.objects.filter(persona=persona)  # Asumiendo que 'Persona' tiene una relación con 'Trazabilidad'
+            trazabilidades = Trazabilidad.objects.filter(persona=persona) 
 
             return render(request, './vistasPrivadas/buscar_resultado.html', {
                 'persona': persona,
@@ -238,7 +238,6 @@ def buscar(request):
             return render(request, './vistasPrivadas/buscarpersona.html', {'error_message': error_message})
 
     return render(request, './vistasPrivadas/buscarpersona.html')
-
 
 @login_required
 def ver_trazabilidad(request, documento):
