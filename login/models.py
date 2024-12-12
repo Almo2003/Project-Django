@@ -30,7 +30,7 @@ class Trazabilidad(models.Model):
         
 class Egresado(models.Model):
     nombre = models.CharField(max_length=100)
-    imagen = models.ImageField(upload_to='egresados/', blank=True, null=True)
+    imagen_url = models.URLField(max_length=500, null=True, blank=True)
     profesion = models.CharField(max_length=100)
     ano_grado = models.IntegerField()
     cargo_actual = models.CharField(max_length=100)
