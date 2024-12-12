@@ -46,6 +46,7 @@ urlpatterns = [
     path('editar/<int:id>/', views.editar_egresado, name='editar_egresado'),
     path('egresados-destacados/', views.listar_egresados_destacados, name='listar_egresados_destacados'),
     path('editar-principal/', views.editar_principal, name='editar_principal'),
+    path('egresado/<int:egresado_id>/', views.egresado_detalle, name='egresado_detalle'),
 
 ]
 

@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-5">Detalle Del Egresado</h1>
+
+    <!-- Contenedor de las tarjetas centrado -->
+    <div class="row d-flex justify-content-center">
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="profile-card shadow-sm d-flex flex-column">
+                <!-- Imagen del egresado -->
+                <img src="{{ egresado.imagen_url }}" alt="Imagen de {{ egresado.nombre }}" class="profile-image img-fluid">
+                <!-- Contenido del egresado -->
+                <div class="profile-content flex-grow-1 d-flex flex-column">
+                    <h2 class="profile-name">{{ egresado.nombre }}</h2>
+                    <p class="profile-profession"><strong>Profesión:</strong> {{ egresado.profesion }}</p>
+                    <p class="profile-year"><strong>Año de Grado:</strong> {{ egresado.ano_grado }}</p>
+                    <p class="profile-position"><strong>Cargo Actual:</strong> {{ egresado.cargo_actual }}</p>
+                    <p class="profile-email">
+                        <strong>Correo Electrónico:</strong>
+                        <a href="mailto:{{ egresado.correo }}">{{ egresado.correo }}</a>
+                    </p>
+                    <p class="profile-description"><strong>Descripción:</strong> {{ egresado.descripcion }}</p>
+                    <p class="profile-date"><strong>Datos Adicionales:</strong> {{ egresado.datos_adicionales }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Estilos CSS -->
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+    }
+
+    .row.d-flex.justify-content-center {
+        display: flex;
+        justify-content: center;
+    }
+
+    .profile-card {
+        background-color: #fff;
+        border-radius: 12px;
+        border: 1px solid #ddd;
+        padding: 20px;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .profile-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-image {
+        width: 100%;
+        max-height: 200px;
+        border-radius: 12px;
+        object-fit: cover;
+        margin-bottom: 15px;
+    }
+
+    .profile-content {
+        flex-grow: 1;
+    }
+
+    .profile-name {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #0056b3;
+        margin-bottom: 10px;
+    }
+
+    .profile-profession,
+    .profile-year,
+    .profile-position,
+    .profile-email,
+    .profile-description,
+    .profile-date {
+        font-size: 0.95rem;
+        margin-bottom: 8px;
+        color: #555;
+    }
+
+    .profile-email a {
+        color: #0056b3;
+        text-decoration: none;
+    }
+
+    .profile-email a:hover {
+        text-decoration: underline;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-primary:focus {
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+    }
+</style>
+{% endblock %}

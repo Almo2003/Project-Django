@@ -95,14 +95,14 @@
                 </div>
             </section>
             
-            <!-- Tercera Vista -->
+            <!--Tercera Vista-->
             <section class="section3 mt-5" style="background-color: rgba(255, 255, 255, 0.5); padding: 2rem; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
                 <div class="container">
                     <h2 class="text-center mb-4" style="color: #1B9D87; font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold;">Noticias de Egresados</h2>
                     <div class="row">
                         <div class="col-md-4">
                             <div class="card shadow-sm">
-                                <a href="#">
+                                <a href="{% url 'egresado_detalle' egresado_id=9 %}">
                                     <img src="https://www.iser.edu.co/wp-content/uploads/2023/08/WhatsApp-Image-2019-05-02-at-4.44.54-PM-1024x682.jpeg" class="card-img-top" alt="Noticia 1">
                                 </a>
                                 <div class="card-body text-center">
@@ -112,7 +112,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="card shadow-sm">
-                                <a href="#">
+                                <a href="{% url 'egresado_detalle' egresado_id=10 %}">
                                     <img src="https://yourteenmag.com/wp-content/uploads/2013/06/Depositphotos_24196475_l-2015.jpg" class="card-img-top" alt="Noticia 2">
                                 </a>
                                 <div class="card-body text-center">
@@ -122,7 +122,9 @@
                         </div>
                         <div class="col-md-4">
                             <div class="card shadow-sm">
-                                <img src="https://d2jyir0m79gs60.cloudfront.net/news/images/successful-college-student-lg.png" class="card-img-top" alt="Noticia 3">
+                                <a href="{% url 'egresado_detalle' egresado_id=11 %}">
+                                    <img src="https://d2jyir0m79gs60.cloudfront.net/news/images/successful-college-student-lg.png" class="card-img-top" alt="Noticia 3">
+                                </a>
                                 <div class="card-body text-center">
                                     <h5 class="card-title" style="color: #1B9E88; font-weight: bold;">Jesus David Moreno Angarita</h5>
                                 </div>
@@ -131,7 +133,7 @@
                     </div>
                 </div>
             </section>
-    
+        
             <!--Cuarta Vista-->
             <section class="section4 mt-5" style="background: rgba(13, 64, 16, 0.73); padding: 2rem; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
                 <div class="container">

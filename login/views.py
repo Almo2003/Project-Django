@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
+from django.contrib import messages
 from django.http import HttpResponse, Http404
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
@@ -311,11 +312,17 @@ def eliminar_trazabilidad(request, trazabilidad_id):
 def egresadosDestacados(request):
     egresados = Egresado.objects.all()
 
-    if request.method == "POST" and len(egresados) < 3:
-        form = EgresadoDestacadoForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('egresadosDestacados')
+    if request.method == "POST":
+        if len(egresados) >= 3:
+            messages.error(request, "No puedes agregar más de 3 egresados destacados.")
+        else:
+            form = EgresadoDestacadoForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Egresado destacado agregado correctamente.")
+                return redirect('egresadosDestacados')
+            else:
+                messages.error(request, "Error al guardar el egresado destacado.")
     else:
         form = EgresadoDestacadoForm()
 
@@ -354,6 +361,10 @@ def editar_principal(request):
     data = [{'imagen': imagen, 'form': ImagenPrincipalForm(instance=imagen)} for imagen in imagenes]
 
     return render(request, './vistasPrivadas/editar_principal.html', {'data': data})
+
+def egresado_detalle(request, egresado_id):
+    egresado = Egresado.objects.get(id=egresado_id)
+    return render(request, './vistasPrivadas/egresado_detalle.html', {'egresado': egresado})
 
 
 
