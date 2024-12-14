@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Persona, Trazabilidad, Egresado
+from .models import Persona, Trazabilidad, Egresado, Imagen
 
 @admin.register(Persona)
 class PersonaAdmin(admin.ModelAdmin):
@@ -28,3 +28,8 @@ class EgresadoAdmin(admin.ModelAdmin):
         if Egresado.objects.count() >= 3:
             raise ValueError("No puedes agregar más de 3 egresados.")
         super().save_model(request, obj, form, change)
+
+
+@admin.register(Imagen)
+class ImagenAdmin(admin.ModelAdmin):
+    list_display = ('id' , 'nombre' , 'imagen')  

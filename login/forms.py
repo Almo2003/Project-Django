@@ -1,5 +1,5 @@
 from django import forms
-from .models import Trazabilidad, Egresado, ImagenPrincipal
+from .models import Trazabilidad, Egresado, Imagen
 
 class CSVUploadForm(forms.Form):
     csv_file = forms.FileField(label='Cargar archivo CSV', 
@@ -50,7 +50,17 @@ class EgresadoDestacadoForm(forms.ModelForm):
         model = Egresado
         fields = ['nombre', 'imagen_url' , 'profesion', 'ano_grado', 'cargo_actual', 'correo', 'descripcion', 'trayectoria', 'datos_adicionales']
 
-class ImagenPrincipalForm(forms.ModelForm):
+class ImagenForm(forms.ModelForm):
     class Meta:
-        model = ImagenPrincipal
-        fields = ['imagen']
+        model = Imagen
+        fields = ['imagen']  # Solo se incluye el campo de la imagen
+    
+    def clean_imagen(self):
+        imagen = self.cleaned_data.get('imagen')
+        
+        # Validación para asegurarse de que el archivo es una imagen
+        if imagen:
+            if not imagen.name.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
+                raise forms.ValidationError('Formato de imagen no soportado. Solo se aceptan PNG, JPG, JPEG o GIF.')
+        
+        return imagen

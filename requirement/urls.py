@@ -45,11 +45,12 @@ urlpatterns = [
     path('egresadosDestacados/', views.egresadosDestacados, name="egresadosDestacados" ),
     path('editar/<int:id>/', views.editar_egresado, name='editar_egresado'),
     path('egresados-destacados/', views.listar_egresados_destacados, name='listar_egresados_destacados'),
-    path('editar-principal/', views.editar_principal, name='editar_principal'),
     path('egresado/<int:egresado_id>/', views.egresado_detalle, name='egresado_detalle'),
+    path('cargar-imagenes/', views.cargar_imagenes, name='cargar_imagenes')
 
-]
+] 
 
-#if settings.DEBUG:
-    #urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
     

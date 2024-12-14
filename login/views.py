@@ -7,22 +7,22 @@ from django.http import HttpResponse, Http404
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 import csv
-from .forms import CSVUploadForm, TrazabilidadForm, EgresadoForm, EgresadoDestacadoForm, ImagenPrincipalForm
+from .forms import CSVUploadForm, TrazabilidadForm, EgresadoForm, EgresadoDestacadoForm, ImagenForm
 import pandas as pd
 import io, os
-from .models import Persona, Trazabilidad, Egresado, ImagenPrincipal
+from .models import Persona, Trazabilidad, Egresado, Imagen
 import json
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 
 # Create your views here.
 def home(request, extra=None):
-    imagenes = ImagenPrincipal.objects.all()
     # Verificamos si hay un segmento adicional en la URL (parámetro extra)
+    imagenes = Imagen.objects.all()
     if extra is not None:
         # Si hay un segmento adicional, redirigimos a la página de inicio de sesión
         return redirect('home')
-    return render(request, './vistasPublicas/home.html', {'imagenes': imagenes})
+    return render(request, './vistasPublicas/home.html',{'imagenes':imagenes})
 
 def signup(request, extra=None):
     # Verificamos si hay un segmento adicional en la URL (parámetro extra)
@@ -346,25 +346,32 @@ def editar_egresado(request, id):
 
     return render(request, './vistasPrivadas/editarEgresado.html', {'form': form, 'egresado': egresado})
 
-
-def editar_principal(request):
-    imagenes = ImagenPrincipal.objects.all()  # Obtén todas las imágenes
-    
-    if request.method == 'POST':
-        for imagen in imagenes:
-            form = ImagenPrincipalForm(request.POST, request.FILES, instance=imagen)
-            if form.is_valid():
-                form.save()  # Guarda las nuevas imágenes en la base de datos
-        return redirect('home')  # Redirige al home después de guardar
-
-    # Combina imágenes con sus formularios en una lista de pares
-    data = [{'imagen': imagen, 'form': ImagenPrincipalForm(instance=imagen)} for imagen in imagenes]
-
-    return render(request, './vistasPrivadas/editar_principal.html', {'data': data})
-
+@login_required
 def egresado_detalle(request, egresado_id):
     egresado = Egresado.objects.get(id=egresado_id)
     return render(request, './vistasPrivadas/egresado_detalle.html', {'egresado': egresado})
+
+def cargar_imagenes(request):
+    imagenes = Imagen.objects.all()  # Obtener todas las imágenes de la base de datos
+    
+    if request.method == 'POST':
+        # Si se está editando una imagen, obtenemos el objeto de la imagen
+        imagen_id = request.POST.get('imagen_id')  # El ID de la imagen a editar
+        imagen = Imagen.objects.get(id=imagen_id) if imagen_id else None
+        
+        # Solo permitir cambiar la imagen si existe en la base de datos
+        if imagen:
+            form = ImagenForm(request.POST, request.FILES, instance=imagen)
+            
+            if form.is_valid():
+                # Guardar la nueva imagen, si el formulario es válido
+                form.save()
+                return redirect('cargar_imagenes')  # Redirigir después de guardar la imagen
+    else:
+        form = ImagenForm()
+    
+    return render(request, 'vistasPrivadas/cargar_imagenes.html', {'form': form, 'imagenes': imagenes})
+
 
 
 
