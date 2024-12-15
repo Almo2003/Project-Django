@@ -13,7 +13,7 @@
             {% for egresado in egresados %}
                 <div class="col-md-4 mb-4">
                     <div class="card">
-                        <img src="{{ egresado.imagen }}" class="card-img-top" alt="Imagen de {{ egresado.nombre }}">
+                        <img src="{{ egresado.Imagen.url }}" class="card-img-top" alt="Imagen de {{ egresado.nombre }}">
                         <div class="card-body">
                             <h5 class="card-title">{{ egresado.nombre }}</h5>
                             <p class="card-text"><strong>Profesión:</strong> {{ egresado.profesion }}</p>

@@ -17,12 +17,22 @@ from django.conf import settings
 
 # Create your views here.
 def home(request, extra=None):
-    # Verificamos si hay un segmento adicional en la URL (parámetro extra)
+    # Obtenemos todos los objetos de Imagen y Egresado
     imagenes = Imagen.objects.all()
+    egresados = Egresado.objects.all()
+    
+    # Verificamos si hay un segmento adicional en la URL (parámetro extra)
     if extra is not None:
         # Si hay un segmento adicional, redirigimos a la página de inicio de sesión
         return redirect('home')
-    return render(request, './vistasPublicas/home.html',{'imagenes':imagenes})
+    
+    # Combinamos los contextos en un solo diccionario
+    context = {
+        'imagenes': imagenes,
+        'egresados': egresados
+    }
+    
+    return render(request, './vistasPublicas/home.html', context)
 
 def signup(request, extra=None):
     # Verificamos si hay un segmento adicional en la URL (parámetro extra)

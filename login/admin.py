@@ -22,7 +22,7 @@ class EgresadoAdmin(admin.ModelAdmin):
                     'descripcion', 
                     'trayectoria', 
                     'datos_adicionales', 
-                    'imagen_url')
+                    'Imagen')
 
     def save_model(self, request, obj, form, change):
         if Egresado.objects.count() >= 3:

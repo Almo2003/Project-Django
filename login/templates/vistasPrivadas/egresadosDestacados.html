@@ -7,34 +7,35 @@
     <!-- Contenedor de las tarjetas -->
     <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for egresado in egresados %}
-        <div class="col">
-            <div class="profile-card shadow-sm d-flex flex-column">
-                <!-- Imagen del egresado -->
-                {% if egresado.imagen_url %}
-                <img src="{{ egresado.imagen_url}}" alt="Imagen de {{ egresado.nombre }}" class="profile-image img-fluid">
-                {% else %}
-                <img src="https://via.placeholder.com/200" alt="Imagen no disponible" class="profile-image img-fluid">
-                {% endif %}
-                <!-- Contenido del egresado -->
-                <div class="profile-content flex-grow-1 d-flex flex-column">
-                    <h2 class="profile-name">{{ egresado.nombre }}</h2>
-                    <p class="profile-profession"><strong>Profesión:</strong> {{ egresado.profesion }}</p>
-                    <p class="profile-year"><strong>Año de Grado:</strong> {{ egresado.ano_grado }}</p>
-                    <p class="profile-position"><strong>Cargo Actual:</strong> {{ egresado.cargo_actual }}</p>
-                    <p class="profile-email">
-                        <strong>Correo Electrónico:</strong>
-                        <a href="mailto:{{ egresado.correo }}">{{ egresado.correo }}</a>
-                    </p>
-                    <p class="profile-description"><strong>Descripción:</strong> {{ egresado.descripcion }}</p>
-                    <p class="profile-date"><strong>Datos Adicionales:</strong> {{ egresado.datos_adicionales }}</p>
-                </div>
+            <div class="col">
+                <div class="profile-card shadow-sm d-flex flex-column">
+                    <!-- Imagen del egresado -->
+                    {% if egresado.Imagen %}
+                       <img src="{{ egresado.Imagen.url }}" alt="Imagen de {{ egresado.nombre }}" class="profile-image img-fluid">
+                    {% else %}
+                      <img src="https://via.placeholder.com/200" alt="Imagen no disponible" class="profile-image img-fluid">
+                    {% endif %}
+                    <!-- Contenido del egresado -->
+                    <div class="profile-content flex-grow-1 d-flex flex-column">
+                        <h2 class="profile-name">{{ egresado.nombre }}</h2>
+                        <p class="profile-profession"><strong>Profesión:</strong> {{ egresado.profesion }}</p>
+                        <p class="profile-year"><strong>Año de Grado:</strong> {{ egresado.ano_grado }}</p>
+                        <p class="profile-position"><strong>Cargo Actual:</strong> {{ egresado.cargo_actual }}</p>
+                        <p class="profile-email">
+                            <strong>Correo Electrónico:</strong>
+                            <a href="mailto:{{ egresado.correo }}">{{ egresado.correo }}</a>
+                        </p>
+                        <p class="profile-trayectory"><strong>Trayectoria:</strong>{{ egresado.trayectoria }}</p>
+                        <p class="profile-description"><strong>Descripción:</strong> {{ egresado.descripcion }}</p>
+                        <p class="profile-date"><strong>Datos Adicionales:</strong> {{ egresado.datos_adicionales }}</p>
+                    </div>
 
-                <!-- Botón -->
-                <button class="btn btn-primary mt-3" onclick="window.location.href='{% url 'editar_egresado' egresado.id %}'">Modificar</button>
+                    <!-- Botón -->
+                    <button class="btn btn-primary mt-3" onclick="window.location.href='{% url 'editar_egresado' egresado.id %}'">Modificar</button>
+                </div>
             </div>
-        </div>
         {% empty %}
-        <p class="text-center text-muted">No hay egresados destacados aún. Puedes agregar hasta tres.</p>
+         <p class="text-center text-muted">No hay egresados destacados aún. Puedes agregar hasta tres.</p>
         {% endfor %}
     </div>
 

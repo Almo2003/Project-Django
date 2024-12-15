@@ -108,54 +108,38 @@
             </div>
         </section>
 
-        <!--Tercera Vista-->
-        <section class="section3 mt-5"
-            style="background-color: rgba(255, 255, 255, 0.5); padding: 2rem; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+        <section class="section3 mt-5" style="background-color: rgba(255, 255, 255, 0.5); padding: 2rem; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
             <div class="container">
-                <h2 class="text-center mb-4"
-                    style="color: #1B9D87; font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold;">
+                <h2 class="text-center mb-4" style="color: #1B9D87; font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold;">
                     Noticias de Egresados</h2>
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="card shadow-sm">
-                            <a href="{% url 'egresado_detalle' egresado_id=13 %}">
-                                <img src="https://www.iser.edu.co/wp-content/uploads/2023/08/WhatsApp-Image-2019-05-02-at-4.44.54-PM-1024x682.jpeg"
-                                    class="card-img-top" alt="Noticia 1">
-                            </a>
-                            <div class="card-body text-center">
-                                <h5 class="card-title" style="color: #1B9E88; font-weight: bold;">Juan Camilo Ortiz
-                                    Ortega</h5>
+                    {% if egresados %}
+                        {% for egresado in egresados %}
+                            <div class="col-md-4">
+                                <div class="card shadow-sm">
+                                    <!-- Enlace a la vista de detalle del egresado -->
+                                    <a href="{% url 'egresado_detalle' egresado.id %}">
+                                        {% if egresado.Imagen %}
+                                            <img src="{{ egresado.Imagen.url }}" class="card-img-top" alt="Noticia {{ egresado.nombre }}">
+                                        {% else %}
+                                            <img src="https://via.placeholder.com/200" class="card-img-top" alt="Imagen no disponible">
+                                        {% endif %}
+                                    </a>
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title" style="color: #1B9E88; font-weight: bold;">
+                                            {{ egresado.nombre }}
+                                        </h5>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card shadow-sm">
-                            <a href="{% url 'egresado_detalle' egresado_id=14 %}">
-                                <img src="https://yourteenmag.com/wp-content/uploads/2013/06/Depositphotos_24196475_l-2015.jpg"
-                                    class="card-img-top" alt="Noticia 2">
-                            </a>
-                            <div class="card-body text-center">
-                                <h5 class="card-title" style="color: #1B9E88; font-weight: bold;">Karol Juliana Peña
-                                    Vera</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card shadow-sm">
-                            <a href="{% url 'egresado_detalle' egresado_id=15 %}">
-                                <img src="https://d2jyir0m79gs60.cloudfront.net/news/images/successful-college-student-lg.png"
-                                    class="card-img-top" alt="Noticia 3">
-                            </a>
-                            <div class="card-body text-center">
-                                <h5 class="card-title" style="color: #1B9E88; font-weight: bold;">Jesus David Moreno
-                                    Angarita</h5>
-                            </div>
-                        </div>
-                    </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-center text-muted">No hay egresados destacados aún.</p>
+                    {% endif %}
                 </div>
             </div>
         </section>
-
+    
         <!--Cuarta Vista-->
         <section class="section4 mt-5"
             style="background: rgba(13, 64, 16, 0.73); padding: 2rem; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
@@ -207,33 +191,61 @@
             padding: 0;
             overflow: hidden;
         }
-
+    
         section {
             padding: 0;
         }
-
+    
         .section2 .card:hover {
             transform: scale(1.05);
             box-shadow: 0 4px 15px rgba(13, 64, 16, 0.73);
         }
-
+    
         .section3 .card:hover {
             transform: scale(1.05);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
-
+    
+        /* Ajustes para garantizar que todas las tarjetas tengan el mismo tamaño */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    
+        .card {
+            display: flex;
+            flex-direction: column;
+            height: 100%; /* Asegura que las tarjetas tengan la misma altura */
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+    
+        /* Tarjeta cuerpo (contenido) con altura flexible */
+        .card-body {
+            flex-grow: 1; /* Hace que el contenido ocupe el espacio disponible */
+        }
+    
+        /* Imagen de la tarjeta */
+        .card-img-top {
+            object-fit: cover;
+            height: 200px; /* Ajusta el tamaño de la imagen si es necesario */
+            width: 100%;
+            border-radius: 12px 12px 0 0;
+        }
+    
         .image-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
         }
-
+    
         .image-grid img {
             width: 100%;
             height: auto;
             border-radius: 8px;
         }
-
+    
         .carousel-container {
             position: relative;
             width: 100%;
@@ -241,23 +253,23 @@
             margin: auto;
             overflow: hidden;
         }
-
+    
         .carousel-images {
             display: flex;
             transition: transform 0.5s ease-in-out;
         }
-
+    
         .carousel-item {
             min-width: 100%;
             height: 400px;
             display: none; /* Ocultar imágenes inicialmente */
         }
-
+    
         .carousel-item img {
             width: 100%;
             object-fit: contain;
         }
-
+    
         .carousel-prev, .carousel-next {
             position: absolute;
             top: 50%;
@@ -270,19 +282,20 @@
             z-index: 1000;
             transform: translateY(-50%);
         }
-
+    
         .carousel-prev {
             left: 10px;
         }
-
+    
         .carousel-next {
             right: 10px;
         }
-
+    
         .carousel-prev:hover, .carousel-next:hover {
             background-color: rgba(0, 0, 0, 0.8);
         }
     </style>
+    
     <script>
         let currentIndex = 0;
         const items = document.querySelectorAll('.carousel-item');

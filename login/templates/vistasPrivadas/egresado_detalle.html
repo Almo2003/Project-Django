@@ -9,7 +9,7 @@
         <div class="col-12 col-md-6 col-lg-4">
             <div class="profile-card shadow-sm d-flex flex-column">
                 <!-- Imagen del egresado -->
-                <img src="{{ egresado.imagen_url }}" alt="Imagen de {{ egresado.nombre }}" class="profile-image img-fluid">
+                <img src="{{ egresado.Imagen.url }}" alt="Imagen de {{ egresado.nombre }}" class="profile-image img-fluid">
                 <!-- Contenido del egresado -->
                 <div class="profile-content flex-grow-1 d-flex flex-column">
                     <h2 class="profile-name">{{ egresado.nombre }}</h2>
@@ -20,6 +20,7 @@
                         <strong>Correo Electrónico:</strong>
                         <a href="mailto:{{ egresado.correo }}">{{ egresado.correo }}</a>
                     </p>
+                    <p class="profile-trayectory"><strong>Trayectoria:</strong>{{ egresado.trayectoria }}</p>
                     <p class="profile-description"><strong>Descripción:</strong> {{ egresado.descripcion }}</p>
                     <p class="profile-date"><strong>Datos Adicionales:</strong> {{ egresado.datos_adicionales }}</p>
                 </div>
