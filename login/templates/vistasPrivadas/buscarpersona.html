@@ -1,17 +1,26 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %}  <!-- Hereda la plantilla base.html para reutilizar el diseño común -->
 
 {% block content %}
-<main class="container py-5">
+<main class="container py-5">  <!-- Contenedor principal con un padding vertical de 5 -->
+
+    <!-- Título de la página, centrado y con una fuente destacada -->
     <h1 class="display-3 text-center">Buscar Persona</h1>
+
+    <!-- Formulario para realizar la búsqueda de una persona por documento -->
     <form method="POST" class="text-center">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="documento">Documento:</label>
+        {% csrf_token %}  <!-- Token de seguridad para prevenir ataques CSRF -->
+        
+        <div class="form-group">  <!-- Agrupación del campo de formulario -->
+            <label for="documento">Documento:</label>  <!-- Etiqueta para el campo de documento -->
+            <!-- Campo de entrada para el documento, obligatorio -->
             <input type="text" name="documento" id="documento" class="form-control" required>
         </div>
+
+        <!-- Botón para enviar el formulario -->
         <button type="submit" class="btn btn-primary mt-3">Buscar</button>
     </form>
 
+    <!-- Si hay un mensaje de error, se muestra en un cuadro de alerta -->
     {% if error_message %}
         <div class="alert alert-danger mt-3">{{ error_message }}</div>
     {% endif %}

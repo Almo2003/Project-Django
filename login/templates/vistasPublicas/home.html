@@ -17,13 +17,16 @@
     <main class="container-fluid p-0">
         <!-- Primera Vista -->
         <section class="card card-body text-left" style="background-color: rgba(255, 255, 255, 0.1); height: 100vh; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+            <!-- Contenedor para centrar el contenido -->
             <div class="container" style="display: flex; justify-content: center; align-items: center; height: 100%;">
                 <div class="row align-items-center justify-content-center" style="width: 100%; height: 100%;">
                     <div class="col-md-6" style="position: relative; overflow: hidden; height: 50vh;">
+                        <!-- Video de fondo -->
                         <video autoplay loop muted playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; border-radius: 8px;">
                             <source src="../../static/multi/iservideo.mp4" type="video/mp4">
                             Tu navegador no soporta la reproducción de videos.
                         </video>
+                        <!-- Superposición oscura y texto -->
                         <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1; padding: 2rem; border-radius: 8px;">
                             <h1 class="display-4" style="font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold; color: white; margin-bottom: 1rem; text-align: center;">Gestión de Egresados</h1>
                             <p style="font-family: Verdana, sans-serif; font-size: 1rem; line-height: 1.6; text-align: justify; color: white;">
@@ -32,14 +35,17 @@
                         </div>
                     </div>
                     <div class="col-md-6">
+                        <!-- Carrusel de imágenes -->
                         <div id="carouselExample" class="carousel-container">
                             <div class="carousel-images">
+                                <!-- Ciclo que muestra imágenes dinámicamente -->
                                 {% for imagen in imagenes %}
                                 <div class="carousel-item">
                                     <img style="height: 100%; width: 100%; object-fit: cover;" src="{{ imagen.imagen.url }}" alt="Imagen ISER {{ forloop.counter }}">
                                 </div>
                                 {% endfor %}
                             </div>
+                            <!-- Botones para navegar en el carrusel -->
                             <button class="carousel-prev" onclick="moveCarousel(-1)">&#10094;</button>
                             <button class="carousel-next" onclick="moveCarousel(1)">&#10095;</button>
                         </div>
@@ -47,58 +53,45 @@
                 </div>
             </div>
         </section>
-
-
-        <!--Segunda Vista-->
-        <section class="section2"
-            style="background: rgba(13, 64, 16, 0.73); height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+    
+        <!-- Segunda Vista -->
+        <section class="section2" style="background: rgba(13, 64, 16, 0.73); height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column;">
             <div class="container text-center">
                 <div class="row justify-content-center">
                     <!-- Columna de imagen -->
                     <div class="col-md-6 d-flex justify-content-center align-items-center">
-                        <img src="../../static/multi/logo original.png" alt="logo iser"
-                            style="max-width: 100%; height: auto;">
+                        <img src="../../static/multi/logo original.png" alt="logo iser" style="max-width: 100%; height: auto;">
                     </div>
                     <!-- Columna de contenido -->
                     <div class="col-md-6 d-flex justify-content-center align-items-center">
                         <div>
-                            <h2 class="mb-4"
-                                style="color: rgba(255, 255, 255); font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold;">
-                                Funcionalidades</h2>
+                            <h2 class="mb-4" style="color: rgba(255, 255, 255); font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold;">
+                                Funcionalidades
+                            </h2>
                             <div class="row justify-content-center">
+                                <!-- Cuatro tarjetas con funcionalidades -->
                                 <div class="col-md-3 col-sm-6 mb-4">
-                                    <div class="card shadow-sm"
-                                        style="background-color: rgba(13, 64, 16, 0.73); border-radius: 10px; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem;">
+                                    <div class="card shadow-sm" style="background-color: rgba(13, 64, 16, 0.73); border-radius: 10px; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem;">
                                         <h4 style="color: rgba(255, 255, 255); font-weight: bold;">Manejo de Datos</h4>
-                                        <p style="color: rgba(255, 255, 255); font-size: 0.9rem;">Facilidad para acceder
-                                            a tus datos</p>
+                                        <p style="color: rgba(255, 255, 255); font-size: 0.9rem;">Facilidad para acceder a tus datos</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-sm-6 mb-4">
-                                    <div class="card shadow-sm"
-                                        style="background-color: rgba(13, 64, 16, 0.73); border-radius: 10px; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem;">
-                                        <h4 style="color: rgba(255, 255, 255); font-weight: bold;">Registro de Cambios
-                                        </h4>
-                                        <p style="color: rgba(255, 255, 255); font-size: 0.9rem;">Seguimiento a los
-                                            cambios surgidos</p>
+                                    <div class="card shadow-sm" style="background-color: rgba(13, 64, 16, 0.73); border-radius: 10px; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem;">
+                                        <h4 style="color: rgba(255, 255, 255); font-weight: bold;">Registro de Cambios</h4>
+                                        <p style="color: rgba(255, 255, 255); font-size: 0.9rem;">Seguimiento a los cambios surgidos</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-sm-6 mb-4">
-                                    <div class="card shadow-sm"
-                                        style="background-color: rgba(13, 64, 16, 0.73); border-radius: 10px; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem;">
-                                        <h4 style="color: rgba(255, 255, 255); font-weight: bold;">Validacion de
-                                            Registro</h4>
-                                        <p style="color: rgba(255, 255, 255); font-size: 0.9rem;">Validar la duplicacion
-                                            de datos</p>
+                                    <div class="card shadow-sm" style="background-color: rgba(13, 64, 16, 0.73); border-radius: 10px; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem;">
+                                        <h4 style="color: rgba(255, 255, 255); font-weight: bold;">Validacion de Registro</h4>
+                                        <p style="color: rgba(255, 255, 255); font-size: 0.9rem;">Validar la duplicación de datos</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-sm-6 mb-4">
-                                    <div class="card shadow-sm"
-                                        style="background-color: rgba(13, 64, 16, 0.73); border-radius: 10px; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem;">
-                                        <h4 style="color: rgb(255, 255, 255); font-weight: bold;">Historial de
-                                            Trazabilidad</h4>
-                                        <p style="color: rgba(255, 255, 255); font-size: 0.9rem;">Visualizar
-                                            trazabilidad del egresado</p>
+                                    <div class="card shadow-sm" style="background-color: rgba(13, 64, 16, 0.73); border-radius: 10px; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem;">
+                                        <h4 style="color: rgb(255, 255, 255); font-weight: bold;">Historial de Trazabilidad</h4>
+                                        <p style="color: rgba(255, 255, 255); font-size: 0.9rem;">Visualizar trazabilidad del egresado</p>
                                     </div>
                                 </div>
                             </div>
@@ -107,31 +100,34 @@
                 </div>
             </div>
         </section>
-
+    
+        <!-- Tercera Vista -->
         <section class="section3 mt-5" style="background-color: rgba(255, 255, 255, 0.5); padding: 2rem; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
             <div class="container">
                 <h2 class="text-center mb-4" style="color: #1B9D87; font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold;">
-                    Noticias de Egresados</h2>
+                    Noticias de Egresados
+                </h2>
                 <div class="row">
+                    <!-- Condicional para mostrar noticias si existen -->
                     {% if egresados %}
                         {% for egresado in egresados %}
-                            <div class="col-md-4">
-                                <div class="card shadow-sm">
-                                    <!-- Enlace a la vista de detalle del egresado -->
-                                    <a href="{% url 'egresado_detalle' egresado.id %}">
-                                        {% if egresado.Imagen %}
-                                            <img src="{{ egresado.Imagen.url }}" class="card-img-top" alt="Noticia {{ egresado.nombre }}">
-                                        {% else %}
-                                            <img src="https://via.placeholder.com/200" class="card-img-top" alt="Imagen no disponible">
-                                        {% endif %}
-                                    </a>
-                                    <div class="card-body text-center">
-                                        <h5 class="card-title" style="color: #1B9E88; font-weight: bold;">
-                                            {{ egresado.nombre }}
-                                        </h5>
-                                    </div>
+                        <div class="col-md-4">
+                            <div class="card shadow-sm">
+                                <!-- Enlace a la vista de detalle del egresado -->
+                                <a href="{% url 'egresado_detalle' egresado.id %}">
+                                    {% if egresado.Imagen %}
+                                        <img src="{{ egresado.Imagen.url }}" class="card-img-top" alt="Noticia {{ egresado.nombre }}">
+                                    {% else %}
+                                        <img src="https://via.placeholder.com/200" class="card-img-top" alt="Imagen no disponible">
+                                    {% endif %}
+                                </a>
+                                <div class="card-body text-center">
+                                    <h5 class="card-title" style="color: #1B9E88; font-weight: bold;">
+                                        {{ egresado.nombre }}
+                                    </h5>
                                 </div>
                             </div>
+                        </div>
                         {% endfor %}
                     {% else %}
                         <p class="text-center text-muted">No hay egresados destacados aún.</p>
@@ -139,26 +135,24 @@
                 </div>
             </div>
         </section>
-    
-        <!--Cuarta Vista-->
-        <section class="section4 mt-5"
-            style="background: rgba(13, 64, 16, 0.73); padding: 2rem; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+        
+        <!-- Cuarta Vista -->
+        <section class="section4 mt-5" style="background: rgba(13, 64, 16, 0.73); padding: 2rem; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
             <div class="container">
-                <h2 class="text-center mb-4"
-                    style="color: #1B9D87; font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold;">
+                <h2 class="text-center mb-4" style="color: #1B9D87; font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold;">
                     Datos Estadísticos
                 </h2>
             </div>
         </section>
-
+    
         <!-- Quinta Vista -->
-        <section class="section5 mt-5"
-            style="background-color: #f8f9fa; padding: 2rem; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+        <section class="section5 mt-5" style="background-color: #f8f9fa; padding: 2rem; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
             <div class="container">
-                <h2 class="text-center mb-4"
-                    style="color: #1B9D87; font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold;">
-                    Síguenos en Redes Sociales</h2>
+                <h2 class="text-center mb-4" style="color: #1B9D87; font-family: Verdana, sans-serif; font-size: 2.5rem; font-weight: bold;">
+                    Síguenos en Redes Sociales
+                </h2>
                 <div class="row justify-content-center">
+                    <!-- Enlaces a redes sociales -->
                     <div class="col-md-2 col-sm-4 mb-4">
                         <a href="https://www.facebook.com/iser.pamplona?mibextid=ZbWKwL" target="_blank">
                             <i class="fab fa-facebook fa-3x" style="color: #3b5998;"></i>
@@ -177,13 +171,14 @@
                 </div>
             </div>
         </section>
-
+    
         <!-- Footer -->
         <footer class="bg-dark text-white text-center py-4 mt-5">
             <p class="mb-0">© 2024 ISER. Todos los derechos reservados.</p>
             <p>Contacto: iserpam@iser.edu.co | Tel: +57 320 655 6171</p>
         </footer>
     </main>
+    
 
     <style>
         main {
@@ -324,7 +319,7 @@
         function startAutoCarousel() {
             setInterval(() => {
                 moveCarousel(1); // Mover el carrusel hacia adelante cada 3 segundos
-            }, 3000);
+            }, 5000);
         }
 
         // Iniciar el carrusel automático

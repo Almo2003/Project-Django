@@ -1,88 +1,105 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<!-- Contenedor principal con un diseño centrado y altura mínima del 80% de la vista -->
 <div class="container mt-5 d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <!-- Tarjeta con sombra y bordes redondeados que contiene el formulario de edición -->
     <div class="card shadow-lg rounded-lg border-light p-4" style="max-width: 600px; width: 100%;">
+        <!-- Título principal que muestra el nombre del egresado a editar -->
         <h1 class="card-title text-center mb-4">Editar Egresado: {{ egresado.nombre }}</h1>
+        
+        <!-- Formulario para enviar los datos, que permite cargar archivos -->
         <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
+            {% csrf_token %}  <!-- Token de seguridad CSRF para proteger el formulario -->
+            
+            <!-- Renderiza el formulario dinámicamente como párrafos -->
             {{ form.as_p }}
+
+            <!-- Contenedor para los botones con espacio entre ellos -->
             <div class="d-flex justify-content-between mt-4">
+                <!-- Botón de guardar, con un evento onclick que redirige a la página de egresados destacados -->
                 <button class="btn btn-primary" onclick="window.location.href='{% url 'egresadosDestacados'%}'">  
                     Guardar  
                 </button>
+
+                <!-- Botón de cancelar que redirige también a la página de egresados destacados -->
                 <a href="{% url 'egresadosDestacados' %}" class="btn btn-secondary w-45">Cancelar</a>
             </div>
         </form>
     </div>
 </div>
 
+<!-- Estilos CSS para personalizar la apariencia de la página y sus elementos -->
 <style>
     /* Fondo general */
     body {
-        background-color: #f4f6f8;
-        font-family: 'Roboto', sans-serif;
-        color: #333;
+        background-color: #f4f6f8;  /* Color de fondo claro */
+        font-family: 'Roboto', sans-serif;  /* Fuente de texto */
+        color: #333;  /* Color del texto */
     }
 
-    /* Card */
+    /* Estilo de la tarjeta donde está el formulario */
     .card {
-        border: 1px solid #e3e6ea;
-        background: white;
-        border-radius: 10px;
-        padding: 30px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e3e6ea;  /* Borde suave alrededor de la tarjeta */
+        background: white;  /* Fondo blanco */
+        border-radius: 10px;  /* Bordes redondeados */
+        padding: 30px;  /* Espaciado dentro de la tarjeta */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  /* Sombra suave alrededor de la tarjeta */
     }
 
-    /* Título de la tarjeta */
+    /* Estilo para el título de la tarjeta */
     .card-title {
-        font-size: 1.8rem;
-        font-weight: bold;
-        color: #1B9E88;
+        font-size: 1.8rem;  /* Tamaño de fuente grande */
+        font-weight: bold;  /* Texto en negrita */
+        color: #1B9E88;  /* Color verde para el título */
     }
 
-    /* Botones */
+    /* Estilos generales para los botones */
     .btn {
-        font-size: 1rem;
-        font-weight: 600;
-        padding: 10px 15px;
-        border-radius: 6px;
+        font-size: 1rem;  /* Tamaño de fuente para los botones */
+        font-weight: 600;  /* Peso de fuente medio */
+        padding: 10px 15px;  /* Espaciado dentro de los botones */
+        border-radius: 6px;  /* Bordes redondeados para los botones */
     }
 
+    /* Estilos para el botón de éxito (si hubiera) */
     .btn-success {
-        background-color: #28a745;
-        border: none;
+        background-color: #28a745;  /* Fondo verde */
+        border: none;  /* Sin borde */
     }
 
     .btn-success:hover {
-        background-color: #218838;
+        background-color: #218838;  /* Cambio de color al pasar el ratón */
     }
 
+    /* Estilos para el botón de cancelar */
     .btn-secondary {
-        background-color: #6c757d;
-        border: none;
+        background-color: #6c757d;  /* Fondo gris */
+        border: none;  /* Sin borde */
     }
 
     .btn-secondary:hover {
-        background-color: #5a6268;
+        background-color: #5a6268;  /* Cambio de color al pasar el ratón */
     }
 
-    /* Ajustes de ancho de botones */
+    /* Estilo para ajustar el ancho de los botones */
     .w-45 {
-        width: 45%;
+        width: 45%;  /* Ancho del 45% para los botones */
     }
 
-    /* Formulario */
+    /* Estilos para los elementos del formulario (input, select, textarea) */
     form input, form select, form textarea {
-        border-radius: 5px;
-        border: 1px solid #ced4da;
-        padding: 10px;
+        border-radius: 5px;  /* Bordes redondeados */
+        border: 1px solid #ced4da;  /* Borde gris claro */
+        padding: 10px;  /* Espaciado dentro de los campos */
     }
 
+    /* Estilos cuando los campos del formulario están en foco */
     form input:focus, form select:focus, form textarea:focus {
-        border-color: #80bdff;
-        outline: none;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        border-color: #80bdff;  /* Borde azul claro */
+        outline: none;  /* Elimina el contorno por defecto */
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);  /* Sombra azul al enfocar el campo */
     }
 </style>
+
 {% endblock %}

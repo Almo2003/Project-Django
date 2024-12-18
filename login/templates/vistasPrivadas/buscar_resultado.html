@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Definimos el conjunto de caracteres para la página -->
     <meta charset="UTF-8">
+    <!-- Hacemos la página adaptable a diferentes tamaños de pantalla (para móviles y tabletas) -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Título de la página que aparece en la pestaña del navegador -->
     <title>Detalle Persona</title>
+    <!-- Enlace a la hoja de estilos de Bootstrap para aplicar estilos modernos y responsivos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
 </head>
 <body>
+    <!-- Contenedor principal con márgenes verticales de 5 -->
     <div class="container my-5">
-        <!-- Título principal -->
+        <!-- Título principal con un estilo de color azul y márgenes inferiores -->
         <h1 class="text-center text-primary mb-4">Detalle de Persona</h1>
 
-        <!-- Datos básicos de la persona -->
+        <!-- Sección que muestra los datos básicos de la persona -->
         <div class="card shadow-sm mb-4">
             <div class="card-header bg-primary text-white">
+                <!-- Subtítulo dentro de la tarjeta con un tamaño de texto más pequeño -->
                 <h2 class="h5">Información Personal</h2>
             </div>
             <div class="card-body">
+                <!-- Tabla que contiene los datos personales -->
                 <table class="table table-bordered">
                     <thead class="table-light">
                         <tr>
@@ -27,6 +34,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <!-- Fila con los datos dinámicos de la persona -->
                         <tr>
                             <td>{{ persona.nombre }}</td>
                             <td>{{ persona.documento }}</td>
@@ -38,13 +46,15 @@
             </div>
         </div>
 
-        <!-- Trazabilidad -->
+        <!-- Sección de trazabilidad que se muestra solo si hay trazabilidades -->
         {% if trazabilidades %}
             <div class="card shadow-sm">
                 <div class="card-header bg-success text-white">
+                    <!-- Subtítulo dentro de la tarjeta de trazabilidad -->
                     <h2 class="h5">Trazabilidad</h2>
                 </div>
                 <div class="card-body">
+                    <!-- Tabla que muestra las trazabilidades de la persona -->
                     <table class="table table-striped">
                         <thead class="table-success">
                             <tr>
@@ -56,27 +66,31 @@
                             </tr>
                         </thead>
                         {% for trazabilidad in trazabilidades %}
+                            <!-- Fila para cada trazabilidad con datos dinámicos -->
                             <tr>
                                 <td>{{ trazabilidad.ubicacion_laboral }}</td>
                                 <td>{{ trazabilidad.correoelectronico }}</td>
                                 <td>{{ trazabilidad.telefono }}</td>
                                 <td>{{ trazabilidad.oferta }}</td>
                                 <td>
-                                    <!-- Botones de acción -->
+                                    <!-- Botones para modificar o eliminar trazabilidad -->
                                     <a href="{% url 'modificar_trazabilidad' trazabilidad.id %}" class="btn btn-warning btn-sm">Modificar</a>
                                     <a href="{% url 'eliminar_trazabilidad' trazabilidad.id %}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar esta trazabilidad?');">Eliminar</a>
                                 </td>
                             </tr>
                         {% endfor %}
                     </table>
+                    <!-- Botón para agregar una nueva trazabilidad -->
                     <button class="btn btn-primary" onclick="window.location.href='{% url 'agregar_trazabilidad' persona.documento %}'">  
                         Agregar Trazabilidad  
                     </button>
                 </div>
             </div>
         {% else %}
+            <!-- Mensaje de advertencia si no hay trazabilidad disponible -->
             <div class="alert alert-warning text-center mt-4">
                 <p>La persona no tiene trazabilidad.</p>
+                <!-- Botón para agregar una trazabilidad -->
                 <button class="btn btn-primary" onclick="window.location.href='{% url 'agregar_trazabilidad' persona.documento %}'">  
                     Agregar Trazabilidad  
                 </button>
@@ -84,6 +98,7 @@
         {% endif %}
     </div>
 
+    <!-- Script de Bootstrap para manejar elementos interactivos -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

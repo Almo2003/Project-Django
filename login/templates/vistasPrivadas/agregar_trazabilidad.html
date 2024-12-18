@@ -1,17 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Definimos el conjunto de caracteres que usará la página (UTF-8) -->
     <meta charset="UTF-8">
+    <!-- Título de la página que aparece en la pestaña del navegador -->
     <title>Agregar Trazabilidad</title>
+    <!-- Enlace a la hoja de estilos de Bootstrap 5 para diseñar la página -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
 </head>
 <body>
+    <!-- Contenedor principal con márgenes superiores de 5 -->
     <div class="container mt-5">
+        <!-- Encabezado que muestra el nombre de la persona a la cual se le agregará trazabilidad -->
         <h1>Agregar Trazabilidad para {{ persona.nombre }}</h1>
+        
+        <!-- Formulario que envía los datos a través de POST -->
         <form method="post">
+            <!-- Token de seguridad CSRF para proteger el formulario de ataques -->
             {% csrf_token %}
+            <!-- El formulario se renderiza dinámicamente, mostrando los campos de entrada -->
             {{ form.as_p }}
-            <button type="submit" class="btn btn-primary" >Guardar Trazabilidad</button>
+            
+            <!-- Botón para enviar el formulario con la clase de Bootstrap 'btn btn-primary' para estilos -->
+            <button type="submit" class="btn btn-primary">Guardar Trazabilidad</button>
+            
+            <!-- Enlace para cancelar y volver a la vista del detalle de la persona, usando la URL 'buscar_resultado' -->
             <a href="{% url 'buscar_resultado' persona.documento %}" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>

@@ -34,64 +34,77 @@ def home(request, extra=None):
     
     return render(request, './vistasPublicas/home.html', context)
 
+# Función para registrar nuevos usuarios
 def signup(request, extra=None):
     # Verificamos si hay un segmento adicional en la URL (parámetro extra)
     if extra is not None:
-        # Si hay un segmento adicional, redirigimos a la página de inicio de sesión
+        # Si hay un segmento adicional, redirigimos a la página de registro para evitar rutas no deseadas
         return redirect('signup')
     
+    # Si la solicitud es GET, renderizamos el formulario de registro
     if request.method == 'GET':
         return render(request, './vistasPublicas/signup.html', {"form": UserCreationForm})
-    else:
-
+    else:  # Si la solicitud es POST
+        # Verificamos si las contraseñas coinciden
         if request.POST["password1"] == request.POST["password2"]:
             try:
+                # Creamos un nuevo usuario con el username y la contraseña proporcionados
                 user = User.objects.create_user(
                     request.POST["username"], password=request.POST["password1"])
-                user.save()
-                login(request, user)
-                return redirect('signin')
+                user.save()  # Guardamos el usuario en la base de datos
+                login(request, user)  # Iniciamos sesión automáticamente
+                return redirect('signin')  # Redirigimos al inicio de sesión
             except IntegrityError:
+                # Si ocurre un error (como un nombre de usuario duplicado), mostramos un mensaje de error
                 return render(request, 'signup.html', {
                     "form": UserCreationForm, 
-                    "error": "Username already exists."})
+                    "error": "Username already exists."
+                })
 
+        # Si las contraseñas no coinciden, renderizamos el formulario con un mensaje de error
         return render(request, './vistasPublicas/signup.html', {
             "form": UserCreationForm, 
-            "error": "Passwords did not match."})
+            "error": "Passwords did not match."
+        })
 
+# Vista privada protegida con @login_required
 @login_required
 def private(request, extra=None):
-    # Verificamos si hay un segmento adicional en la URL (parámetro extra)
+    # Verificamos si hay un segmento adicional en la URL
     if extra is not None:
-        # Si hay un segmento adicional, redirigimos a la página de inicio de sesión
+        # Si existe, redirigimos nuevamente a la página privada
         return redirect('private')
+    # Renderizamos la plantilla de la vista privada
     return render(request, './vistasPrivadas/private.html')
 
+# Función para cerrar sesión
 @login_required
 def signout(request, extra=None):
-    # Verificamos si hay un segmento adicional en la URL (parámetro extra)
+    # Verificamos si hay un segmento adicional en la URL
     if extra is not None:
-        # Si hay un segmento adicional, redirigimos a la página de inicio de sesión
+        # Si existe, redirigimos nuevamente a la función de cierre de sesión
         return redirect('signout')
+    # Cerramos la sesión del usuario
     logout(request)
+    # Redirigimos a la página principal
     return redirect('home')
-    
+
+# Función para iniciar sesión
 def signin(request, extra=None):
-    # Verificamos si hay un segmento adicional en la URL (parámetro extra)
+    # Verificamos si hay un segmento adicional en la URL
     if extra is not None:
-        # Si hay un segmento adicional, redirigimos a la página de inicio de sesión
+        # Si existe, redirigimos a la función de inicio de sesión
         return redirect('signin')
 
-    # Si la solicitud es GET, renderizamos el formulario
+    # Si la solicitud es GET, renderizamos el formulario de inicio de sesión
     if request.method == 'GET':
         return render(request, './vistasPublicas/signin.html', {
             'form': AuthenticationForm()
         })
 
-    # Si la solicitud es POST, procesamos los datos del formulario
+    # Si la solicitud es POST, procesamos los datos enviados
     elif request.method == 'POST':
-        # Autenticamos el usuario con username y password
+        # Autenticamos al usuario con el username y password proporcionados
         user = authenticate(
             request, 
             username=request.POST.get('username'), 
@@ -105,83 +118,95 @@ def signin(request, extra=None):
                 'error': 'Username o contraseña incorrectos.'
             })
         
-        # Si el usuario es válido, iniciamos sesión
+        # Si la autenticación es exitosa, iniciamos sesión
         login(request, user)
-        # Redirigimos a la vista 'private'
+        # Redirigimos a la vista privada
         return redirect('private')
 
-    # Si llega un método no esperado, lanzamos un error 404
+    # Si el método no es válido, lanzamos un error 404
     raise Http404("Método no válido")
 
+# Función para cargar un archivo CSV
 @login_required    
 def cargar_archivo(request, extra=None):
+    # Verificamos si hay un segmento adicional en la URL
     if extra is not None:
+        # Si existe, redirigimos nuevamente a la función de carga
         return redirect('cargar_archivo')
     
-    if request.method == 'POST':
+    if request.method == 'POST':  # Si la solicitud es POST
         form = CSVUploadForm(request.POST, request.FILES)
         if form.is_valid():
+            # Obtenemos el archivo CSV cargado
             csv_file = request.FILES['csv_file']
 
-            # Recoger los nombres de las columnas ingresados en las cajas de texto
+            # Obtenemos los nombres de las columnas especificadas por el usuario
             column_names = [request.POST.get(f'columna_{i + 1}').strip() for i in range(int(request.POST.get('id_num_cajas', 0)))]
 
-            # Validar que no haya columnas vacías
-            errors = []  # Lista para almacenar errores
+            # Validamos que no haya columnas vacías
+            errors = []  # Lista para almacenar los errores
             for i, col in enumerate(column_names):
                 if col == "":
                     errors.append(f"Por favor, digite la columna {i + 1} que quiere observar.")
 
             if errors:
-                # Si hay errores, renderizar la plantilla con los errores
-                return render(request, 'cargar_archivo.html', {'form': form, 'errors': errors})
+                # Si hay errores, los mostramos al usuario
+                return render(request, './vistasPrivadas/cargar_archivo.html', {'form': form, 'errors': errors})
 
             try:
+                # Procesamos el archivo CSV
                 decoded_file = csv_file.read().decode('ISO-8859-1').splitlines()
                 reader = csv.DictReader(decoded_file, delimiter=';')
 
-                # Verificar si las columnas ingresadas existen en el CSV
+                # Verificamos que las columnas ingresadas existan en el archivo CSV
                 csv_columns = [col.strip() for col in reader.fieldnames]
 
                 if all(col in csv_columns for col in column_names):
+                    # Extraemos los datos de las columnas seleccionadas
                     data = []
                     for row in reader:
                         extracted_row = [row[col] for col in column_names if col in row]
                         data.append(extracted_row)
                 else:
+                    # Si las columnas no existen, lanzamos un error
                     raise ValueError("Una o más columnas ingresadas no existen en el archivo CSV")
 
             except Exception as e:
+                # Si ocurre un error al procesar el archivo, lo mostramos al usuario
                 error_message = f"Error al procesar el archivo: {str(e)}"
                 return render(request, './vistasPrivadas/cargar_archivo.html', {'form': form, 'error_message': error_message})
 
+            # Si todo es exitoso, renderizamos la vista para mostrar los datos del CSV
             return render(request, './vistasPrivadas/mostrar_csv.html', {
                 'data': data,
                 'column_names': column_names
             })
 
-    else:
+    else:  # Si la solicitud es GET
         form = CSVUploadForm()
 
+    # Renderizamos el formulario para cargar un archivo
     return render(request, './vistasPrivadas/cargar_archivo.html', {'form': form})
 
+# Función para guardar los datos en la base de datos
 @login_required
-
 def guardar_datos(request):
-    if request.method == 'POST':
-        # Obtener los datos del input hidden
+    if request.method == 'POST':  # Solo permitimos POST
+        # Obtenemos los datos desde el input oculto
         data = request.POST.get('data')
         print("Datos recibidos antes de decodificar:", data)
 
         try:
+            # Decodificamos los datos del JSON
             data = json.loads(data)
             print("Datos decodificados:", data)
         except json.JSONDecodeError as e:
+            # Si hay un error al decodificar, redirigimos a la vista de carga
             print(f"Error al decodificar JSON: {e}")
             return redirect('cargar_archivo')
 
         for row in data:
-            # Verificar si los valores existen antes de asignar
+            # Verificamos y asignamos los valores de cada columna
             nombre = row[0] if len(row) > 0 else None
             documento = row[1] if len(row) > 1 else None
             programa = row[2] if len(row) > 2 else None
@@ -191,10 +216,10 @@ def guardar_datos(request):
             telefono = row[6] if len(row) > 6 else None
             oferta = row[7] if len(row) > 7 else None
 
-            # Verificar si ya existe un registro con el mismo documento
+            # Verificamos si ya existe un registro con el mismo documento
             if documento and not Persona.objects.filter(documento=documento).exists():
                 try:
-                    # Crear y guardar una nueva instancia de Persona
+                    # Creamos y guardamos un nuevo registro en Persona
                     persona = Persona(
                         nombre=nombre,
                         documento=documento,
@@ -203,7 +228,7 @@ def guardar_datos(request):
                     )
                     persona.save()
 
-                    # Crear la instancia de Trazabilidad para los campos dinámicos
+                    # Creamos un registro en Trazabilidad si hay datos dinámicos
                     if telefono or correoelectronico or ubicacion_laboral or oferta:
                         trazabilidad = Trazabilidad(
                             persona=persona,
@@ -217,170 +242,210 @@ def guardar_datos(request):
                 except IntegrityError as e:
                     print(f"Error al guardar datos: {e}")
             else:
+                # Si el registro ya existe, lo ignoramos
                 print(f"Registro duplicado encontrado para documento: {documento}")
 
-        # Mostrar un mensaje de éxito
+        # Redirigimos a una vista de éxito tras guardar los datos
         return redirect('exito_guardado')
 
+    # Si el método no es POST, redirigimos a la vista de carga
     return redirect('cargar_archivo')
 
-
+# Función para mostrar el mensaje de éxito
 def exito_guardado(request):
     return render(request, 'exito_guardado.html')
 
+# Función para buscar una persona por su documento
 @login_required
 def buscar(request):
-    if request.method == 'POST':
-        documento = request.POST.get('documento')  # Obtenemos el documento del formulario
+    if request.method == 'POST':  # Verifica si la solicitud es de tipo POST
+        documento = request.POST.get('documento')  # Obtiene el documento del formulario enviado por el usuario
 
         try:
-            persona = Persona.objects.get(documento=documento)  # Intentamos obtener la persona
+            # Busca una persona en la base de datos con el documento proporcionado
+            persona = Persona.objects.get(documento=documento)
 
-            # Obtener la trazabilidad asociada a esta persona (si existe)
-            trazabilidades = Trazabilidad.objects.filter(persona=persona) 
+            # Busca todas las trazabilidades asociadas a esta persona
+            trazabilidades = Trazabilidad.objects.filter(persona=persona)
 
+            # Renderiza la vista con los resultados encontrados
             return render(request, './vistasPrivadas/buscar_resultado.html', {
                 'persona': persona,
                 'trazabilidades': trazabilidades,
             })
         except Persona.DoesNotExist:
-            # Si no existe, mostramos un mensaje de error
+            # Si no se encuentra ninguna persona con ese documento, se muestra un mensaje de error
             error_message = f"No se encontró ninguna persona con el documento {documento}."
             return render(request, './vistasPrivadas/buscarpersona.html', {'error_message': error_message})
 
+    # Si la solicitud no es POST, renderiza el formulario para buscar personas
     return render(request, './vistasPrivadas/buscarpersona.html')
 
+# Función para ver el historial de trazabilidad de una persona
 @login_required
 def ver_trazabilidad(request, documento):
+    # Busca la persona en la base de datos por su documento
     persona = get_object_or_404(Persona, documento=documento)
-    trazabilidades = persona.trazabilidades.all()  # Obtiene el historial de trazabilidad de la persona
+
+    # Obtiene todas las trazabilidades asociadas a esta persona
+    trazabilidades = persona.trazabilidades.all()
+
+    # Renderiza la vista de trazabilidad con los datos de la persona y su historial
     context = {
         'persona': persona,
         'trazabilidades': trazabilidades,
     }
     return render(request, './vistasPrivadas/ver_trazabilidad.html', context)
 
+# Función para mostrar el detalle de una persona y su trazabilidad
 @login_required
 def detalle_persona(request, documento):
-    # Busca la persona por su documento
+    # Busca la persona en la base de datos por su documento
     persona = get_object_or_404(Persona, documento=documento)
-    
-    # Obtén la trazabilidad asociada a la persona
+
+    # Obtiene todas las trazabilidades asociadas a esta persona
     trazabilidades = Trazabilidad.objects.filter(persona=persona)
+
+    # Renderiza la vista con los detalles de la persona y su trazabilidad
     contexto = {
         'persona': persona,
         'trazabilidades': trazabilidades,
     }
-    
     return render(request, './vistasPrivadas/buscar_resultado.html', contexto)
 
+# Función para agregar un nuevo registro de trazabilidad para una persona
 @login_required
 def agregar_trazabilidad(request, documento):
+    # Busca la persona en la base de datos por su documento
     persona = get_object_or_404(Persona, documento=documento)
 
-    if request.method == 'POST':
-        form = TrazabilidadForm(request.POST)
+    if request.method == 'POST':  # Verifica si la solicitud es de tipo POST
+        form = TrazabilidadForm(request.POST)  # Crea el formulario con los datos enviados
         if form.is_valid():
-            # Crear y guardar la nueva trazabilidad
+            # Crea un nuevo registro de trazabilidad asociado a la persona
             Trazabilidad.objects.create(
                 persona=persona,
                 ubicacion_laboral=form.cleaned_data['ubicacion_laboral'],
                 correoelectronico=form.cleaned_data['correoelectronico'],
                 telefono=form.cleaned_data['telefono'],
                 oferta=form.cleaned_data['oferta'],
-            )                  # Guarda la trazabilidad
-            return redirect('buscar_resultado', documento=documento)  # Redirige al detalle de la persona
+            )
+            # Redirige al detalle de la persona después de guardar
+            return redirect('buscar_resultado', documento=documento)
     else:
+        # Si la solicitud no es POST, muestra un formulario vacío
         form = TrazabilidadForm()
 
+    # Renderiza la vista para agregar trazabilidad
     return render(request, './vistasPrivadas/agregar_trazabilidad.html', {'form': form, 'persona': persona})
 
+# Función para modificar un registro de trazabilidad existente
 @login_required
 def modificar_trazabilidad(request, trazabilidad_id):
+    # Busca el registro de trazabilidad por su ID
     trazabilidad = get_object_or_404(Trazabilidad, id=trazabilidad_id)
-    
-    if request.method == 'POST':
+
+    if request.method == 'POST':  # Verifica si la solicitud es de tipo POST
+        # Crea el formulario con los datos enviados y asocia el registro de trazabilidad existente
         form = TrazabilidadForm(request.POST, instance=trazabilidad)
         if form.is_valid():
-            form.save()
-            return redirect('ver_trazabilidad', documento=trazabilidad.persona.documento)  # Redirige a la vista de trazabilidad
+            form.save()  # Guarda los cambios realizados
+            # Redirige a la vista de trazabilidad de la persona
+            return redirect('ver_trazabilidad', documento=trazabilidad.persona.documento)
     else:
+        # Si la solicitud no es POST, carga el formulario con los datos existentes
         form = TrazabilidadForm(instance=trazabilidad)
-    
+
+    # Renderiza la vista para modificar trazabilidad
     return render(request, './vistasPrivadas/agregar_trazabilidad.html', {'form': form, 'persona': trazabilidad.persona})
 
-
+# Función para eliminar un registro de trazabilidad
 @login_required
 def eliminar_trazabilidad(request, trazabilidad_id):
+    # Busca el registro de trazabilidad por su ID
     trazabilidad = get_object_or_404(Trazabilidad, id=trazabilidad_id)
-    documento = trazabilidad.persona.documento  # Para redirigir después
-    trazabilidad.delete()  # Elimina la trazabilidad
-    
-    return redirect('ver_trazabilidad', documento=documento)  # Redirige a la vista de trazabilidad
 
+    # Obtiene el documento de la persona asociada para redirigir después
+    documento = trazabilidad.persona.documento
+
+    # Elimina el registro de trazabilidad
+    trazabilidad.delete()
+
+    # Redirige a la vista de trazabilidad de la persona
+    return redirect('ver_trazabilidad', documento=documento)
+
+# Función para gestionar los egresados destacados
 @login_required
 def egresadosDestacados(request):
-    egresados = Egresado.objects.all()
+    egresados = Egresado.objects.all()  # Obtiene todos los egresados destacados
 
-    if request.method == "POST":
+    if request.method == "POST":  # Verifica si la solicitud es de tipo POST
         if len(egresados) >= 3:
+            # Si ya hay 3 egresados destacados, muestra un mensaje de error
             messages.error(request, "No puedes agregar más de 3 egresados destacados.")
         else:
-            form = EgresadoDestacadoForm(request.POST, request.FILES)
+            form = EgresadoDestacadoForm(request.POST, request.FILES)  # Crea el formulario con los datos enviados
             if form.is_valid():
-                form.save()
+                form.save()  # Guarda el nuevo egresado destacado
                 messages.success(request, "Egresado destacado agregado correctamente.")
                 return redirect('egresadosDestacados')
             else:
                 messages.error(request, "Error al guardar el egresado destacado.")
     else:
+        # Si la solicitud no es POST, muestra un formulario vacío
         form = EgresadoDestacadoForm()
 
+    # Renderiza la vista de gestión de egresados destacados
     return render(request, './vistasPrivadas/egresadosDestacados.html', {'egresados': egresados, 'form': form})
 
+# Función para listar los egresados destacados públicamente
 def listar_egresados_destacados(request):
-    egresados = Egresado.objects.all()  # Obtener todos los egresados destacados
+    egresados = Egresado.objects.all()  # Obtiene todos los egresados destacados
     return render(request, 'listar_egresados_destacados.html', {'egresados': egresados})
 
+# Función para editar un egresado destacado
 @login_required
 def editar_egresado(request, id):
-    egresado = get_object_or_404(Egresado, id=id)
+    egresado = get_object_or_404(Egresado, id=id)  # Busca el egresado por su ID
 
-    if request.method == 'POST':
+    if request.method == 'POST':  # Verifica si la solicitud es de tipo POST
         form = EgresadoDestacadoForm(request.POST, request.FILES, instance=egresado)
         if form.is_valid():
-            form.save()
+            form.save()  # Guarda los cambios realizados
             return redirect('egresadosDestacados')
     else:
+        # Si la solicitud no es POST, carga el formulario con los datos existentes
         form = EgresadoDestacadoForm(instance=egresado)
 
+    # Renderiza la vista para editar egresados destacados
     return render(request, './vistasPrivadas/editarEgresado.html', {'form': form, 'egresado': egresado})
 
+# Función para ver los detalles de un egresado destacado
 @login_required
 def egresado_detalle(request, egresado_id):
-    egresado = Egresado.objects.get(id=egresado_id)
+    egresado = Egresado.objects.get(id=egresado_id)  # Obtiene el egresado por su ID
     return render(request, './vistasPrivadas/egresado_detalle.html', {'egresado': egresado})
 
+# Función para cargar imágenes
 def cargar_imagenes(request):
-    imagenes = Imagen.objects.all()  # Obtener todas las imágenes de la base de datos
-    
-    if request.method == 'POST':
-        # Si se está editando una imagen, obtenemos el objeto de la imagen
-        imagen_id = request.POST.get('imagen_id')  # El ID de la imagen a editar
+    imagenes = Imagen.objects.all()  # Obtiene todas las imágenes de la base de datos
+
+    if request.method == 'POST':  # Verifica si la solicitud es de tipo POST
+        imagen_id = request.POST.get('imagen_id')  # Obtiene el ID de la imagen (si se está editando)
         imagen = Imagen.objects.get(id=imagen_id) if imagen_id else None
-        
-        # Solo permitir cambiar la imagen si existe en la base de datos
-        if imagen:
+
+        if imagen:  # Si la imagen existe
             form = ImagenForm(request.POST, request.FILES, instance=imagen)
-            
             if form.is_valid():
-                # Guardar la nueva imagen, si el formulario es válido
-                form.save()
-                return redirect('cargar_imagenes')  # Redirigir después de guardar la imagen
+                form.save()  # Guarda los cambios realizados en la imagen
+                return redirect('cargar_imagenes')
     else:
+        # Si la solicitud no es POST, muestra un formulario vacío
         form = ImagenForm()
-    
+
+    # Renderiza la vista para cargar o editar imágenes
     return render(request, 'vistasPrivadas/cargar_imagenes.html', {'form': form, 'imagenes': imagenes})
+
 
 
 

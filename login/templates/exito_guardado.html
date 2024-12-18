@@ -1,8 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<!-- Contenedor principal de la página -->
 <main class="container py-5">
+    <!-- Título principal centrado, de tamaño grande -->
     <h1 class="display-3 text-center">Guardado con éxito</h1>
-    <a href="{% url 'cargar_archivo' %}" class="btn btn-light my-2" style="background-color: #1B9D87; color: white; padding: 8px 16px; width: 150px; height: 50px;">Volver</a>
+    
+    <!-- Botón de vuelta, que redirige a la página 'cargar_archivo' -->
+    <a href="{% url 'cargar_archivo' %}" class="btn btn-light my-2" style="background-color: #1B9D87; color: white; padding: 8px 16px; width: 150px; height: 50px;">
+        Volver
+    </a>
 </main>
 {% endblock %}

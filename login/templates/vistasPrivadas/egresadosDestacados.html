@@ -1,23 +1,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<!-- Contenedor principal con relleno vertical (py-5) -->
 <div class="container py-5">
+    <!-- Título de la página -->
     <h1 class="text-center mb-5">Egresados Destacados</h1>
 
-    <!-- Contenedor de las tarjetas -->
+    <!-- Contenedor de tarjetas de egresados -->
     <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for egresado in egresados %}
             <div class="col">
+                <!-- Tarjeta de perfil del egresado -->
                 <div class="profile-card shadow-sm d-flex flex-column">
                     <!-- Imagen del egresado -->
                     {% if egresado.Imagen %}
-                       <img src="{{ egresado.Imagen.url }}" alt="Imagen de {{ egresado.nombre }}" class="profile-image img-fluid">
+                        <img src="{{ egresado.Imagen.url }}" alt="Imagen de {{ egresado.nombre }}" class="profile-image img-fluid">
                     {% else %}
-                      <img src="https://via.placeholder.com/200" alt="Imagen no disponible" class="profile-image img-fluid">
+                        <img src="https://via.placeholder.com/200" alt="Imagen no disponible" class="profile-image img-fluid">
                     {% endif %}
-                    <!-- Contenido del egresado -->
+                    <!-- Contenido del perfil del egresado -->
                     <div class="profile-content flex-grow-1 d-flex flex-column">
+                        <!-- Nombre del egresado -->
                         <h2 class="profile-name">{{ egresado.nombre }}</h2>
+                        <!-- Información sobre el egresado -->
                         <p class="profile-profession"><strong>Profesión:</strong> {{ egresado.profesion }}</p>
                         <p class="profile-year"><strong>Año de Grado:</strong> {{ egresado.ano_grado }}</p>
                         <p class="profile-position"><strong>Cargo Actual:</strong> {{ egresado.cargo_actual }}</p>
@@ -30,16 +35,16 @@
                         <p class="profile-date"><strong>Datos Adicionales:</strong> {{ egresado.datos_adicionales }}</p>
                     </div>
 
-                    <!-- Botón -->
+                    <!-- Botón para editar el egresado -->
                     <button class="btn btn-primary mt-3" onclick="window.location.href='{% url 'editar_egresado' egresado.id %}'">Modificar</button>
                 </div>
             </div>
         {% empty %}
-         <p class="text-center text-muted">No hay egresados destacados aún. Puedes agregar hasta tres.</p>
+            <p class="text-center text-muted">No hay egresados destacados aún. Puedes agregar hasta tres.</p>
         {% endfor %}
     </div>
 
-    <!-- Formulario para agregar egresado destacado -->
+    <!-- Formulario para agregar un egresado destacado si no se ha alcanzado el límite -->
     {% if egresados|length < 3 %}
     <div class="mt-5">
         <h2>Agregar Nuevo Egresado Destacado</h2>
@@ -54,84 +59,95 @@
 
 <!-- Estilos CSS -->
 <style>
+    /* Estilo general para el cuerpo de la página */
     body {
         font-family: 'Poppins', sans-serif;
-        background-color: #f9f9f9;
-        color: #333;
+        background-color: #f9f9f9;  /* Fondo claro */
+        color: #333;  /* Texto oscuro */
     }
 
+    /* Alineación de las columnas de las tarjetas en diferentes tamaños de pantalla */
     .row-cols-md-3 > .col {
         display: flex;
     }
 
+    /* Estilo para la tarjeta del perfil */
     .profile-card {
-        background-color: #fff;
-        border-radius: 12px;
-        border: 1px solid #ddd;
-        padding: 20px;
-        text-align: left;
+        background-color: #fff;  /* Fondo blanco */
+        border-radius: 12px;  /* Bordes redondeados */
+        border: 1px solid #ddd;  /* Borde gris claro */
+        padding: 20px;  /* Espaciado dentro de la tarjeta */
+        text-align: left;  /* Alineación del texto */
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;  /* Transición suave al pasar el ratón */
     }
 
+    /* Efecto hover en la tarjeta */
     .profile-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        transform: translateY(-5px);  /* Eleva la tarjeta */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);  /* Sombra suave */
     }
 
+    /* Estilo de la imagen del perfil */
     .profile-image {
-        width: 100%;
-        max-height: 200px;
-        border-radius: 12px;
-        object-fit: cover;
-        margin-bottom: 15px;
+        width: 100%;  /* Ancho completo de la imagen */
+        max-height: 200px;  /* Altura máxima */
+        border-radius: 12px;  /* Bordes redondeados */
+        object-fit: cover;  /* Ajuste de la imagen sin deformarse */
+        margin-bottom: 15px;  /* Espaciado inferior */
     }
 
+    /* Estilo para el contenido dentro de la tarjeta */
     .profile-content {
-        flex-grow: 1;
+        flex-grow: 1;  /* La tarjeta crece para llenar el espacio */
     }
 
+    /* Estilo del nombre del egresado */
     .profile-name {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #0056b3;
-        margin-bottom: 10px;
+        font-size: 1.5rem;  /* Tamaño grande */
+        font-weight: bold;  /* Negrita */
+        color: #0056b3;  /* Color azul */
+        margin-bottom: 10px;  /* Espaciado inferior */
     }
 
+    /* Estilos para los párrafos de información del egresado */
     .profile-profession,
     .profile-year,
     .profile-position,
     .profile-email,
     .profile-description,
     .profile-date {
-        font-size: 0.95rem;
-        margin-bottom: 8px;
-        color: #555;
+        font-size: 0.95rem;  /* Tamaño de fuente pequeño */
+        margin-bottom: 8px;  /* Espaciado entre los párrafos */
+        color: #555;  /* Color gris */
     }
 
+    /* Estilo del enlace de correo electrónico */
     .profile-email a {
-        color: #0056b3;
-        text-decoration: none;
+        color: #0056b3;  /* Color azul */
+        text-decoration: none;  /* Sin subrayado */
     }
 
+    /* Efecto al pasar el ratón sobre el enlace */
     .profile-email a:hover {
-        text-decoration: underline;
+        text-decoration: underline;  /* Subrayado al pasar el ratón */
     }
 
+    /* Estilo para el botón primario */
     .btn-primary {
-        background-color: #007bff;
-        border: none;
-        transition: background-color 0.3s ease;
+        background-color: #007bff;  /* Fondo azul */
+        border: none;  /* Sin borde */
+        transition: background-color 0.3s ease;  /* Transición suave al pasar el ratón */
     }
 
     .btn-primary:hover {
-        background-color: #0056b3;
+        background-color: #0056b3;  /* Cambio de color al pasar el ratón */
     }
 
     .btn-primary:focus {
-        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);  /* Efecto al enfocar el botón */
     }
 </style>
 {% endblock %}

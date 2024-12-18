@@ -1,45 +1,62 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %}  <!-- Extiende la plantilla base para reutilizar la estructura común del sitio -->
+
+{% block content %}  <!-- Inicio del bloque content que se inserta en el cuerpo de la plantilla base -->
 <main class="d-flex justify-content-center align-items-center vh-100 bg-aquamarine">
+    <!-- Se define el contenedor principal con clases de Bootstrap para centrar el contenido y darle altura completa -->
+    
     <style>
-        #id_username_helptext,
-        li,
-        #id_password2_helptext {
-            display: none; /* Oculta completamente los elementos */
+        /* Estilo personalizado para ocultar los textos de ayuda y otros elementos específicos */
+        #id_username_helptext,  /* Selecciona el texto de ayuda del campo 'username' */
+        li,  /* Selecciona todas las listas (posiblemente listas de errores) */
+        #id_password2_helptext {  /* Selecciona el texto de ayuda del campo 'password2' */
+            display: none;  /* Oculta completamente los elementos seleccionados */
         }
 
         .nav-item {
-            display: block; /* Asegura que sean visibles */
-            visibility: visible; /* Garantiza que no estén ocultas */
-            opacity: 1; /* Asegura que no sean transparentes */
+            display: block;  /* Asegura que los elementos del menú de navegación sean visibles y se muestren como bloques */
+            visibility: visible;  /* Asegura que no estén ocultos visualmente */
+            opacity: 1;  /* Asegura que no sean transparentes */
         }
 
-        label[for="id_username"]{
-            margin-right: 89px;
+        label[for="id_username"]{  /* Aplica estilo específico al label para el campo 'username' */
+            margin-right: 89px;  /* Ajusta el margen derecho para alinear el campo correctamente */
         }
-         label[for="id_password1"]{
-            margin-right: 93px;
+        
+        label[for="id_password1"]{  /* Aplica estilo específico al label para el campo 'password1' */
+            margin-right: 93px;  /* Ajusta el margen derecho para alinear el campo correctamente */
         }
     </style>
 
     <section style="margin: 0 35%; height: 580px; width: 39%;" class="card card-body shadow-lg rounded-3 login-card d-flex justify-content-center align-items-center ">
+        <!-- Se define una tarjeta (card) para el formulario de registro con estilos personalizados de margen y tamaño -->
         
         <div class="text-center">
+            <!-- Contenedor para la imagen, centrado -->
             <!-- Imagen de ícono (opcional) -->
             <img src="https://www.iser.edu.co/wp-content/uploads/2024/07/IMAGOTIPO-NEGRO-01-1447x1536.png" alt="Login Icon" class="img-fluid" width="200px" height="200px">
+            <!-- Se inserta el logo de la institución, con tamaño ajustado -->
         </div>
         <h1 class="card-title text-center text-black mb-4">Registrase</h1>
+        <!-- Título principal del formulario, indicando que es para registrarse -->
 
         {{error}}
- 
+        <!-- Se muestran los errores, si existen, que se pasan desde la vista -->
+
         <form method="POST">
-            {% csrf_token %} 
+            <!-- El formulario que se enviará mediante el método POST -->
+            {% csrf_token %}
+            <!-- Se incluye el token CSRF para proteger el formulario contra ataques de falsificación de solicitudes entre sitios -->
+
             {{form.as_p}}
+            <!-- Se renderiza el formulario pasando todos los campos como párrafos, lo que organiza los campos de formulario de manera vertical -->
+            
             <button class="btn btn-primary justify-content-center align-items-center align-text-center btn-lg">
                 Registrarse
             </button>
+            <!-- Botón de envío del formulario, con clase para hacerlo visible y estilizado -->
         </form>
         
     </section>
 </main>
-{% endblock %}
+{% endblock %}
+<!-- Fin del bloque content -->

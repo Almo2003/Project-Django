@@ -1,39 +1,48 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %}  <!-- Hereda la plantilla base.html para reutilizar el diseño común -->
 
 {% block content %}
-<main class="container py-5">
+<main class="container py-5">  <!-- Contenedor principal con un padding vertical de 5 -->
+
     <section class="card card-body" style="background: transparent; border: none;">
+        <!-- Título principal centrado -->
         <h1 class="display-1 text-center">Sube tu archivo CSV</h1>
         
+        <!-- Formulario para cargar el archivo CSV -->
         <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
+            {% csrf_token %}  <!-- Token de seguridad para prevenir ataques CSRF -->
+            
+            <!-- Renderiza los campos del formulario -->
             {{ form.as_p }}
 
-            <!-- Aquí se agregarán dinámicamente las cajas de texto -->
+            <!-- Contenedor donde se agregarán dinámicamente las cajas de texto -->
             <div id="cajasContainer"></div>
 
+            <!-- Botón para enviar el formulario -->
             <button type="submit" class="btn btn-light my-2" style="width: 150px; height: 50px;">Cargar</button>
         </form>
 
-        <!-- Mostrar errores de validación -->
+        <!-- Contenedor para mostrar errores de validación si los hay -->
         <div id="errorContainer" class="alert alert-danger" style="display: {% if errors %} block {% else %} none {% endif %};">
             {% for error in errors %}
-                <p>{{ error }}</p>
+                <p>{{ error }}</p>  <!-- Muestra cada error -->
             {% endfor %}
         </div>
 
+        <!-- Contenedor para mostrar un mensaje de error si no se ha seleccionado un archivo CSV -->
         <div id="alertContainer" style="display: none;" class="alert alert-danger" role="alert">
             Por favor, selecciona un archivo CSV antes de cargar.
         </div>
 
         <script>
+            // Referencias a elementos del DOM
             const numCajasInput = document.getElementById('id_num_cajas');
             const form = document.querySelector('form');
             const alertContainer = document.getElementById('alertContainer');
-            const fileInput = document.querySelector('input[type="file"]'); // Selecciona el input de archivo
+            const fileInput = document.querySelector('input[type="file"]');  <!-- Selecciona el input de archivo -->
             
+            // Evento que se dispara cuando el formulario es enviado
             form.addEventListener('submit', function(event) {
-                // Asegúrate de que el número de cajas se envíe
+                // Asegura que el número de cajas se envíe como dato oculto
                 const numCajas = numCajasInput.value;
                 const hiddenInput = document.createElement('input');
                 hiddenInput.type = 'hidden';
@@ -41,30 +50,31 @@
                 hiddenInput.value = numCajas;
                 form.appendChild(hiddenInput);
 
-                // Validar si hay un archivo cargado
+                // Validación: Si no se seleccionó un archivo, previene el envío del formulario y muestra un mensaje
                 if (!fileInput.files.length) {
-                    event.preventDefault(); // Evita que el formulario se envíe
-                    alertContainer.style.display = 'block'; // Muestra el aviso
+                    event.preventDefault();  // Evita que el formulario se envíe
+                    alertContainer.style.display = 'block';  // Muestra el aviso de error
                 } else {
-                    alertContainer.style.display = 'none'; // Oculta el aviso si hay un archivo
+                    alertContainer.style.display = 'none';  // Oculta el aviso si hay un archivo
                 }
             });
             
-            // Código para agregar cajas dinámicamente
+            // Código para agregar cajas de texto dinámicamente según el número ingresado
             numCajasInput.addEventListener('input', function() {
                 const numCajas = numCajasInput.value;
                 const cajasContainer = document.getElementById('cajasContainer');
                 cajasContainer.innerHTML = '';  // Limpiar el contenedor antes de agregar nuevas cajas
 
+                // Crear el número adecuado de cajas de texto
                 for (let i = 0; i < numCajas; i++) {
                     const label = document.createElement('label');
-                    label.textContent = `Nombre de la columna ${i + 1}: `;
+                    label.textContent = `Nombre de la columna ${i + 1}: `;  // Etiqueta para cada caja de texto
                     const input = document.createElement('input');
                     input.type = 'text';
-                    input.name = `columna_${i + 1}`;
+                    input.name = `columna_${i + 1}`;  // Asigna el nombre dinámico para cada columna
                     cajasContainer.appendChild(label);
                     cajasContainer.appendChild(input);
-                    cajasContainer.appendChild(document.createElement('br'));
+                    cajasContainer.appendChild(document.createElement('br'));  // Salto de línea después de cada caja
                 }
             });
         </script>

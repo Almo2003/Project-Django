@@ -2,13 +2,16 @@
 
 {% block content %}
 <main class="container py-5">
+    <!-- Título principal -->
     <h1 class="display-3 text-center">Datos del archivo CSV</h1>
     
+    <!-- Tabla que muestra los datos del archivo CSV -->
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
                 {% for column in column_names %}
-                    <th>{{ column }}</th>  <!-- Mostrar los nombres de las columnas -->
+                    <!-- Encabezado de la tabla, donde se muestran los nombres de las columnas -->
+                    <th>{{ column }}</th>
                 {% endfor %}
             </tr>
         </thead>
@@ -16,22 +19,29 @@
             {% for row in data %}
                 <tr>
                     {% for item in row %}
-                        <td>{{ item }}</td>  <!-- Mostrar los valores de las columnas -->
+                        <!-- Mostrar cada valor de las columnas en las filas -->
+                        <td>{{ item }}</td>
                     {% endfor %}
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+
+    <!-- Botón para volver a cargar otro archivo -->
     <a href="{% url 'cargar_archivo' %}" class="btn btn-light my-2" style="background-color: #1B9D87; color: white; padding: 8px 16px; width: 150px; height: 50px;">Volver</a>
+    
+    <!-- Formulario para guardar los datos del archivo CSV -->
     <form method="POST" action="{% url 'guardar_datos' %}">
         {% csrf_token %}
+        <!-- Campo oculto para almacenar los datos en formato JSON -->
         <input type="hidden" name="data" id="data">
         
+        <!-- Botón para enviar el formulario y guardar los datos -->
         <button type="submit" class="btn btn-light my-2" style="background-color: #1B9D87; color: white; padding: 8px 16px; width: 150px; height: 50px;">Guardar</button>
     </form>
     
+    <!-- Script para convertir los datos a formato JSON antes de enviarlos al servidor -->
     <script>
-        // Convertir el objeto de datos en una cadena JSON antes de enviar el formulario
         document.getElementById('data').value = JSON.stringify({{ data|safe }});
     </script>
 </main>
